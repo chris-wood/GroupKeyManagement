@@ -1,0 +1,26 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% File: script.m
+% Author: Christopher Wood, caw4567@rit.edu
+% Description: Script that uses pre-computed values to run the E(Td) function
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fixed input into the time function
+N = [5,10,15,20,25,30]
+P = [0.25,0.5,0.75,0.85,0.95,0.99,1.0]
+
+% Resulting time computations
+T = zeros(size(N)(2), size(P)(2));
+
+% Compute all time combinations and then display the result
+for i = 1:size(N)(2)
+	for j = 1:size(P)(2)
+		%val = time(0, 0, N(i), P(j));
+		T(i,j) = time(0, 0, N(i), P(j));
+	end
+end
+
+% Display the result
+T		
+
