@@ -140,6 +140,7 @@ end
 
 % Display the final table
 disp(finalTable);
+plot(finalTabe
 
 %disp('Expected time');
 %disp(totalTime / NUM_SAMPLES)
