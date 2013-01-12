@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-NUM_SAMPLES = 10; %10000
+NUM_SAMPLES = 10000; %10000
 %MAX_CHILDREN = 2;
 MAX_CHILDREN = [2,3,4,5,6,7,8]; 
 NUM_NODES = [5,10,15,20,25,30];
@@ -160,8 +160,8 @@ for c = 1:numChildren
     plot(temp); 
 end
 
-figure(numChildren + 1);
-scatter3(MAX_CHILDREN, PROBABILITIES, NUM_NODES, 5, avgTimes)
+%figure(numChildren + 1);
+%scatter3(MAX_CHILDREN, PROBABILITIES, NUM_NODES, 5, avgTimes)
 
 %surf(PROBABILITIES, NUM_NODES, avgTimes(1,:,:))
 
