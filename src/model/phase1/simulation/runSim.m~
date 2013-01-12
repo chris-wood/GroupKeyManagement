@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-NUM_SAMPLES = 10; %10000
+NUM_SAMPLES = 10000;
 %MAX_CHILDREN = 2;
 MAX_CHILDREN = [2,3,4,5,6,7,8]; 
 NUM_NODES = [5,10,15,20,25,30];
@@ -148,7 +148,7 @@ end
 disp(avgTimes)
 %plot3(avgTimes(:,:,1))
 
-% Generate a plot for each one
+% Generate a plot for each on
 for c = 1:numChildren
     temp = zeros(numProbs, numSims);
     for p = 1:numProbs
@@ -159,9 +159,6 @@ for c = 1:numChildren
     figure(c);
     plot(temp); 
 end
-
-figure(numChildren + 1);
-scatter3(MAX_CHILDREN, PROBABILITIES, NUM_NODES, 5, avgTimes)
 
 %surf(PROBABILITIES, NUM_NODES, avgTimes(1,:,:))
 
