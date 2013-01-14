@@ -18,7 +18,7 @@ PROBABILITIES = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 
 % Set up the results matrix
 times = zeros(numProbs, numSims,NUM_SAMPLES); % we perform one simulation for each number of nodes
-avgTimes = zeros(numProbs, numSims, 1);
+avgTimes = zeros(numProbs, numSims);
 finalTable = zeros(numProbs, numSims, 4);
 
 % Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
@@ -118,7 +118,7 @@ for p = 1:numProbs
             times(p,n,i) = time;
         end
     
-        avgTimes(p,n,1) = totalTime / NUM_SAMPLES;
+        avgTimes(p,n) = totalTime / NUM_SAMPLES;
     end
 end
 
@@ -137,6 +137,9 @@ for p = 1:numProbs
         finalTable(p,i,4) = stderr;
     end
 end
+
+% Display the average times table
+disp(avgTimes);
 
 % Display the final table
 disp(finalTable);
