@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-NUM_SAMPLES = 10; %10000
+NUM_SAMPLES = 1; %10000
 %MAX_CHILDREN = 2;
 MAX_CHILDREN = [2,3,4,5,6,7,8]; 
 NUM_NODES = [5,10,15,20,25,30];
@@ -122,7 +122,7 @@ for childIndex = 1:numChildren
                 end
 
                 totalTime = totalTime + time;
-                times(p,n,i) = time;
+                times(childIndex,p,n,i) = time;
             end
 
             totalTime;
@@ -136,8 +136,8 @@ for childIndex = 1:numChildren
     % Calculate the average and standard deviation for each node simulation
     for p = 1:numProbs
         for i = 1:numSims
-            avg = mean(times(p, i,:));
-            stddev = std(times(p, i,:));
+            avg = mean(times(childIndex,p,i,:));
+            stddev = std(times(childIndex,p, i,:));
             stderr = 2 * (stddev / (NUM_SAMPLES^(1/2)));
             finalTable(childIndex, p,i,1) = NUM_NODES(i);
             finalTable(childIndex, p,i,2) = avg;
@@ -164,8 +164,22 @@ for c = 1:numChildren
        end
     end
     figure(c);
-    plot(temp); 
+    plot(temp);
+    %axis([0.1 1.0 0 Inf])
+    %set(gca, 'XTickMode', 'manual');
+    %title(MAX_CHILDREN(c),'FontWeight','bold');
+    set(gca,'XTickLabel',{'0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0'});
+    title(['Key Distribution Time for ',int2str(MAX_CHILDREN(c)), ' Children']);
+    xlabel('Connection Probability');
+    ylabel('Average Re-Key Time (epochs)');
 end
+
+%x = -pi:.1:pi;
+%y = sin(x);
+%plot(x,y)
+%set(gca,'XTick',0.1:0.1)
+%set(gca,'XTickLabel',{'-pi','-pi/2','0','pi/2','pi'})
+
 
 %figure(numChildren + 1);
 %scatter3(MAX_CHILDREN, PROBABILITIES, NUM_NODES, 5, avgTimes)
