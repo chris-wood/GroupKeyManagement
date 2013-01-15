@@ -9,7 +9,7 @@
 % Simulation parameters
 NUM_SAMPLES = 10; %1000 or 10000 for proper results 
 MAX_CHILDREN = 2;
-NUM_NODES = [5,10,15,20,25,30];
+NUM_NODES = [5]; %,10,15,20,25,30]; % return after the thing is working!
 %NUM_NODES = [5];
 PROBABILITIES = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 %PROBABILITIES = [0.5];
@@ -22,6 +22,7 @@ avgTimes = zeros(numProbs, numSims);
 finalTable = zeros(numProbs, numSims, 4);
 
 % Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
+kMult = 4;
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');
@@ -31,7 +32,7 @@ for p = 1:numProbs
         for i = 1:NUM_SAMPLES
             % Initialize the adj. matrix representation for the nodes and network
             % No one is connected at the beginning.
-            time = 0;
+            time = 0; % time = #t2 events
             nConnected = 0;
             aMatrix = zeros(NUM_NODES(n), NUM_NODES(n));
             cMatrix = zeros(NUM_NODES(n));

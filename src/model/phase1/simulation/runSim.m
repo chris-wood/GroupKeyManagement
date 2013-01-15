@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-NUM_SAMPLES = 10000; %10000
+NUM_SAMPLES = 10; %10000
 %MAX_CHILDREN = 2;
 MAX_CHILDREN = [2,3,4,5,6,7,8]; 
 NUM_NODES = [5,10,15,20,25,30];
@@ -32,8 +32,8 @@ for childIndex = 1:numChildren
         disp('Probability');
         disp(PROBABILITIES(p));
         for n = 1:numSims
-            disp('Simulation number');
-            disp(n);
+            disp('Number of nodes');
+            disp(NUM_NODES(n));
             totalTime = 0;
             for i = 1:NUM_SAMPLES
                 % Initialize the adj. matrix representation for the nodes and network
@@ -159,7 +159,8 @@ for c = 1:numChildren
     temp = zeros(numProbs, numSims);
     for p = 1:numProbs
        for n = 1:numSims
-          temp(p, n) = avgTimes(c, p, n);
+          %temp(p, n) = avgTimes(c, p, n); % the final table has the correct values
+          temp(p, n) = finalTable(c, p, n, 2); % the second element is the average time
        end
     end
     figure(c);
