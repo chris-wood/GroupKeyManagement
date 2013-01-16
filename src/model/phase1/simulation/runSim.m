@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-NUM_SAMPLES = 1; %10000
+NUM_SAMPLES = 10000; %10000
 %MAX_CHILDREN = 2;
 MAX_CHILDREN = [2,3,4,5,6,7,8]; 
 NUM_NODES = [5,10,15,20,25,30];
