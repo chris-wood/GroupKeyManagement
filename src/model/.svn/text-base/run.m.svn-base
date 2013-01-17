@@ -1,8 +1,0 @@
-% Run the time estimation function for a fixed p and n
- 
-n = input("Group size: ");
-p = input("Transmission probability: ");
-
-time = time(0, 0, n, p)
-time
- 
