@@ -197,10 +197,11 @@ for pAuthIndex = 1:numAuthProbs
                                   % probability to see if the key
                                   % connection is passed along...
                                   if (rand(1) < authProbabilities(pAuthIndex))
-                                      aMatrix(rIndex, cIndex) = 1;
-                                      aMatrix(cIndex, rIndex) = 1;
-                                      cMatrix(cIndex) = 1;
-                                      nConnected = nConnected + 1;
+                                      asd
+                                      aMatrix(child, parent) = 1;
+                                            %aMatrix(parent, child) = 1;
+                                            %cMatrix(child) = 1;
+                                            %nConnected = nConnected + 1;
                                   end
                               end
                            end
