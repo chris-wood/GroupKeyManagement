@@ -196,7 +196,8 @@ for pAuthIndex = 1:numAuthProbs
                                   % A connection exists, use the key
                                   % probability to see if the key
                                   % connection is passed along...
-                                  if (rand(1) < authProbabilities(pAuthIndex))
+                                  if (rand(1) < authProbabilities(pKeyIndex))
+                                      authMatrix(kMult, rIndex, cIndex) = 0;
                                       aMatrix(rIndex, cIndex) = 1;
                                       aMatrix(cIndex, rIndex) = 1;
                                       cMatrix(cIndex) = 1;
