@@ -9,7 +9,7 @@
 % Simulation parameters
 numSamples = 1; %1000 or 10000 for proper results 
 maxChildren = 2;
-numNodes = [5]; %,10,15,20,25,30]; % return after the thing is working!
+numNodes = [5,10]; %,10,15,20,25,30]; % return after the thing is working!
 authProbabilities = [1];%0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 keyProbabilities = [1]; %[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numSims] = size(numNodes);
@@ -137,6 +137,7 @@ for pAuthIndex = 1:numAuthProbs
                               % probability to see if the key
                               % connection is passed along...
                               if (rand(1) < authProbabilities(pKeyIndex))
+                                  disp(sprintf('(%d) The key was passed from node %d to node %d', time, parent, child))
                                   authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
                                   aMatrix(rIndex, cIndex) = 1;
                                   aMatrix(cIndex, rIndex) = 1;
@@ -158,6 +159,7 @@ for pAuthIndex = 1:numAuthProbs
                               % make progress
                               if (authMatrix(kIndex, rIndex, cIndex) == 1)
                                   if (rand(1) < authProbabilities(pAuthIndex))
+                                      disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, parent, child))
                                       authMatrix(kIndex + 1, rIndex, cIndex) = 1;
                                       authMatrix(kIndex, rIndex, cIndex) = 0;
                                   end
@@ -180,6 +182,7 @@ for pAuthIndex = 1:numAuthProbs
                         % Hook these guys into the auth matrix
                         child = unconnected(readyIndex);
                         parent = parentList(j);
+                        disp(sprintf('(%d) Node %d starting authentication with node %d', time, parent, child))
                         authMatrix(1, parent, child) = 1; % this is a directed graph, so don't point from child->parent
                         readyIndex = readyIndex + 1;
                     end
@@ -189,21 +192,14 @@ for pAuthIndex = 1:numAuthProbs
                 
                 % Take away the last step in time (handle off-by-one)
                 time = time - 1;
+                disp(sprintf('Total time: %d', time))
                 
-                disp('Total time:')
-                disp(time)
-
-                    % - Check for nodes to gain new parents
-                    % - Loop through 1:(kMult - 1), advancing each connection to the
-                    % next time if it's successful (with given probability p)
-                    % - For kMult, we check to see if it succeeds, and then it
-                    % advances to the next stage
-                %end
-
+                % Record the total time for simulation
                 totalTime = totalTime + time;
                 times(pAuthIndex,pKeyIndex,n,i) = time;
             end
 
+            % Save the average time thus far (redundant...)
             avgTimes(pAuthIndex,pKeyIndex,n) = totalTime / numSamples;
         end
     end
