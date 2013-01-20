@@ -1,6 +1,6 @@
-function [parentList, parentCount] = readyParents(aMatrix, cMatrix, maxChildren, nNodes)
-%READYNODES Summary of this function goes here
-%   Detailed explanation goes here
+function [parentList, parentCount] = readyParents(aMatrix, cMatrix, authMatrix, maxChildren, nNodes, kMult)
+% readParents - Generate the list of ready parents that can accept children
+% for authentication (and the length of that list for simplicity)
 
 % Assume none are ready to start
 parentList = [];
@@ -9,14 +9,29 @@ parentCount = 0;
 for i = 1:nNodes
     if (cMatrix(i) == 1)
         cCount = 0;
+        
+        % Search the adjacency matrix...
         for j = 1:nNodes
             if (aMatrix(i,j) == 1)
                 cCount = cCount + 1;
             end
         end
-        if (i ~= 1)
-            cCount = cCount - 1; % take away the parent we are adjacent to!
+        
+        % Search the authentication matrix...
+        for kIndex = 1:kMult
+            for cIndex = 1:nNodes
+                if (authMatrix(kIndex, i, cIndex) == 1) 
+                    cCount = cCount + 1; % currently trying to authenticate some other node that isn't connected!
+                end
+            end
         end
+        
+        % Take away the parent we are adjacent to
+        if (i ~= 1)
+            cCount = cCount - 1; 
+        end
+        
+        % We're only ready if we haven't maxed out at this point
         if (cCount < maxChildren)
             parentCount = parentCount + 1;
             tempList(parentCount) = i;

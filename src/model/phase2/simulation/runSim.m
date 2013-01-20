@@ -10,7 +10,7 @@
 numSamples = 1; %1000 or 10000 for proper results 
 maxChildren = 2;
 numNodes = [5]; %,10,15,20,25,30]; % return after the thing is working!
-authProbabilities = [1]; %[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+authProbabilities = [1];%0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 keyProbabilities = [1]; %[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numSims] = size(numNodes);
 [~, numAuthProbs] = size(authProbabilities);
@@ -42,31 +42,16 @@ for pAuthIndex = 1:numAuthProbs
                 % The adjacency matrix stores those nodes node connections (the
                 % tree).
                 aMatrix = zeros(numNodes(n), numNodes(n));
-                % TODO: isn't aMatrix redundant with the above and below?
 
                 % The connected vector that indicates whether a node has
                 % the key (it is connected).
-                cMatrix = zeros(numNodes(n));
-
-                % Populate the adjacency matrix and children matrix.
-                %for r = 1:numNodes(n)
-                %    cMatrix(r) = 0;
-                %    for c = 1:numNodes(n)
-                %        aMatrix(r,c) = 0;
-                %    end
-                %end
+                cMatrix = zeros(1, numNodes(n));
 
                 % Set the root node to have the key at time 0
                 cMatrix(1) = 1;
 
                 % Loop while we do try to establish a connection with each node
                 while (nConnected < (numNodes(n) - 1)) % We go until connected == (n-1)
-                    % Loop through the pipeline
-                    %for k = 1:kMult
-                    
-                    %disp('auth matrix start')
-                    %disp(authMatrix)
-                    
                     % Find the unconnected nodes from the connected list
                     tempList = zeros(1, numNodes(n));
                     tempListBack = zeros(1, numNodes(n));
@@ -81,10 +66,6 @@ for pAuthIndex = 1:numAuthProbs
                             %disp(j)
                         end
                     end
-                    
-                    %disp('temp lists')
-                    %disp(tempList)
-                    %disp(tempListBack)
 
                     % Strip out all nodes that are currently in 
                     % authentication stage.
@@ -95,25 +76,16 @@ for pAuthIndex = 1:numAuthProbs
                                 % cIndex is being authenticated by rIndex,
                                 % so take out cIndex from the list if it's
                                 % in there.
-                                %disp('taking stuff out from auth matrix')
-                                %disp(cIndex)
-                                
                                 for nIndex = 1:numNodes(n)
                                     if (tempList(nIndex) == cIndex)
                                         tempList(nIndex) = -1; % set it back to invalid
                                         nUnconnected = nUnconnected - 1; % decrement since we took it out of the list
                                     end
                                 end
-                                %tempIndex = tempListBack(cIndex);
-                                %tempList(tempIndex) = -1; % mark as invalid so it can be omitted down below
                              end
                           end
                        end
                     end
-                    
-                    %disp('after pruning')
-                    %disp(tempList)
-                    %disp(nUnconnected)
 
                     % Build up the unconnected list
                     unconnected = zeros(1, nUnconnected);
@@ -129,9 +101,6 @@ for pAuthIndex = 1:numAuthProbs
                         tempIndex = tempIndex + 1;
                     end
 
-                    % Debug
-                    %display(unconnected);
-
                     % For each node that is ready, decide with probability p
                     % if it should receive the key at this instance in time.
                     readyList = zeros(1, nUnconnected);
@@ -142,9 +111,14 @@ for pAuthIndex = 1:numAuthProbs
                             nReady = nReady + 1;
                         end
                     end
-
+                    
+                    %%% We need to work backwards through the
+                    %%% authentication stages so we don't accidentally
+                    %%% carry connections through the pipeline in the same
+                    %%% instance in time (only one transition at a time)
+                    
                     % Compute the set of available parents at this iteration
-                    [parentList, parentCount] = readyParents(aMatrix, cMatrix, maxChildren, numNodes(n));
+                    [parentList, parentCount] = readyParents(aMatrix, cMatrix, authMatrix, maxChildren, numNodes(n), kMult);
 
                     % Shuffle algorithm
                     for j = parentCount:-1:1
@@ -153,17 +127,25 @@ for pAuthIndex = 1:numAuthProbs
                         parentList(index) = parentList(j);
                         parentList(j) = temp;
                     end
-
-                    %disp('Unconnected')
-                    %disp(unconnected)
-                    %disp('Ready')
-                    %disp(readyList)
-
-                    % TODO: need to advance time for every one of these
-                    % k-steps below? Or no...
                     
-                    %disp('auth matrix')
-                    %disp(authMatrix(1,:,:))
+                    % Handle the key distribution step now (authentication
+                    % is complete at this stage in the auth matrix)
+                    for rIndex = 1:numNodes(n)
+                       for cIndex = 1:numNodes(n)
+                          if (authMatrix(kMult, rIndex, cIndex) == 1)
+                              % A connection exists, use the key
+                              % probability to see if the key
+                              % connection is passed along...
+                              if (rand(1) < authProbabilities(pKeyIndex))
+                                  authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
+                                  aMatrix(rIndex, cIndex) = 1;
+                                  aMatrix(cIndex, rIndex) = 1;
+                                  cMatrix(cIndex) = 1;
+                                  nConnected = nConnected + 1;
+                              end
+                          end
+                       end
+                    end
 
                     % Now check to see if the nodes doing
                     % authentication march forwards in time
@@ -174,15 +156,8 @@ for pAuthIndex = 1:numAuthProbs
                               % If a pair of nodes is attempting
                               % authentcation, check to see if they
                               % make progress
-                              %disp(authMatrix(kIndex, rIndex, cIndex))
                               if (authMatrix(kIndex, rIndex, cIndex) == 1)
-                                  % Shift these guys over in time (to
-                                  % the next k-stage)
-                                  %disp('trying...')
                                   if (rand(1) < authProbabilities(pAuthIndex))
-                                      disp('shifting a node over!')
-                                      disp(cIndex)
-                                      disp(time)
                                       authMatrix(kIndex + 1, rIndex, cIndex) = 1;
                                       authMatrix(kIndex, rIndex, cIndex) = 0;
                                   end
@@ -191,31 +166,8 @@ for pAuthIndex = 1:numAuthProbs
                         end
                     end
 
-                    % Now handle the last guys who want to do a key
-                    % exchange
-                    for rIndex = 1:numNodes(n)
-                       for cIndex = 1:numNodes(n)
-                          if (authMatrix(kMult, rIndex, cIndex) == 1)
-                              % A connection exists, use the key
-                              % probability to see if the key
-                              % connection is passed along...
-                              if (rand(1) < authProbabilities(pKeyIndex))
-                                  authMatrix(kMult, rIndex, cIndex) = 0;
-                                  aMatrix(rIndex, cIndex) = 1;
-                                  aMatrix(cIndex, rIndex) = 1;
-                                  cMatrix(cIndex) = 1;
-                                  nConnected = nConnected + 1;
-                              end
-                          end
-                       end
-                    end
-
-                    %disp('Authentication matrix')
-                    %disp(authMatrix)
-
                     % Find upper bound on connections
                     bound = min(parentCount, nReady);
-                    %disp(bound)
 
                     % Start these nodes off in the authentication step
                     readyIndex = 1;
@@ -228,49 +180,15 @@ for pAuthIndex = 1:numAuthProbs
                         % Hook these guys into the auth matrix
                         child = unconnected(readyIndex);
                         parent = parentList(j);
-                        %disp('Adding element to authMatrix')
-                        %disp(child)
                         authMatrix(1, parent, child) = 1; % this is a directed graph, so don't point from child->parent
-                        %disp(authMatrix(1,:,:))
-                        readyIndex = readyIndex + 1;
-
-                        % 
-                        %aMatrix(child, parent) = 1;
-                        %aMatrix(parent, child) = 1;
-                        %cMatrix(child) = 1;
-                        %nConnected = nConnected + 1;
-                        %readyIndex = readyIndex + 1;
-                    end
-
-                    %{
-
-                    % Make the connections between ready children and available
-                    % parents
-                    readyIndex = 1;
-                    for j = 1:bound
-                        % Skip over nodes that were deemed not ready
-                        while (readyList(readyIndex) == 0)
-                            readyIndex = readyIndex + 1;
-                        end
-
-                        % Tie these guys together
-                        %disp('connecting...');
-                        child = unconnected(readyIndex);
-                        parent = parentList(j);
-                        aMatrix(child, parent) = 1;
-                        aMatrix(parent, child) = 1;
-                        cMatrix(child) = 1;
-                        nConnected = nConnected + 1;
                         readyIndex = readyIndex + 1;
                     end
-
-                    % Increment the time variable
-                    time = time + 1;
-
-                    %}
 
                     time = time + 1;
                 end
+                
+                % Take away the last step in time (handle off-by-one)
+                time = time - 1;
                 
                 disp('Total time:')
                 disp(time)
