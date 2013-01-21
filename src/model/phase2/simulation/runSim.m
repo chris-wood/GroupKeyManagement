@@ -30,6 +30,7 @@ totalTime = 0;
 for pAuthIndex = 1:numAuthProbs
     for pKeyIndex = 1:numKeyProbs
         for n = 1:numSims
+            disp(sprintf('Simulation for %d nodes with pAuth = %d and pKey = %d', numNodes(n), authProbabilities(pAuthIndex), keyProbabilities(pKeyIndex)))
             for i = 1:numSamples
                 % Initialize the adj. matrix representation for the nodes and network
                 % No one is connected at the beginning...
@@ -106,7 +107,7 @@ for pAuthIndex = 1:numAuthProbs
                     readyList = zeros(1, nUnconnected);
                     nReady = 0;
                     for j = 1:nUnconnected
-                        if (rand(1) < authProbabilities(pAuthIndex))
+                        if (rand(1) <= authProbabilities(pAuthIndex))
                             readyList(j) = 1; % Flag it as ready for authentication
                             nReady = nReady + 1;
                         end
@@ -136,8 +137,8 @@ for pAuthIndex = 1:numAuthProbs
                               % A connection exists, use the key
                               % probability to see if the key
                               % connection is passed along...
-                              if (rand(1) < authProbabilities(pKeyIndex))
-                                  disp(sprintf('(%d) The key was passed from node %d to node %d', time, parent, child))
+                              if (rand(1) <= authProbabilities(pKeyIndex))
+                                  disp(sprintf('(%d) The key was passed from node %d to node %d', time, rIndex, cIndex));
                                   authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
                                   aMatrix(rIndex, cIndex) = 1;
                                   aMatrix(cIndex, rIndex) = 1;
@@ -158,8 +159,8 @@ for pAuthIndex = 1:numAuthProbs
                               % authentcation, check to see if they
                               % make progress
                               if (authMatrix(kIndex, rIndex, cIndex) == 1)
-                                  if (rand(1) < authProbabilities(pAuthIndex))
-                                      disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, parent, child))
+                                  if (rand(1) <= authProbabilities(pAuthIndex))
+                                      disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, rIndex, cIndex))
                                       authMatrix(kIndex + 1, rIndex, cIndex) = 1;
                                       authMatrix(kIndex, rIndex, cIndex) = 0;
                                   end
