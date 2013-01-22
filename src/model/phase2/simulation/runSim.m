@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 1; %1000 or 10000 for proper results 
+numSamples = 10; %1000 or 10000 for proper results 
 maxChildren = 2;
-numNodes = [5,10]; %,10,15,20,25,30]; % return after the thing is working!
-authProbabilities = [1];%0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-keyProbabilities = [1]; %[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+numNodes = [5,10,15,20,25,30]; % return after the thing is working!
+authProbabilities = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+keyProbabilities = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numSims] = size(numNodes);
 [~, numAuthProbs] = size(authProbabilities);
 [~, numKeyProbs] = size(keyProbabilities);
@@ -30,7 +30,7 @@ totalTime = 0;
 for pAuthIndex = 1:numAuthProbs
     for pKeyIndex = 1:numKeyProbs
         for n = 1:numSims
-            disp(sprintf('Simulation for %d nodes with pAuth = %d and pKey = %d', numNodes(n), authProbabilities(pAuthIndex), keyProbabilities(pKeyIndex)))
+            %disp(sprintf('Simulation for %d nodes with pAuth = %d and pKey = %d', numNodes(n), authProbabilities(pAuthIndex), keyProbabilities(pKeyIndex)))
             for i = 1:numSamples
                 % Initialize the adj. matrix representation for the nodes and network
                 % No one is connected at the beginning...
@@ -138,7 +138,7 @@ for pAuthIndex = 1:numAuthProbs
                               % probability to see if the key
                               % connection is passed along...
                               if (rand(1) <= authProbabilities(pKeyIndex))
-                                  disp(sprintf('(%d) The key was passed from node %d to node %d', time, rIndex, cIndex));
+                                  %disp(sprintf('(%d) The key was passed from node %d to node %d', time, rIndex, cIndex));
                                   authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
                                   aMatrix(rIndex, cIndex) = 1;
                                   aMatrix(cIndex, rIndex) = 1;
@@ -160,7 +160,7 @@ for pAuthIndex = 1:numAuthProbs
                               % make progress
                               if (authMatrix(kIndex, rIndex, cIndex) == 1)
                                   if (rand(1) <= authProbabilities(pAuthIndex))
-                                      disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, rIndex, cIndex))
+                                      %disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, rIndex, cIndex))
                                       authMatrix(kIndex + 1, rIndex, cIndex) = 1;
                                       authMatrix(kIndex, rIndex, cIndex) = 0;
                                   end
@@ -183,7 +183,7 @@ for pAuthIndex = 1:numAuthProbs
                         % Hook these guys into the auth matrix
                         child = unconnected(readyIndex);
                         parent = parentList(j);
-                        disp(sprintf('(%d) Node %d starting authentication with node %d', time, parent, child))
+                        %disp(sprintf('(%d) Node %d starting authentication with node %d', time, parent, child))
                         authMatrix(1, parent, child) = 1; % this is a directed graph, so don't point from child->parent
                         readyIndex = readyIndex + 1;
                     end
@@ -193,7 +193,7 @@ for pAuthIndex = 1:numAuthProbs
                 
                 % Take away the last step in time (handle off-by-one)
                 time = time - 1;
-                disp(sprintf('Total time: %d', time))
+                %disp(sprintf('Total time: %d', time))
                 
                 % Record the total time for simulation
                 totalTime = totalTime + time;
@@ -206,20 +206,39 @@ for pAuthIndex = 1:numAuthProbs
     end
 end
 
-% Calculate the average and standard deviation for each node simulation
-for pAuthIndex = 1:numAuthProbs
-    for pKeyIndex = 1:numKeyProbs
-        for i = 1:numSims
-            avg = mean(times(pAuthIndex, pKeyIndex, i,:));
-            stddev = std(times(pAuthIndex, pKeyIndex, i,:));
-            stderr = 2 * (stddev / (numSamples^(1/2)));
-            finalTable(pAuthIndex,pKeyIndex,i,1) = numNodes(i);
-            finalTable(pAuthIndex,pKeyIndex,i,2) = avg;
-            finalTable(pAuthIndex,pKeyIndex,i,3) = stddev;
-            finalTable(pAuthIndex,pKeyIndex,i,4) = stderr;
-        end
+% Generate a plot for each one
+%for c = 1:numChildren
+for pKeyIndex = 1:numKeyProbs
+    temp = zeros(numAuthProbs, numSims);
+    for p = 1:numAuthProbs
+       for n = 1:numSims
+          %temp(p, n) = avgTimes(c, p, n); % the final table has the correct values
+          temp(p, n) = mean(times(p,pKeyIndex,n,:)); % the second element is the average time
+       end
     end
+    figure(pKeyIndex)
+    plot(temp);
+    set(gca,'XTickLabel',{'0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7','0.8', '0.9', '1.0'});
+    title([sprintf('Key Distribution Time for 2 Children with Key Probability = %d', keyProbabilities(pKeyIndex))]);
+    xlabel('Authentication Probability');
+    ylabel('Average Re-Key Time (epochs)');
 end
+%end
+
+% Calculate the average and standard deviation for each node simulation
+%for pAuthIndex = 1:numAuthProbs
+%    for pKeyIndex = 1:numKeyProbs
+%        for i = 1:numSims
+%            avg = mean(times(pAuthIndex, pKeyIndex, i,:));
+%            stddev = std(times(pAuthIndex, pKeyIndex, i,:));
+%            stderr = 2 * (stddev / (numSamples^(1/2)));
+%            finalTable(pAuthIndex,pKeyIndex,i,1) = numNodes(i);
+%            finalTable(pAuthIndex,pKeyIndex,i,2) = avg;
+%            finalTable(pAuthIndex,pKeyIndex,i,3) = stddev;
+%            finalTable(pAuthIndex,pKeyIndex,i,4) = stderr;
+%        end
+%    end
+%end
 
 % Display the average times table
 %disp(avgTimes);
