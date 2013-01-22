@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 10; %1000 or 10000 for proper results 
+numSamples = 1000; %1000 or 10000 for proper results 
 maxChildren = 2;
 numNodes = [5,10,15,20,25,30]; % return after the thing is working!
 authProbabilities = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
@@ -30,7 +30,7 @@ totalTime = 0;
 for pAuthIndex = 1:numAuthProbs
     for pKeyIndex = 1:numKeyProbs
         for n = 1:numSims
-            %disp(sprintf('Simulation for %d nodes with pAuth = %d and pKey = %d', numNodes(n), authProbabilities(pAuthIndex), keyProbabilities(pKeyIndex)))
+            disp(sprintf('Simulation for %d nodes with pAuth = %d and pKey = %d', numNodes(n), authProbabilities(pAuthIndex), keyProbabilities(pKeyIndex)))
             for i = 1:numSamples
                 % Initialize the adj. matrix representation for the nodes and network
                 % No one is connected at the beginning...
