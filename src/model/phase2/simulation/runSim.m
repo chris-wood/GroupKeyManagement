@@ -8,7 +8,7 @@
 
 % Simulation parameters
 numSamples = 1000; %1000 or 10000 for proper results
-maxChildren = [2,3,4,5,6,7,8];
+maxChildren = [2,3,4,5,6];
 numNodes = [5,10,15,20,25,30]; % return after the thing is working!
 authProbabilities = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 keyProbabilities = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
@@ -27,6 +27,7 @@ kMult = 4;
 % Run the simulation nSamples times
 disp('Starting the simulation...');
 for childIndex = 1:numChildren
+    disp(sprintf('Maximum number of children = %d', maxChildren(childIndex)))
     for pAuthIndex = 1:numAuthProbs
         for pKeyIndex = 1:numKeyProbs
             for n = 1:numSims
@@ -201,6 +202,7 @@ for childIndex = 1:numChildren
 end
 
 % Generate a plot for each one
+figureId = 1;
 for childIndex = 1:numChildren
     for pKeyIndex = 1:numKeyProbs
         temp = zeros(numAuthProbs, numSims);
@@ -210,7 +212,8 @@ for childIndex = 1:numChildren
               temp(p, n) = mean(times(childIndex,p,pKeyIndex,n,:)); % the second element is the average time
            end
         end
-        figure((childIndex * numChildren) + pKeyIndex)
+        figure(figureId);
+        figureId = figureId + 1; % forward the figures... math is fun.
         plot(temp);
         set(gca,'XTickLabel',{'0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7','0.8', '0.9', '1.0'});
         title([sprintf('Key Distribution Time for %d Children with Key Probability = %d', maxChildren(childIndex), keyProbabilities(pKeyIndex))]);
