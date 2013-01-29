@@ -59,7 +59,24 @@ $S* = (D_2, D_3 - D_2, D_4 - D_3, 1 + D_2 + D_3, n - 1 - D_2 - D_3 - D_4)$.
 Therefore, we can represent the state of the network using a three-dimensional vector
 $D_k = (D_1, D_2, D_3)$. 
 
-TODO: constraints.
+If we now consider transitions in the state of the network by some vector $\bar{h} = (i, j, k)$, where the 
+transition is defined as $D + \bar{h} = (D_2 + i, D_3 + j, D_4 + k)$, as well as the transfer equations
+used to define the network state evolution, we come up with the following constraints for $\bar{h}$
+
+Based on the transfer equations, we can also define the following constraints for the network state.
+\begin{align*}
+0 \leq i \leq D_3 - D_2 \\
+0 \leq j \leq D_4 - D_3 \\
+0 \leq k \leq 1 + D_2 + D_3 \\
+i + j + k \leq n - 1 - D_2 - D_3 - D_4
+\end{align*}
+With these constraints, we conclude that the network can evolve along any vector path bounded by these
+constraints and the line $D_2 + D_3 + D_4 = 1$, which is the point where all nodes have the key. This network
+state space is shown in Figure \ref{fig:d3plot}.
+
+TODO: Insert plot of surface here.
+
+
 
 \section{Generalized Model}
 

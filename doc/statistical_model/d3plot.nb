@@ -1,0 +1,211 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      8331,        202]
+NotebookOptionsPosition[      7996,        185]
+NotebookOutlinePosition[      8351,        201]
+CellTagsIndexPosition[      8308,        198]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+plot D1 + D2 + D3  = n - 1, where n = 30\
+\>", "WolframAlphaLong",
+ CellChangeTimes->{{3.568298602898122*^9, 3.568298616796967*^9}, {
+  3.5684732979062777`*^9, 3.568473355617404*^9}}],
+
+Cell[BoxData[
+ NamespaceBox["WolframAlphaQueryResults",
+  DynamicModuleBox[{Typeset`q$$ = 
+   "plot D1 + D2 + D3  = n - 1, where n = 30, constrained by D3 >= D2, D4 >= \
+D3, and 1 + D2 + D3 >= 0", Typeset`opts$$ = {
+   AppearanceElements -> {
+     "Warnings", "Assumptions", "Brand", "Pods", "PodMenus", "Unsuccessful", 
+      "Sources"}, Asynchronous -> All, 
+    TimeConstraint -> {30, Automatic, Automatic, Automatic}, 
+    Method -> {
+     "Formats" -> {"cell", "minput", "msound", "dataformats"}, "Server" -> 
+      "http://api.wolframalpha.com/v1/"}}, Typeset`elements$$ = {
+   "Warnings", "Assumptions", "Brand", "Pods", "PodMenus", "Unsuccessful", 
+    "Sources"}, Typeset`pod1$$ = XMLElement[
+   "pod", {"title" -> "Input", "scanner" -> "Identity", "id" -> "Input", 
+     "position" -> "100", "error" -> "false", "numsubpods" -> "1"}, {
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["minput", {}, {"D1 + D2 + D3 == n - 1"}], 
+       XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             RowBox[{
+               RowBox[{"D1", "+", "D2", "+", "D3"}], "\[LongEqual]", 
+               TagBox[
+                RowBox[{"n", "-", "1"}], Identity]}], 
+             PolynomialForm[#, TraditionalOrder -> False]& ], 
+            TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,minput,computabledata,formatteddata,formuladata"}]}]}], 
+   Typeset`pod2$$ = XMLElement[
+   "pod", {"title" -> "Alternate forms", "scanner" -> "Simplification", "id" -> 
+     "AlternateForm", "position" -> "200", "error" -> "false", "numsubpods" -> 
+     "3"}, {
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["minput", {}, {"FullSimplify[D1 + D2 + D3 == -1 + n]"}], 
+       XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+         Cell[
+          BoxData[
+           FormBox[
+            RowBox[{
+              RowBox[{"D1", "+", "D2", "+", "D3", "+", "1"}], "\[LongEqual]", 
+              "n"}], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,minput,moutput,computabledata,formatteddata,formuladata"}]}\
+], 
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+         Cell[
+          BoxData[
+           FormBox[
+            RowBox[{
+              RowBox[{"D1", "+", "D2", "+", "D3", "-", "n", "+", "1"}], 
+              "\[LongEqual]", "0"}], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,moutput,computabledata,formatteddata,formuladata"}]}], 
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+         Cell[
+          BoxData[
+           FormBox[
+            RowBox[{"D3", "\[LongEqual]", 
+              TagBox[
+               RowBox[{
+                 RowBox[{"-", 
+                   RowBox[{"D1"}]}], "-", "D2", "+", "n", "-", "1"}], 
+               Identity]}], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,moutput,computabledata,formatteddata,formuladata"}]}]}], 
+   Typeset`pod3$$ = XMLElement[
+   "pod", {"title" -> "Solution for the variable n", "scanner" -> "Reduce", 
+     "id" -> "SolutionForTheVariableV", "position" -> "300", "error" -> 
+     "false", "numsubpods" -> "1", "primary" -> "true"}, {
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["minput", {}, {"Solve[1 + D1 + D2 + D3 == n, n]"}], 
+       XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+         Cell[
+          BoxData[
+           FormBox[
+            FormBox[
+             FormBox[
+              TagBox[
+               GridBox[{{
+                  PaneBox[
+                   RowBox[{"n", "\[LongEqual]", 
+                    TagBox[
+                    RowBox[{"D1", "+", "D2", "+", "D3", "+", "1"}], 
+                    Identity]}], BaselinePosition -> Baseline, ImageSize -> 
+                   500]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                AllowScriptLevelChange -> False, 
+                GridBoxItemSize -> {
+                 "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+               "Column"], TraditionalForm], TraditionalForm], 
+            TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,minput,moutput,computabledata,formatteddata,formuladata"}]}\
+], 
+     XMLElement["states", {"count" -> "1"}, {
+       XMLElement[
+       "state", {
+        "name" -> "Step-by-step solution", "input" -> 
+         "SolutionForTheVariableV__Step-by-step solution"}, {}]}]}], 
+   Typeset`aux1$$ = {True, False, {False}, True}, Typeset`aux2$$ = {
+   True, False, {False, False, False}, True}, Typeset`aux3$$ = {
+   True, False, {False}, True}, Typeset`asyncpods$$ = {}, Typeset`nonpods$$ = {
+    XMLElement["warnings", {"count" -> "1"}, {
+      XMLElement[
+      "reinterpret", {
+       "text" -> "Using closest Wolfram|Alpha interpretation:", "new" -> 
+        "D1 + D2 + D3  = n - 1", "score" -> "0.366495", "level" -> 
+        "medium"}, {}]}]}, Typeset`initdone$$ = True, Typeset`queryinfo$$ = {
+   "success" -> "true", "error" -> "false", "numpods" -> "3", "datatypes" -> 
+    "", "timedout" -> "", "timedoutpods" -> "", "timing" -> "7.833", 
+    "parsetiming" -> "0.", "parsetimedout" -> "false", "recalculate" -> "", 
+    "id" -> "MSPa37511a522978375f31c3000040i25e0c4edi8e3c", "auth" -> "", 
+    "host" -> "http://www2.wolframalpha.com", "server" -> "6", "related" -> 
+    "", "version" -> "2.6"}, Typeset`sessioninfo$$ = {
+   "TimeZone" -> -5., 
+    "Date" -> {2013, 1, 29, 13, 35, 45.903377`8.414419613589265}, "Line" -> 2,
+     "SessionID" -> 23386228520798744165}, Typeset`showpods$$ = {1, 2, 3}, 
+   Typeset`failedpods$$ = {}, Typeset`chosen$$ = {}, Typeset`open$$ = False, 
+   Typeset`newq$$ = 
+   "plot D1 + D2 + D3  = n - 1, where n = 30, constrained by D3 >= D2, D4 >= \
+D3, and 1 + D2 + D3 >= 0"}, 
+   DynamicBox[ToBoxes[
+     AlphaIntegration`FormatAlphaResults[
+      Dynamic[{
+       1, {Typeset`pod1$$, Typeset`pod2$$, Typeset`pod3$$}, {
+        Typeset`aux1$$, Typeset`aux2$$, Typeset`aux3$$}, Typeset`chosen$$, 
+        Typeset`open$$, Typeset`elements$$, Typeset`q$$, Typeset`opts$$, 
+        Typeset`nonpods$$, Typeset`queryinfo$$, Typeset`sessioninfo$$, 
+        Typeset`showpods$$, Typeset`failedpods$$, Typeset`newq$$}]], 
+     StandardForm],
+    ImageSizeCache->{673., {150., 156.}},
+    TrackedSymbols:>{Typeset`showpods$$, Typeset`failedpods$$}],
+   DynamicModuleValues:>{},
+   Initialization:>If[
+     Not[Typeset`initdone$$], WolframAlphaClient`Private`doAsyncUpdates[
+       Hold[{Typeset`pod1$$, Typeset`pod2$$, Typeset`pod3$$}], 
+       Typeset`asyncpods$$, 
+       Dynamic[Typeset`failedpods$$]]; Typeset`asyncpods$$ = {}; 
+     Typeset`initdone$$ = True],
+   SynchronousInitialization->False],
+  BaseStyle->{Deployed -> True},
+  DeleteWithContents->True,
+  Editable->False,
+  SelectWithContents->True]], "Print",
+ CellMargins->{{20, 10}, {Inherited, Inherited}},
+ CellChangeTimes->{3.568473345916147*^9}]
+}, Open  ]]
+},
+WindowSize->{740, 752},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 193, 4, 37, "WolframAlphaLong"],
+Cell[775, 28, 7205, 154, 316, "Print"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
