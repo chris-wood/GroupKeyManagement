@@ -30,8 +30,36 @@
 \maketitle
 
 \section{Three Children Model}
+In this case we let the number of children $m = 3$. Following the approach for the 
+$m = 2$ case, we now define the following sets $S_1$, $S_2$, $S_3$, $S_4$, and $S_5$.
+\begin{align*}
+S_1 & = \text{The number of nodes with $3$ children} \\
+S_2 & = \text{The number of nodes with $2$ children} \\
+S_3 & = \text{The number of nodes with $1$ children} \\
+S_4 & = \text{The number of nodes with $0$ children} \\
+S_5 & = \text{The number of nodes that are not connected}
+\end{align*}
+In a network with $n$ nodes, we can see that $\sum_{i = 1}^{5}S_i = n$. 
 
+Now we examine the change of the network state at each epoch, where a node is
+assumed to only obtain one new child node connection in an epoch. To capture this
+behavior, we define the following variables $D_2$, $D_3$, and $D_4$ to be the
+number of new nodes connected from nodes in sets $S_2$, $S_3$, and $S_4$, respectively. 
+Using this information, the transfer equations clearly generalize to:
+\begin{align*}
+S_1 & \rightarrow S_1 + D_2 \\
+S_2 & \rightarrow S_2 - D_2 + D_3 \\
+S_3 & \rightarrow S_3 - D_3 + D_4 \\
+S_4 & \rightarrow S_4 + D_2 + D_3 \\
+S_5 & \rightarrow S_5 - D_2 - D_3 - D_4
+\end{align*}
+Clearly, the initial state of the network is $S* = (S_1, S_2, S_3, S_4, S_5) = (0, 0, 0, 1, n - 1)$.
+Using the aforementioned transfer equations we can represent this state as 
+$S* = (D_2, D_3 - D_2, D_4 - D_3, 1 + D_2 + D_3, n - 1 - D_2 - D_3 - D_4)$. 
+Therefore, we can represent the state of the network using a three-dimensional vector
+$D_k = (D_1, D_2, D_3)$. 
 
+TODO: constraints.
 
 \section{Generalized Model}
 
