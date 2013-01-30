@@ -64,22 +64,62 @@ transition is defined as $D + \bar{h} = (D_2 + i, D_3 + j, D_4 + k)$, as well as
 used to define the network state evolution, we come up with the following constraints for $\bar{h}$
 
 Based on the transfer equations, we can also define the following constraints for the network state.
-\begin{align*}
+\begin{align}
 0 \leq i \leq D_3 - D_2 \\
 0 \leq j \leq D_4 - D_3 \\
 0 \leq k \leq 1 + D_2 + D_3 \\
 i + j + k \leq n - 1 - D_2 - D_3 - D_4
-\end{align*}
+\end{align}
 With these constraints, we conclude that the network can evolve along any vector path bounded by these
-constraints and the line $D_2 + D_3 + D_4 = 1$, which is the point where all nodes have the key. This network
-state space is shown in Figure \ref{fig:d3plot}.
+constraints and the line $D_2 + D_3 + D_4 = 1$, which is the point where all nodes have the key. A visual 
+depiction of the unconstrained and partly constrained network state space is shown in Figures \ref{fig:unconstrained} 
+and \ref{fig:constrained}.
 
-TODO: Insert plot of surface here.
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=5in]{constrained_plot.pdf}
+\end{center}
+\label{fig:unconstrained}
+\caption{Plot of the network space without constraints, where $x$, $y$, and $z$ are $D_2$, $D_3$, and $D_4$, respectively.}
+\end{figure}
 
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=5in]{unconstrained_plot.pdf}
+\end{center}
+\label{fig:constrained}
+\caption{Plot of the network space under constraint $1$, where $x$, $y$, and $z$ are $D_2$, $D_3$, and $D_4$, respectively.}
+\end{figure}
 
+With a constrained network state space, we can now define the expected time for a key to be distributed, $E(T_D)$, 
+by assigning a probability $P_D(\bar{h})$ to each possible network state transition. In particular, we have the following.
+\begin{align*}
+P_D(\bar{h}) = \text{Pr}[D_{s+1} = D + \bar{h} | D_s = D]
+\end{align*}
+In this context, $D_s$ is the state of the network at state $s$ (i.e. after $s$ epochs). We can now define $E(T_D)$ as 
+follows,
+\begin{align*}
+E(T_D) = \frac{1}{1 - P_D(\bar{h*})}[1 + \sum_{\bar{h} \in A_{D_s}} P_D(\bar{h}) \times E(T_{D + \bar{h}})],
+\end{align*}
+where $A_{D_s} = \{ (i, j, k) | 0 < i + j + k \leq n - 1 - D_2 - D_3 - D_4, 0 \leq i \leq D_3 - D_2, 0 \leq j \leq D_4 - D_3, 0 \leq k \leq 1 + D_2 + D_3\}$.
+
+From this point, we refer to the original proof of the correctness of this equation. No further work must be done
 
 \section{Generalized Model}
-
+Following the approach for the $m = 3$ case, we can generalize the this model to $m \geq 4$ as follows.
+\begin{enumerate}
+	\item Define network state sets $S_1$, $S_2$, ..., $S_{m+1}$, $S_{m+2}$, and also define network state variables $D_2$, ..., $D_m$, $D_{m+1}$.
+	\item Generalize the transfer equations to the following.
+	\begin{align*}
+		S_1 & \rightarrow S_1 + D_2 \\
+		S_2 & \rightarrow S_2 - D_2 + D_3 \\
+		S_i & \rightarrow S_i - D_i + D_{i+1} \\
+		S_{m+1} & \rightarrow S_{m+1} + \sum_{k=2}^{m}D_k \\
+		S_{m+2} & \rightarrow S_{m+1} - (\sum_{k=2}^{m+1}D_k) 
+	\end{align*}
+	\item Represent the network state space in terms of all $D_i$ variables, thus resulting in a $m$-dimensional network 
+	state space. 
+\end{enumerate}
 
 \begin{comment}
 \begin{figure}[h]
