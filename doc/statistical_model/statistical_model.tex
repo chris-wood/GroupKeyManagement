@@ -13,7 +13,7 @@
 \usepackage{anysize}
 \marginsize{1in}{1in}{1in}{1in}
 
-\title{Marvok-Chain Model for Unbounded Key Propagation}
+\title{Markov-Chain Model for Unbounded Key Propagation}
 \author{}
 \date{\today}
 
@@ -57,7 +57,7 @@ Clearly, the initial state of the network is $S* = (S_1, S_2, S_3, S_4, S_5) = (
 Using the aforementioned transfer equations we can represent this state as 
 $S* = (D_2, D_3 - D_2, D_4 - D_3, 1 + D_2 + D_3, n - 1 - D_2 - D_3 - D_4)$. 
 Therefore, we can represent the state of the network using a three-dimensional vector
-$D_k = (D_1, D_2, D_3)$. 
+$D_k = (D_2, D_3, D_4)$. 
 
 If we now consider transitions in the state of the network by some vector $\bar{h} = (i, j, k)$, where the 
 transition is defined as $D + \bar{h} = (D_2 + i, D_3 + j, D_4 + k)$, as well as the transfer equations
@@ -71,7 +71,7 @@ Based on the transfer equations, we can also define the following constraints fo
 i + j + k \leq n - 1 - D_2 - D_3 - D_4
 \end{align}
 With these constraints, we conclude that the network can evolve along any vector path bounded by these
-constraints and the line $D_2 + D_3 + D_4 = 1$, which is the point where all nodes have the key. A visual 
+constraints and the line $D_2 + D_3 + D_4 = n - 1$, which is the point where all nodes have the key. A visual 
 depiction of the unconstrained and partly constrained network state space is shown in Figures \ref{fig:unconstrained} 
 and \ref{fig:constrained}.
 
@@ -79,16 +79,16 @@ and \ref{fig:constrained}.
 \begin{center}
 \includegraphics[width=5in]{constrained_plot.pdf}
 \end{center}
-\label{fig:unconstrained}
-\caption{Plot of the network space without constraints, where $x$, $y$, and $z$ are $D_2$, $D_3$, and $D_4$, respectively.}
+\label{fig:constrained}
+\caption{Plot of the network space under constraint $1$, where $x$, $y$, and $z$ are $D_2$, $D_3$, and $D_4$, respectively.}
 \end{figure}
 
 \begin{figure}[ht!]
 \begin{center}
 \includegraphics[width=5in]{unconstrained_plot.pdf}
 \end{center}
-\label{fig:constrained}
-\caption{Plot of the network space under constraint $1$, where $x$, $y$, and $z$ are $D_2$, $D_3$, and $D_4$, respectively.}
+\label{fig:unconstrained}
+\caption{Plot of the network space without constraints, where $x$, $y$, and $z$ are $D_2$, $D_3$, and $D_4$, respectively.}
 \end{figure}
 
 With a constrained network state space, we can now define the expected time for a key to be distributed, $E(T_D)$, 
@@ -108,7 +108,7 @@ From this point, we refer to the original proof of the correctness of this equat
 \section{Generalized Model}
 Following the approach for the $m = 3$ case, we can generalize the this model to $m \geq 4$ as follows.
 \begin{enumerate}
-	\item Define network state sets $S_1$, $S_2$, ..., $S_{m+1}$, $S_{m+2}$, and also define network state variables $D_2$, ..., $D_m$, $D_{m+1}$.
+	\item Define network state sets $S_1$, $S_2$, \dots, $S_{m+1}$, $S_{m+2}$, and also define network state variables $D_2$, \dots, $D_m$, $D_{m+1}$.
 	\item Generalize the transfer equations to the following.
 	\begin{align*}
 		S_1 & \rightarrow S_1 + D_2 \\

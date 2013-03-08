@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  26 JAN 2013 00:16
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  8 MAR 2013 14:36
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -332,158 +332,6 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package epstopdf Info: Source file: <images_p1/children1.eps>
-(epstopdf)                    date: 2013-01-25 23:59:51
-(epstopdf)                    size: 8889 bytes
-(epstopdf)             Output file: <images_p1/children1-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:05:37
-(epstopdf)                    size: 8228 bytes
-(epstopdf)             Command: <epstopdf --outfile=images_p1/children1-eps-con
-verted-to.pdf images_p1/children1.eps>
-(epstopdf)             \includegraphics on input line 41.
-Package epstopdf Info: Output file is already uptodate.
-
-<images_p1/children1-eps-converted-to.pdf, id=1, 491.8375pt x 404.51125pt>
-File: images_p1/children1-eps-converted-to.pdf Graphic file (type pdf)
-
-<use images_p1/children1-eps-converted-to.pdf>
-Package pdftex.def Info: images_p1/children1-eps-converted-to.pdf used on input
- line 41.
-(pdftex.def)             Requested size: 216.81pt x 178.31262pt.
-Package epstopdf Info: Source file: <images_p1/children2.eps>
-(epstopdf)                    date: 2013-01-25 23:59:51
-(epstopdf)                    size: 8888 bytes
-(epstopdf)             Output file: <images_p1/children2-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:05:37
-(epstopdf)                    size: 8233 bytes
-(epstopdf)             Command: <epstopdf --outfile=images_p1/children2-eps-con
-verted-to.pdf images_p1/children2.eps>
-(epstopdf)             \includegraphics on input line 42.
-Package epstopdf Info: Output file is already uptodate.
-
-<images_p1/children2-eps-converted-to.pdf, id=2, 491.8375pt x 404.51125pt>
-File: images_p1/children2-eps-converted-to.pdf Graphic file (type pdf)
-
-<use images_p1/children2-eps-converted-to.pdf>
-Package pdftex.def Info: images_p1/children2-eps-converted-to.pdf used on input
- line 42.
-(pdftex.def)             Requested size: 216.81pt x 178.31262pt.
-
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 39--44
- []$ 
- []
-
-Package epstopdf Info: Source file: <images_p1/children3.eps>
-(epstopdf)                    date: 2013-01-25 23:59:51
-(epstopdf)                    size: 8888 bytes
-(epstopdf)             Output file: <images_p1/children3-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:05:37
-(epstopdf)                    size: 8224 bytes
-(epstopdf)             Command: <epstopdf --outfile=images_p1/children3-eps-con
-verted-to.pdf images_p1/children3.eps>
-(epstopdf)             \includegraphics on input line 50.
-Package epstopdf Info: Output file is already uptodate.
-<images_p1/children3-eps-converted-to.pdf, id=3, 491.8375pt x 404.51125pt>
-File: images_p1/children3-eps-converted-to.pdf Graphic file (type pdf)
-
-<use images_p1/children3-eps-converted-to.pdf>
-Package pdftex.def Info: images_p1/children3-eps-converted-to.pdf used on input
- line 50.
-(pdftex.def)             Requested size: 216.81pt x 178.31262pt.
-Package epstopdf Info: Source file: <images_p1/children4.eps>
-(epstopdf)                    date: 2013-01-25 23:59:51
-(epstopdf)                    size: 8888 bytes
-(epstopdf)             Output file: <images_p1/children4-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:05:37
-(epstopdf)                    size: 8213 bytes
-(epstopdf)             Command: <epstopdf --outfile=images_p1/children4-eps-con
-verted-to.pdf images_p1/children4.eps>
-(epstopdf)             \includegraphics on input line 51.
-Package epstopdf Info: Output file is already uptodate.
-
-<images_p1/children4-eps-converted-to.pdf, id=4, 491.8375pt x 404.51125pt>
-File: images_p1/children4-eps-converted-to.pdf Graphic file (type pdf)
-
-<use images_p1/children4-eps-converted-to.pdf>
-Package pdftex.def Info: images_p1/children4-eps-converted-to.pdf used on input
- line 51.
-(pdftex.def)             Requested size: 216.81pt x 178.31262pt.
-
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 48--53
- []$ 
- []
-
-Package epstopdf Info: Source file: <images_p1/children5.eps>
-(epstopdf)                    date: 2013-01-25 23:59:51
-(epstopdf)                    size: 8889 bytes
-(epstopdf)             Output file: <images_p1/children5-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:05:37
-(epstopdf)                    size: 8212 bytes
-(epstopdf)             Command: <epstopdf --outfile=images_p1/children5-eps-con
-verted-to.pdf images_p1/children5.eps>
-(epstopdf)             \includegraphics on input line 59.
-Package epstopdf Info: Output file is already uptodate.
-<images_p1/children5-eps-converted-to.pdf, id=5, 491.8375pt x 404.51125pt>
-File: images_p1/children5-eps-converted-to.pdf Graphic file (type pdf)
-
-<use images_p1/children5-eps-converted-to.pdf>
-Package pdftex.def Info: images_p1/children5-eps-converted-to.pdf used on input
- line 59.
-(pdftex.def)             Requested size: 216.81pt x 178.31262pt.
-Package epstopdf Info: Source file: <images_p1/children6.eps>
-(epstopdf)                    date: 2013-01-25 23:59:51
-(epstopdf)                    size: 8888 bytes
-(epstopdf)             Output file: <images_p1/children6-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:05:38
-(epstopdf)                    size: 8210 bytes
-(epstopdf)             Command: <epstopdf --outfile=images_p1/children6-eps-con
-verted-to.pdf images_p1/children6.eps>
-(epstopdf)             \includegraphics on input line 60.
-Package epstopdf Info: Output file is already uptodate.
-
-<images_p1/children6-eps-converted-to.pdf, id=6, 491.8375pt x 404.51125pt>
-File: images_p1/children6-eps-converted-to.pdf Graphic file (type pdf)
-
-<use images_p1/children6-eps-converted-to.pdf>
-Package pdftex.def Info: images_p1/children6-eps-converted-to.pdf used on input
- line 60.
-(pdftex.def)             Requested size: 216.81pt x 178.31262pt.
-
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 57--62
- []$ 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-Package epstopdf Info: Source file: <images_p1/children7.eps>
-(epstopdf)                    date: 2013-01-25 23:59:51
-(epstopdf)                    size: 8888 bytes
-(epstopdf)             Output file: <images_p1/children7-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:05:38
-(epstopdf)                    size: 8212 bytes
-(epstopdf)             Command: <epstopdf --outfile=images_p1/children7-eps-con
-verted-to.pdf images_p1/children7.eps>
-(epstopdf)             \includegraphics on input line 68.
-Package epstopdf Info: Output file is already uptodate.
-<images_p1/children7-eps-converted-to.pdf, id=7, 491.8375pt x 404.51125pt>
-File: images_p1/children7-eps-converted-to.pdf Graphic file (type pdf)
-
-<use images_p1/children7-eps-converted-to.pdf>
-Package pdftex.def Info: images_p1/children7-eps-converted-to.pdf used on input
- line 68.
-(pdftex.def)             Requested size: 216.81pt x 178.31262pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[1
-
-{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./image
-s_p1/children1-eps-converted-to.pdf> <./images_p1/children2-eps-converted-to.pd
-f> <./images_p1/children3-eps-converted-to.pdf> <./images_p1/children4-eps-conv
-erted-to.pdf>] [2 <./images_p1/children5-eps-converted-to.pdf> <./images_p1/chi
-ldren6-eps-converted-to.pdf> <./images_p1/children7-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <images_p2/f1.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 9071 bytes
@@ -492,15 +340,15 @@ Package epstopdf Info: Source file: <images_p2/f1.eps>
 (epstopdf)                    size: 8396 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f1-eps-converted-
 to.pdf images_p2/f1.eps>
-(epstopdf)             \includegraphics on input line 86.
+(epstopdf)             \includegraphics on input line 41.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f1-eps-converted-to.pdf, id=62, 496.85625pt x 404.51125pt>
+<images_p2/f1-eps-converted-to.pdf, id=1, 496.85625pt x 404.51125pt>
 File: images_p2/f1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f1-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f1-eps-converted-to.pdf used on input line 8
-6.
+Package pdftex.def Info: images_p2/f1-eps-converted-to.pdf used on input line 4
+1.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f2.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -510,18 +358,18 @@ Package epstopdf Info: Source file: <images_p2/f2.eps>
 (epstopdf)                    size: 8385 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f2-eps-converted-
 to.pdf images_p2/f2.eps>
-(epstopdf)             \includegraphics on input line 87.
+(epstopdf)             \includegraphics on input line 42.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f2-eps-converted-to.pdf, id=63, 496.85625pt x 404.51125pt>
+<images_p2/f2-eps-converted-to.pdf, id=2, 496.85625pt x 404.51125pt>
 File: images_p2/f2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f2-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f2-eps-converted-to.pdf used on input line 8
-7.
+Package pdftex.def Info: images_p2/f2-eps-converted-to.pdf used on input line 4
+2.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 84--89
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 39--44
  []$ 
  []
 
@@ -533,14 +381,14 @@ Package epstopdf Info: Source file: <images_p2/f3.eps>
 (epstopdf)                    size: 8359 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f3-eps-converted-
 to.pdf images_p2/f3.eps>
-(epstopdf)             \includegraphics on input line 95.
+(epstopdf)             \includegraphics on input line 50.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f3-eps-converted-to.pdf, id=64, 496.85625pt x 404.51125pt>
+<images_p2/f3-eps-converted-to.pdf, id=3, 496.85625pt x 404.51125pt>
 File: images_p2/f3-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f3-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f3-eps-converted-to.pdf used on input line 9
-5.
+Package pdftex.def Info: images_p2/f3-eps-converted-to.pdf used on input line 5
+0.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f4.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -550,18 +398,18 @@ Package epstopdf Info: Source file: <images_p2/f4.eps>
 (epstopdf)                    size: 8358 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f4-eps-converted-
 to.pdf images_p2/f4.eps>
-(epstopdf)             \includegraphics on input line 96.
+(epstopdf)             \includegraphics on input line 51.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f4-eps-converted-to.pdf, id=65, 496.85625pt x 404.51125pt>
+<images_p2/f4-eps-converted-to.pdf, id=4, 496.85625pt x 404.51125pt>
 File: images_p2/f4-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f4-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f4-eps-converted-to.pdf used on input line 9
-6.
+Package pdftex.def Info: images_p2/f4-eps-converted-to.pdf used on input line 5
+1.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 93--98
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 48--53
  []$ 
  []
 
@@ -573,14 +421,14 @@ Package epstopdf Info: Source file: <images_p2/f5.eps>
 (epstopdf)                    size: 8355 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f5-eps-converted-
 to.pdf images_p2/f5.eps>
-(epstopdf)             \includegraphics on input line 104.
+(epstopdf)             \includegraphics on input line 59.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f5-eps-converted-to.pdf, id=66, 496.85625pt x 404.51125pt>
+<images_p2/f5-eps-converted-to.pdf, id=5, 496.85625pt x 404.51125pt>
 File: images_p2/f5-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f5-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f5-eps-converted-to.pdf used on input line 1
-04.
+Package pdftex.def Info: images_p2/f5-eps-converted-to.pdf used on input line 5
+9.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f6.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -590,18 +438,18 @@ Package epstopdf Info: Source file: <images_p2/f6.eps>
 (epstopdf)                    size: 8365 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f6-eps-converted-
 to.pdf images_p2/f6.eps>
-(epstopdf)             \includegraphics on input line 105.
+(epstopdf)             \includegraphics on input line 60.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f6-eps-converted-to.pdf, id=67, 496.85625pt x 404.51125pt>
+<images_p2/f6-eps-converted-to.pdf, id=6, 496.85625pt x 404.51125pt>
 File: images_p2/f6-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f6-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f6-eps-converted-to.pdf used on input line 1
-05.
+Package pdftex.def Info: images_p2/f6-eps-converted-to.pdf used on input line 6
+0.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 102--107
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 57--62
  []$ 
  []
 
@@ -616,14 +464,14 @@ Package epstopdf Info: Source file: <images_p2/f7.eps>
 (epstopdf)                    size: 8377 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f7-eps-converted-
 to.pdf images_p2/f7.eps>
-(epstopdf)             \includegraphics on input line 113.
+(epstopdf)             \includegraphics on input line 68.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f7-eps-converted-to.pdf, id=68, 496.85625pt x 404.51125pt>
+<images_p2/f7-eps-converted-to.pdf, id=7, 496.85625pt x 404.51125pt>
 File: images_p2/f7-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f7-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f7-eps-converted-to.pdf used on input line 1
-13.
+Package pdftex.def Info: images_p2/f7-eps-converted-to.pdf used on input line 6
+8.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f8.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -633,18 +481,18 @@ Package epstopdf Info: Source file: <images_p2/f8.eps>
 (epstopdf)                    size: 8367 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f8-eps-converted-
 to.pdf images_p2/f8.eps>
-(epstopdf)             \includegraphics on input line 114.
+(epstopdf)             \includegraphics on input line 69.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f8-eps-converted-to.pdf, id=69, 496.85625pt x 404.51125pt>
+<images_p2/f8-eps-converted-to.pdf, id=8, 496.85625pt x 404.51125pt>
 File: images_p2/f8-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f8-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f8-eps-converted-to.pdf used on input line 1
-14.
+Package pdftex.def Info: images_p2/f8-eps-converted-to.pdf used on input line 6
+9.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 111--116
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 66--71
  []$ 
  []
 
@@ -659,14 +507,14 @@ Package epstopdf Info: Source file: <images_p2/f9.eps>
 (epstopdf)                    size: 8356 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f9-eps-converted-
 to.pdf images_p2/f9.eps>
-(epstopdf)             \includegraphics on input line 122.
+(epstopdf)             \includegraphics on input line 77.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f9-eps-converted-to.pdf, id=70, 496.85625pt x 404.51125pt>
+<images_p2/f9-eps-converted-to.pdf, id=9, 496.85625pt x 404.51125pt>
 File: images_p2/f9-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f9-eps-converted-to.pdf>
-Package pdftex.def Info: images_p2/f9-eps-converted-to.pdf used on input line 1
-22.
+Package pdftex.def Info: images_p2/f9-eps-converted-to.pdf used on input line 7
+7.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f10.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -676,18 +524,18 @@ Package epstopdf Info: Source file: <images_p2/f10.eps>
 (epstopdf)                    size: 8355 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f10-eps-converted
 -to.pdf images_p2/f10.eps>
-(epstopdf)             \includegraphics on input line 123.
+(epstopdf)             \includegraphics on input line 78.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f10-eps-converted-to.pdf, id=71, 496.85625pt x 404.51125pt>
+<images_p2/f10-eps-converted-to.pdf, id=10, 496.85625pt x 404.51125pt>
 File: images_p2/f10-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f10-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f10-eps-converted-to.pdf used on input line 
-123.
+78.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 120--125
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 75--80
  []$ 
  []
 
@@ -702,14 +550,14 @@ Package epstopdf Info: Source file: <images_p2/f11.eps>
 (epstopdf)                    size: 8332 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f11-eps-converted
 -to.pdf images_p2/f11.eps>
-(epstopdf)             \includegraphics on input line 131.
+(epstopdf)             \includegraphics on input line 86.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f11-eps-converted-to.pdf, id=72, 496.85625pt x 404.51125pt>
+<images_p2/f11-eps-converted-to.pdf, id=11, 496.85625pt x 404.51125pt>
 File: images_p2/f11-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f11-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f11-eps-converted-to.pdf used on input line 
-131.
+86.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f12.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -719,18 +567,18 @@ Package epstopdf Info: Source file: <images_p2/f12.eps>
 (epstopdf)                    size: 8226 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f12-eps-converted
 -to.pdf images_p2/f12.eps>
-(epstopdf)             \includegraphics on input line 132.
+(epstopdf)             \includegraphics on input line 87.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f12-eps-converted-to.pdf, id=73, 496.85625pt x 404.51125pt>
+<images_p2/f12-eps-converted-to.pdf, id=12, 496.85625pt x 404.51125pt>
 File: images_p2/f12-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f12-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f12-eps-converted-to.pdf used on input line 
-132.
+87.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 129--134
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 84--89
  []$ 
  []
 
@@ -745,14 +593,14 @@ Package epstopdf Info: Source file: <images_p2/f13.eps>
 (epstopdf)                    size: 8229 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f13-eps-converted
 -to.pdf images_p2/f13.eps>
-(epstopdf)             \includegraphics on input line 140.
+(epstopdf)             \includegraphics on input line 95.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f13-eps-converted-to.pdf, id=74, 496.85625pt x 404.51125pt>
+<images_p2/f13-eps-converted-to.pdf, id=13, 496.85625pt x 404.51125pt>
 File: images_p2/f13-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f13-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f13-eps-converted-to.pdf used on input line 
-140.
+95.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f14.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -762,18 +610,18 @@ Package epstopdf Info: Source file: <images_p2/f14.eps>
 (epstopdf)                    size: 8325 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f14-eps-converted
 -to.pdf images_p2/f14.eps>
-(epstopdf)             \includegraphics on input line 141.
+(epstopdf)             \includegraphics on input line 96.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f14-eps-converted-to.pdf, id=75, 496.85625pt x 404.51125pt>
+<images_p2/f14-eps-converted-to.pdf, id=14, 496.85625pt x 404.51125pt>
 File: images_p2/f14-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f14-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f14-eps-converted-to.pdf used on input line 
-141.
+96.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 138--143
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 93--98
  []$ 
  []
 
@@ -788,14 +636,14 @@ Package epstopdf Info: Source file: <images_p2/f15.eps>
 (epstopdf)                    size: 8320 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f15-eps-converted
 -to.pdf images_p2/f15.eps>
-(epstopdf)             \includegraphics on input line 149.
+(epstopdf)             \includegraphics on input line 104.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f15-eps-converted-to.pdf, id=76, 496.85625pt x 404.51125pt>
+<images_p2/f15-eps-converted-to.pdf, id=15, 496.85625pt x 404.51125pt>
 File: images_p2/f15-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f15-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f15-eps-converted-to.pdf used on input line 
-149.
+104.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f16.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -805,18 +653,18 @@ Package epstopdf Info: Source file: <images_p2/f16.eps>
 (epstopdf)                    size: 8324 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f16-eps-converted
 -to.pdf images_p2/f16.eps>
-(epstopdf)             \includegraphics on input line 150.
+(epstopdf)             \includegraphics on input line 105.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f16-eps-converted-to.pdf, id=77, 496.85625pt x 404.51125pt>
+<images_p2/f16-eps-converted-to.pdf, id=16, 496.85625pt x 404.51125pt>
 File: images_p2/f16-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f16-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f16-eps-converted-to.pdf used on input line 
-150.
+105.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 147--152
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 102--107
  []$ 
  []
 
@@ -831,14 +679,14 @@ Package epstopdf Info: Source file: <images_p2/f17.eps>
 (epstopdf)                    size: 8322 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f17-eps-converted
 -to.pdf images_p2/f17.eps>
-(epstopdf)             \includegraphics on input line 158.
+(epstopdf)             \includegraphics on input line 113.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f17-eps-converted-to.pdf, id=78, 496.85625pt x 404.51125pt>
+<images_p2/f17-eps-converted-to.pdf, id=17, 496.85625pt x 404.51125pt>
 File: images_p2/f17-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f17-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f17-eps-converted-to.pdf used on input line 
-158.
+113.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f18.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -848,18 +696,18 @@ Package epstopdf Info: Source file: <images_p2/f18.eps>
 (epstopdf)                    size: 8320 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f18-eps-converted
 -to.pdf images_p2/f18.eps>
-(epstopdf)             \includegraphics on input line 159.
+(epstopdf)             \includegraphics on input line 114.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f18-eps-converted-to.pdf, id=79, 496.85625pt x 404.51125pt>
+<images_p2/f18-eps-converted-to.pdf, id=18, 496.85625pt x 404.51125pt>
 File: images_p2/f18-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f18-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f18-eps-converted-to.pdf used on input line 
-159.
+114.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 156--161
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 111--116
  []$ 
  []
 
@@ -874,14 +722,14 @@ Package epstopdf Info: Source file: <images_p2/f19.eps>
 (epstopdf)                    size: 8324 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f19-eps-converted
 -to.pdf images_p2/f19.eps>
-(epstopdf)             \includegraphics on input line 167.
+(epstopdf)             \includegraphics on input line 122.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f19-eps-converted-to.pdf, id=80, 496.85625pt x 404.51125pt>
+<images_p2/f19-eps-converted-to.pdf, id=19, 496.85625pt x 404.51125pt>
 File: images_p2/f19-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f19-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f19-eps-converted-to.pdf used on input line 
-167.
+122.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f20.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -891,18 +739,18 @@ Package epstopdf Info: Source file: <images_p2/f20.eps>
 (epstopdf)                    size: 8310 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f20-eps-converted
 -to.pdf images_p2/f20.eps>
-(epstopdf)             \includegraphics on input line 168.
+(epstopdf)             \includegraphics on input line 123.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f20-eps-converted-to.pdf, id=81, 496.85625pt x 404.51125pt>
+<images_p2/f20-eps-converted-to.pdf, id=20, 496.85625pt x 404.51125pt>
 File: images_p2/f20-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f20-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f20-eps-converted-to.pdf used on input line 
-168.
+123.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 165--170
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 120--125
  []$ 
  []
 
@@ -917,14 +765,14 @@ Package epstopdf Info: Source file: <images_p2/f21.eps>
 (epstopdf)                    size: 8329 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f21-eps-converted
 -to.pdf images_p2/f21.eps>
-(epstopdf)             \includegraphics on input line 176.
+(epstopdf)             \includegraphics on input line 131.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f21-eps-converted-to.pdf, id=82, 496.85625pt x 404.51125pt>
+<images_p2/f21-eps-converted-to.pdf, id=21, 496.85625pt x 404.51125pt>
 File: images_p2/f21-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f21-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f21-eps-converted-to.pdf used on input line 
-176.
+131.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f22.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -934,18 +782,18 @@ Package epstopdf Info: Source file: <images_p2/f22.eps>
 (epstopdf)                    size: 8336 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f22-eps-converted
 -to.pdf images_p2/f22.eps>
-(epstopdf)             \includegraphics on input line 177.
+(epstopdf)             \includegraphics on input line 132.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f22-eps-converted-to.pdf, id=83, 496.85625pt x 404.51125pt>
+<images_p2/f22-eps-converted-to.pdf, id=22, 496.85625pt x 404.51125pt>
 File: images_p2/f22-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f22-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f22-eps-converted-to.pdf used on input line 
-177.
+132.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 174--179
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 129--134
  []$ 
  []
 
@@ -960,14 +808,14 @@ Package epstopdf Info: Source file: <images_p2/f23.eps>
 (epstopdf)                    size: 8316 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f23-eps-converted
 -to.pdf images_p2/f23.eps>
-(epstopdf)             \includegraphics on input line 185.
+(epstopdf)             \includegraphics on input line 140.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f23-eps-converted-to.pdf, id=84, 496.85625pt x 404.51125pt>
+<images_p2/f23-eps-converted-to.pdf, id=23, 496.85625pt x 404.51125pt>
 File: images_p2/f23-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f23-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f23-eps-converted-to.pdf used on input line 
-185.
+140.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f24.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -977,18 +825,18 @@ Package epstopdf Info: Source file: <images_p2/f24.eps>
 (epstopdf)                    size: 8326 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f24-eps-converted
 -to.pdf images_p2/f24.eps>
-(epstopdf)             \includegraphics on input line 186.
+(epstopdf)             \includegraphics on input line 141.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f24-eps-converted-to.pdf, id=85, 496.85625pt x 404.51125pt>
+<images_p2/f24-eps-converted-to.pdf, id=24, 496.85625pt x 404.51125pt>
 File: images_p2/f24-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f24-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f24-eps-converted-to.pdf used on input line 
-186.
+141.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 183--188
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 138--143
  []$ 
  []
 
@@ -1003,14 +851,14 @@ Package epstopdf Info: Source file: <images_p2/f25.eps>
 (epstopdf)                    size: 8311 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f25-eps-converted
 -to.pdf images_p2/f25.eps>
-(epstopdf)             \includegraphics on input line 194.
+(epstopdf)             \includegraphics on input line 149.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f25-eps-converted-to.pdf, id=86, 496.85625pt x 404.51125pt>
+<images_p2/f25-eps-converted-to.pdf, id=25, 496.85625pt x 404.51125pt>
 File: images_p2/f25-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f25-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f25-eps-converted-to.pdf used on input line 
-194.
+149.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f26.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -1020,18 +868,18 @@ Package epstopdf Info: Source file: <images_p2/f26.eps>
 (epstopdf)                    size: 8320 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f26-eps-converted
 -to.pdf images_p2/f26.eps>
-(epstopdf)             \includegraphics on input line 195.
+(epstopdf)             \includegraphics on input line 150.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f26-eps-converted-to.pdf, id=87, 496.85625pt x 404.51125pt>
+<images_p2/f26-eps-converted-to.pdf, id=26, 496.85625pt x 404.51125pt>
 File: images_p2/f26-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f26-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f26-eps-converted-to.pdf used on input line 
-195.
+150.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 192--197
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 147--152
  []$ 
  []
 
@@ -1046,14 +894,14 @@ Package epstopdf Info: Source file: <images_p2/f27.eps>
 (epstopdf)                    size: 8324 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f27-eps-converted
 -to.pdf images_p2/f27.eps>
-(epstopdf)             \includegraphics on input line 203.
+(epstopdf)             \includegraphics on input line 158.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f27-eps-converted-to.pdf, id=88, 496.85625pt x 404.51125pt>
+<images_p2/f27-eps-converted-to.pdf, id=27, 496.85625pt x 404.51125pt>
 File: images_p2/f27-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f27-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f27-eps-converted-to.pdf used on input line 
-203.
+158.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f28.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -1063,18 +911,18 @@ Package epstopdf Info: Source file: <images_p2/f28.eps>
 (epstopdf)                    size: 8325 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f28-eps-converted
 -to.pdf images_p2/f28.eps>
-(epstopdf)             \includegraphics on input line 204.
+(epstopdf)             \includegraphics on input line 159.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f28-eps-converted-to.pdf, id=89, 496.85625pt x 404.51125pt>
+<images_p2/f28-eps-converted-to.pdf, id=28, 496.85625pt x 404.51125pt>
 File: images_p2/f28-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f28-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f28-eps-converted-to.pdf used on input line 
-204.
+159.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 201--206
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 156--161
  []$ 
  []
 
@@ -1089,14 +937,14 @@ Package epstopdf Info: Source file: <images_p2/f29.eps>
 (epstopdf)                    size: 8327 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f29-eps-converted
 -to.pdf images_p2/f29.eps>
-(epstopdf)             \includegraphics on input line 212.
+(epstopdf)             \includegraphics on input line 167.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f29-eps-converted-to.pdf, id=90, 496.85625pt x 404.51125pt>
+<images_p2/f29-eps-converted-to.pdf, id=29, 496.85625pt x 404.51125pt>
 File: images_p2/f29-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f29-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f29-eps-converted-to.pdf used on input line 
-212.
+167.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f30.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -1106,18 +954,18 @@ Package epstopdf Info: Source file: <images_p2/f30.eps>
 (epstopdf)                    size: 8305 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f30-eps-converted
 -to.pdf images_p2/f30.eps>
-(epstopdf)             \includegraphics on input line 213.
+(epstopdf)             \includegraphics on input line 168.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f30-eps-converted-to.pdf, id=91, 496.85625pt x 404.51125pt>
+<images_p2/f30-eps-converted-to.pdf, id=30, 496.85625pt x 404.51125pt>
 File: images_p2/f30-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f30-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f30-eps-converted-to.pdf used on input line 
-213.
+168.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 210--215
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 165--170
  []$ 
  []
 
@@ -1132,14 +980,14 @@ Package epstopdf Info: Source file: <images_p2/f31.eps>
 (epstopdf)                    size: 8304 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f31-eps-converted
 -to.pdf images_p2/f31.eps>
-(epstopdf)             \includegraphics on input line 221.
+(epstopdf)             \includegraphics on input line 176.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f31-eps-converted-to.pdf, id=92, 496.85625pt x 404.51125pt>
+<images_p2/f31-eps-converted-to.pdf, id=31, 496.85625pt x 404.51125pt>
 File: images_p2/f31-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f31-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f31-eps-converted-to.pdf used on input line 
-221.
+176.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f32.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -1149,18 +997,18 @@ Package epstopdf Info: Source file: <images_p2/f32.eps>
 (epstopdf)                    size: 8331 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f32-eps-converted
 -to.pdf images_p2/f32.eps>
-(epstopdf)             \includegraphics on input line 222.
+(epstopdf)             \includegraphics on input line 177.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f32-eps-converted-to.pdf, id=93, 496.85625pt x 404.51125pt>
+<images_p2/f32-eps-converted-to.pdf, id=32, 496.85625pt x 404.51125pt>
 File: images_p2/f32-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f32-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f32-eps-converted-to.pdf used on input line 
-222.
+177.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 219--224
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 174--179
  []$ 
  []
 
@@ -1175,14 +1023,14 @@ Package epstopdf Info: Source file: <images_p2/f33.eps>
 (epstopdf)                    size: 8326 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f33-eps-converted
 -to.pdf images_p2/f33.eps>
-(epstopdf)             \includegraphics on input line 230.
+(epstopdf)             \includegraphics on input line 185.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f33-eps-converted-to.pdf, id=94, 496.85625pt x 404.51125pt>
+<images_p2/f33-eps-converted-to.pdf, id=33, 496.85625pt x 404.51125pt>
 File: images_p2/f33-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f33-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f33-eps-converted-to.pdf used on input line 
-230.
+185.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f34.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -1192,18 +1040,18 @@ Package epstopdf Info: Source file: <images_p2/f34.eps>
 (epstopdf)                    size: 8293 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f34-eps-converted
 -to.pdf images_p2/f34.eps>
-(epstopdf)             \includegraphics on input line 231.
+(epstopdf)             \includegraphics on input line 186.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f34-eps-converted-to.pdf, id=95, 496.85625pt x 404.51125pt>
+<images_p2/f34-eps-converted-to.pdf, id=34, 496.85625pt x 404.51125pt>
 File: images_p2/f34-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f34-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f34-eps-converted-to.pdf used on input line 
-231.
+186.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 228--233
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 183--188
  []$ 
  []
 
@@ -1218,14 +1066,14 @@ Package epstopdf Info: Source file: <images_p2/f35.eps>
 (epstopdf)                    size: 8295 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f35-eps-converted
 -to.pdf images_p2/f35.eps>
-(epstopdf)             \includegraphics on input line 240.
+(epstopdf)             \includegraphics on input line 195.
 Package epstopdf Info: Output file is already uptodate.
-<images_p2/f35-eps-converted-to.pdf, id=96, 496.85625pt x 404.51125pt>
+<images_p2/f35-eps-converted-to.pdf, id=35, 496.85625pt x 404.51125pt>
 File: images_p2/f35-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f35-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f35-eps-converted-to.pdf used on input line 
-240.
+195.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f36.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
@@ -1235,18 +1083,18 @@ Package epstopdf Info: Source file: <images_p2/f36.eps>
 (epstopdf)                    size: 8291 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f36-eps-converted
 -to.pdf images_p2/f36.eps>
-(epstopdf)             \includegraphics on input line 241.
+(epstopdf)             \includegraphics on input line 196.
 Package epstopdf Info: Output file is already uptodate.
 
-<images_p2/f36-eps-converted-to.pdf, id=97, 496.85625pt x 404.51125pt>
+<images_p2/f36-eps-converted-to.pdf, id=36, 496.85625pt x 404.51125pt>
 File: images_p2/f36-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f36-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f36-eps-converted-to.pdf used on input line 
-241.
+196.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 238--243
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 193--198
  []$ 
  []
 
@@ -1257,45 +1105,39 @@ Package epstopdf Info: Source file: <images_p2/f37.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8786 bytes
 (epstopdf)             Output file: <images_p2/f37-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:03
+(epstopdf)                    size: 8281 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f37-eps-converted
 -to.pdf images_p2/f37.eps>
-(epstopdf)             \includegraphics on input line 249.
-runsystem(epstopdf --outfile=images_p2/f37-eps-converted-to.pdf images_p2/f37.e
-ps)...executed.
-
-Package epstopdf Info: Result file: <images_p2/f37-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:03
-(epstopdf)                    size: 8281 bytes.
-<images_p2/f37-eps-converted-to.pdf, id=98, 496.85625pt x 404.51125pt>
+(epstopdf)             \includegraphics on input line 204.
+Package epstopdf Info: Output file is already uptodate.
+<images_p2/f37-eps-converted-to.pdf, id=37, 496.85625pt x 404.51125pt>
 File: images_p2/f37-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f37-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f37-eps-converted-to.pdf used on input line 
-249.
+204.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f38.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8787 bytes
 (epstopdf)             Output file: <images_p2/f38-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:03
+(epstopdf)                    size: 8294 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f38-eps-converted
 -to.pdf images_p2/f38.eps>
-(epstopdf)             \includegraphics on input line 250.
-runsystem(epstopdf --outfile=images_p2/f38-eps-converted-to.pdf images_p2/f38.e
-ps)...executed.
+(epstopdf)             \includegraphics on input line 205.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <images_p2/f38-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:03
-(epstopdf)                    size: 8294 bytes.
-
-<images_p2/f38-eps-converted-to.pdf, id=99, 496.85625pt x 404.51125pt>
+<images_p2/f38-eps-converted-to.pdf, id=38, 496.85625pt x 404.51125pt>
 File: images_p2/f38-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f38-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f38-eps-converted-to.pdf used on input line 
-250.
+205.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 247--252
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 202--207
  []$ 
  []
 
@@ -1306,45 +1148,39 @@ Package epstopdf Info: Source file: <images_p2/f39.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8788 bytes
 (epstopdf)             Output file: <images_p2/f39-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:03
+(epstopdf)                    size: 8289 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f39-eps-converted
 -to.pdf images_p2/f39.eps>
-(epstopdf)             \includegraphics on input line 258.
-runsystem(epstopdf --outfile=images_p2/f39-eps-converted-to.pdf images_p2/f39.e
-ps)...executed.
-
-Package epstopdf Info: Result file: <images_p2/f39-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:03
-(epstopdf)                    size: 8289 bytes.
-<images_p2/f39-eps-converted-to.pdf, id=100, 496.85625pt x 404.51125pt>
+(epstopdf)             \includegraphics on input line 213.
+Package epstopdf Info: Output file is already uptodate.
+<images_p2/f39-eps-converted-to.pdf, id=39, 496.85625pt x 404.51125pt>
 File: images_p2/f39-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f39-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f39-eps-converted-to.pdf used on input line 
-258.
+213.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f40.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8778 bytes
 (epstopdf)             Output file: <images_p2/f40-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:04
+(epstopdf)                    size: 8273 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f40-eps-converted
 -to.pdf images_p2/f40.eps>
-(epstopdf)             \includegraphics on input line 259.
-runsystem(epstopdf --outfile=images_p2/f40-eps-converted-to.pdf images_p2/f40.e
-ps)...executed.
+(epstopdf)             \includegraphics on input line 214.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <images_p2/f40-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:04
-(epstopdf)                    size: 8273 bytes.
-
-<images_p2/f40-eps-converted-to.pdf, id=101, 496.85625pt x 404.51125pt>
+<images_p2/f40-eps-converted-to.pdf, id=40, 496.85625pt x 404.51125pt>
 File: images_p2/f40-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f40-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f40-eps-converted-to.pdf used on input line 
-259.
+214.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 256--261
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 211--216
  []$ 
  []
 
@@ -1355,45 +1191,39 @@ Package epstopdf Info: Source file: <images_p2/f41.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8780 bytes
 (epstopdf)             Output file: <images_p2/f41-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:04
+(epstopdf)                    size: 8309 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f41-eps-converted
 -to.pdf images_p2/f41.eps>
-(epstopdf)             \includegraphics on input line 267.
-runsystem(epstopdf --outfile=images_p2/f41-eps-converted-to.pdf images_p2/f41.e
-ps)...executed.
-
-Package epstopdf Info: Result file: <images_p2/f41-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:04
-(epstopdf)                    size: 8309 bytes.
-<images_p2/f41-eps-converted-to.pdf, id=102, 496.85625pt x 404.51125pt>
+(epstopdf)             \includegraphics on input line 222.
+Package epstopdf Info: Output file is already uptodate.
+<images_p2/f41-eps-converted-to.pdf, id=41, 496.85625pt x 404.51125pt>
 File: images_p2/f41-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f41-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f41-eps-converted-to.pdf used on input line 
-267.
+222.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f42.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8782 bytes
 (epstopdf)             Output file: <images_p2/f42-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:04
+(epstopdf)                    size: 8295 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f42-eps-converted
 -to.pdf images_p2/f42.eps>
-(epstopdf)             \includegraphics on input line 268.
-runsystem(epstopdf --outfile=images_p2/f42-eps-converted-to.pdf images_p2/f42.e
-ps)...executed.
+(epstopdf)             \includegraphics on input line 223.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <images_p2/f42-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:04
-(epstopdf)                    size: 8295 bytes.
-
-<images_p2/f42-eps-converted-to.pdf, id=103, 496.85625pt x 404.51125pt>
+<images_p2/f42-eps-converted-to.pdf, id=42, 496.85625pt x 404.51125pt>
 File: images_p2/f42-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f42-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f42-eps-converted-to.pdf used on input line 
-268.
+223.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 265--270
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 220--225
  []$ 
  []
 
@@ -1404,45 +1234,39 @@ Package epstopdf Info: Source file: <images_p2/f43.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8783 bytes
 (epstopdf)             Output file: <images_p2/f43-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:04
+(epstopdf)                    size: 8300 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f43-eps-converted
 -to.pdf images_p2/f43.eps>
-(epstopdf)             \includegraphics on input line 276.
-runsystem(epstopdf --outfile=images_p2/f43-eps-converted-to.pdf images_p2/f43.e
-ps)...executed.
-
-Package epstopdf Info: Result file: <images_p2/f43-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:04
-(epstopdf)                    size: 8300 bytes.
-<images_p2/f43-eps-converted-to.pdf, id=104, 496.85625pt x 404.51125pt>
+(epstopdf)             \includegraphics on input line 231.
+Package epstopdf Info: Output file is already uptodate.
+<images_p2/f43-eps-converted-to.pdf, id=43, 496.85625pt x 404.51125pt>
 File: images_p2/f43-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f43-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f43-eps-converted-to.pdf used on input line 
-276.
+231.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f44.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8786 bytes
 (epstopdf)             Output file: <images_p2/f44-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:04
+(epstopdf)                    size: 8291 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f44-eps-converted
 -to.pdf images_p2/f44.eps>
-(epstopdf)             \includegraphics on input line 277.
-runsystem(epstopdf --outfile=images_p2/f44-eps-converted-to.pdf images_p2/f44.e
-ps)...executed.
+(epstopdf)             \includegraphics on input line 232.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <images_p2/f44-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:04
-(epstopdf)                    size: 8291 bytes.
-
-<images_p2/f44-eps-converted-to.pdf, id=105, 496.85625pt x 404.51125pt>
+<images_p2/f44-eps-converted-to.pdf, id=44, 496.85625pt x 404.51125pt>
 File: images_p2/f44-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f44-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f44-eps-converted-to.pdf used on input line 
-277.
+232.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 274--279
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 229--234
  []$ 
  []
 
@@ -1453,45 +1277,39 @@ Package epstopdf Info: Source file: <images_p2/f45.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8787 bytes
 (epstopdf)             Output file: <images_p2/f45-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:05
+(epstopdf)                    size: 8295 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f45-eps-converted
 -to.pdf images_p2/f45.eps>
-(epstopdf)             \includegraphics on input line 285.
-runsystem(epstopdf --outfile=images_p2/f45-eps-converted-to.pdf images_p2/f45.e
-ps)...executed.
-
-Package epstopdf Info: Result file: <images_p2/f45-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:05
-(epstopdf)                    size: 8295 bytes.
-<images_p2/f45-eps-converted-to.pdf, id=106, 496.85625pt x 404.51125pt>
+(epstopdf)             \includegraphics on input line 240.
+Package epstopdf Info: Output file is already uptodate.
+<images_p2/f45-eps-converted-to.pdf, id=45, 496.85625pt x 404.51125pt>
 File: images_p2/f45-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f45-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f45-eps-converted-to.pdf used on input line 
-285.
+240.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f46.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8788 bytes
 (epstopdf)             Output file: <images_p2/f46-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:05
+(epstopdf)                    size: 8294 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f46-eps-converted
 -to.pdf images_p2/f46.eps>
-(epstopdf)             \includegraphics on input line 286.
-runsystem(epstopdf --outfile=images_p2/f46-eps-converted-to.pdf images_p2/f46.e
-ps)...executed.
+(epstopdf)             \includegraphics on input line 241.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <images_p2/f46-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:05
-(epstopdf)                    size: 8294 bytes.
-
-<images_p2/f46-eps-converted-to.pdf, id=107, 496.85625pt x 404.51125pt>
+<images_p2/f46-eps-converted-to.pdf, id=46, 496.85625pt x 404.51125pt>
 File: images_p2/f46-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f46-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f46-eps-converted-to.pdf used on input line 
-286.
+241.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 283--288
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 238--243
  []$ 
  []
 
@@ -1502,45 +1320,39 @@ Package epstopdf Info: Source file: <images_p2/f47.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8788 bytes
 (epstopdf)             Output file: <images_p2/f47-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:05
+(epstopdf)                    size: 8278 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f47-eps-converted
 -to.pdf images_p2/f47.eps>
-(epstopdf)             \includegraphics on input line 294.
-runsystem(epstopdf --outfile=images_p2/f47-eps-converted-to.pdf images_p2/f47.e
-ps)...executed.
-
-Package epstopdf Info: Result file: <images_p2/f47-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:05
-(epstopdf)                    size: 8278 bytes.
-<images_p2/f47-eps-converted-to.pdf, id=108, 496.85625pt x 404.51125pt>
+(epstopdf)             \includegraphics on input line 249.
+Package epstopdf Info: Output file is already uptodate.
+<images_p2/f47-eps-converted-to.pdf, id=47, 496.85625pt x 404.51125pt>
 File: images_p2/f47-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f47-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f47-eps-converted-to.pdf used on input line 
-294.
+249.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f48.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8788 bytes
 (epstopdf)             Output file: <images_p2/f48-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:05
+(epstopdf)                    size: 8295 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f48-eps-converted
 -to.pdf images_p2/f48.eps>
-(epstopdf)             \includegraphics on input line 295.
-runsystem(epstopdf --outfile=images_p2/f48-eps-converted-to.pdf images_p2/f48.e
-ps)...executed.
+(epstopdf)             \includegraphics on input line 250.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <images_p2/f48-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:05
-(epstopdf)                    size: 8295 bytes.
-
-<images_p2/f48-eps-converted-to.pdf, id=109, 496.85625pt x 404.51125pt>
+<images_p2/f48-eps-converted-to.pdf, id=48, 496.85625pt x 404.51125pt>
 File: images_p2/f48-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f48-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f48-eps-converted-to.pdf used on input line 
-295.
+250.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 292--297
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 247--252
  []$ 
  []
 
@@ -1551,96 +1363,91 @@ Package epstopdf Info: Source file: <images_p2/f49.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8787 bytes
 (epstopdf)             Output file: <images_p2/f49-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:05
+(epstopdf)                    size: 8292 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f49-eps-converted
 -to.pdf images_p2/f49.eps>
-(epstopdf)             \includegraphics on input line 303.
-runsystem(epstopdf --outfile=images_p2/f49-eps-converted-to.pdf images_p2/f49.e
-ps)...executed.
-
-Package epstopdf Info: Result file: <images_p2/f49-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:05
-(epstopdf)                    size: 8292 bytes.
-<images_p2/f49-eps-converted-to.pdf, id=110, 496.85625pt x 404.51125pt>
+(epstopdf)             \includegraphics on input line 258.
+Package epstopdf Info: Output file is already uptodate.
+<images_p2/f49-eps-converted-to.pdf, id=49, 496.85625pt x 404.51125pt>
 File: images_p2/f49-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f49-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f49-eps-converted-to.pdf used on input line 
-303.
+258.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 Package epstopdf Info: Source file: <images_p2/f50.eps>
 (epstopdf)                    date: 2013-01-25 23:57:58
 (epstopdf)                    size: 8777 bytes
 (epstopdf)             Output file: <images_p2/f50-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-01-26 00:16:05
+(epstopdf)                    size: 8293 bytes
 (epstopdf)             Command: <epstopdf --outfile=images_p2/f50-eps-converted
 -to.pdf images_p2/f50.eps>
-(epstopdf)             \includegraphics on input line 304.
-runsystem(epstopdf --outfile=images_p2/f50-eps-converted-to.pdf images_p2/f50.e
-ps)...executed.
+(epstopdf)             \includegraphics on input line 259.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <images_p2/f50-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-01-26 00:16:05
-(epstopdf)                    size: 8293 bytes.
-
-<images_p2/f50-eps-converted-to.pdf, id=111, 496.85625pt x 404.51125pt>
+<images_p2/f50-eps-converted-to.pdf, id=50, 496.85625pt x 404.51125pt>
 File: images_p2/f50-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images_p2/f50-eps-converted-to.pdf>
 Package pdftex.def Info: images_p2/f50-eps-converted-to.pdf used on input line 
-304.
+259.
 (pdftex.def)             Requested size: 216.81pt x 176.51648pt.
 
-Overfull \hbox (0.6521pt too wide) in paragraph at lines 301--306
+Overfull \hbox (0.6521pt too wide) in paragraph at lines 256--261
  []$ 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3
+[1
 
- <./images_p2/f1-eps-converted-to.pdf> <./images_p2/f2-eps-converted-to.pdf> <.
-/images_p2/f3-eps-converted-to.pdf> <./images_p2/f4-eps-converted-to.pdf>]
-[4 <./images_p2/f5-eps-converted-to.pdf> <./images_p2/f6-eps-converted-to.pdf> 
-<./images_p2/f7-eps-converted-to.pdf> <./images_p2/f8-eps-converted-to.pdf> <./
-images_p2/f9-eps-converted-to.pdf> <./images_p2/f10-eps-converted-to.pdf>]
-[5 <./images_p2/f11-eps-converted-to.pdf> <./images_p2/f12-eps-converted-to.pdf
-> <./images_p2/f13-eps-converted-to.pdf> <./images_p2/f14-eps-converted-to.pdf>
- <./images_p2/f15-eps-converted-to.pdf> <./images_p2/f16-eps-converted-to.pdf>]
-[6 <./images_p2/f17-eps-converted-to.pdf> <./images_p2/f18-eps-converted-to.pdf
-> <./images_p2/f19-eps-converted-to.pdf> <./images_p2/f20-eps-converted-to.pdf>
- <./images_p2/f21-eps-converted-to.pdf> <./images_p2/f22-eps-converted-to.pdf>]
-[7 <./images_p2/f23-eps-converted-to.pdf> <./images_p2/f24-eps-converted-to.pdf
-> <./images_p2/f25-eps-converted-to.pdf> <./images_p2/f26-eps-converted-to.pdf>
- <./images_p2/f27-eps-converted-to.pdf> <./images_p2/f28-eps-converted-to.pdf>]
-[8 <./images_p2/f29-eps-converted-to.pdf> <./images_p2/f30-eps-converted-to.pdf
-> <./images_p2/f31-eps-converted-to.pdf> <./images_p2/f32-eps-converted-to.pdf>
- <./images_p2/f33-eps-converted-to.pdf> <./images_p2/f34-eps-converted-to.pdf>]
-[9 <./images_p2/f35-eps-converted-to.pdf> <./images_p2/f36-eps-converted-to.pdf
-> <./images_p2/f37-eps-converted-to.pdf> <./images_p2/f38-eps-converted-to.pdf>
- <./images_p2/f39-eps-converted-to.pdf> <./images_p2/f40-eps-converted-to.pdf>]
-[10 <./images_p2/f41-eps-converted-to.pdf> <./images_p2/f42-eps-converted-to.pd
-f> <./images_p2/f43-eps-converted-to.pdf> <./images_p2/f44-eps-converted-to.pdf
-> <./images_p2/f45-eps-converted-to.pdf> <./images_p2/f46-eps-converted-to.pdf>
-] [11 <./images_p2/f47-eps-converted-to.pdf> <./images_p2/f48-eps-converted-to.
-pdf> <./images_p2/f49-eps-converted-to.pdf> <./images_p2/f50-eps-converted-to.p
-df>] (./simulation_results.aux) ) 
+{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./image
+s_p2/f1-eps-converted-to.pdf> <./images_p2/f2-eps-converted-to.pdf> <./images_p
+2/f3-eps-converted-to.pdf> <./images_p2/f4-eps-converted-to.pdf>] [2 <./images_
+p2/f5-eps-converted-to.pdf> <./images_p2/f6-eps-converted-to.pdf> <./images_p2/
+f7-eps-converted-to.pdf> <./images_p2/f8-eps-converted-to.pdf> <./images_p2/f9-
+eps-converted-to.pdf> <./images_p2/f10-eps-converted-to.pdf>] [3 <./images_p2/f
+11-eps-converted-to.pdf> <./images_p2/f12-eps-converted-to.pdf> <./images_p2/f1
+3-eps-converted-to.pdf> <./images_p2/f14-eps-converted-to.pdf> <./images_p2/f15
+-eps-converted-to.pdf> <./images_p2/f16-eps-converted-to.pdf>] [4 <./images_p2/
+f17-eps-converted-to.pdf> <./images_p2/f18-eps-converted-to.pdf> <./images_p2/f
+19-eps-converted-to.pdf> <./images_p2/f20-eps-converted-to.pdf> <./images_p2/f2
+1-eps-converted-to.pdf> <./images_p2/f22-eps-converted-to.pdf>] [5 <./images_p2
+/f23-eps-converted-to.pdf> <./images_p2/f24-eps-converted-to.pdf> <./images_p2/
+f25-eps-converted-to.pdf> <./images_p2/f26-eps-converted-to.pdf> <./images_p2/f
+27-eps-converted-to.pdf> <./images_p2/f28-eps-converted-to.pdf>] [6 <./images_p
+2/f29-eps-converted-to.pdf> <./images_p2/f30-eps-converted-to.pdf> <./images_p2
+/f31-eps-converted-to.pdf> <./images_p2/f32-eps-converted-to.pdf> <./images_p2/
+f33-eps-converted-to.pdf> <./images_p2/f34-eps-converted-to.pdf>] [7 <./images_
+p2/f35-eps-converted-to.pdf> <./images_p2/f36-eps-converted-to.pdf> <./images_p
+2/f37-eps-converted-to.pdf> <./images_p2/f38-eps-converted-to.pdf> <./images_p2
+/f39-eps-converted-to.pdf> <./images_p2/f40-eps-converted-to.pdf>] [8 <./images
+_p2/f41-eps-converted-to.pdf> <./images_p2/f42-eps-converted-to.pdf> <./images_
+p2/f43-eps-converted-to.pdf> <./images_p2/f44-eps-converted-to.pdf> <./images_p
+2/f45-eps-converted-to.pdf> <./images_p2/f46-eps-converted-to.pdf>] [9 <./image
+s_p2/f47-eps-converted-to.pdf> <./images_p2/f48-eps-converted-to.pdf> <./images
+_p2/f49-eps-converted-to.pdf> <./images_p2/f50-eps-converted-to.pdf>]
+(./simulation_results.aux) ) 
 Here is how much of TeX's memory you used:
- 3191 strings out of 493488
- 51039 string characters out of 3141326
- 119553 words of memory out of 3000000
- 6383 multiletter control sequences out of 15000+200000
+ 3155 strings out of 493488
+ 49685 string characters out of 3141326
+ 119552 words of memory out of 3000000
+ 6355 multiletter control sequences out of 15000+200000
  8716 words of font info for 32 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  36i,11n,23p,339b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2012/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr17.pfb>
-Output written on simulation_results.pdf (11 pages, 324021 bytes).
+</usr/local/texlive/2012/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr17.pfb>
+Output written on simulation_results.pdf (9 pages, 288728 bytes).
 PDF statistics:
- 458 PDF objects out of 1000 (max. 8388607)
- 323 compressed objects within 4 object streams
+ 402 PDF objects out of 1000 (max. 8388607)
+ 284 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 286 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 251 words of extra memory for PDF output out of 10000 (max. 10000000)
 
