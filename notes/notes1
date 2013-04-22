@@ -1,0 +1,7 @@
+Notes:
+- Keep the same probability for each epoch in a single stage
+- 
+
+Questions:
+- How does the probability depend on the length of the message?
+- 
