@@ -1,4 +1,4 @@
-function [ ds ] = push( depth, k, m, n, D, ds ) 
+function [ pass ] = checkConstraints( index, k, m, n, D ) 
 % Dmax is a (k x m) matrix
 
 % disp('Entering push')

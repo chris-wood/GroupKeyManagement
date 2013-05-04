@@ -37,7 +37,7 @@ end
 % I wanna take you for granted, and I will
 % Credit: Matchbox Twenty - Push
 % ... Now the push function :-)
-ds = {}
+ds = {};
 ds = pushLast(1, k, m, n, dSpaces(:,:,5), ds);
 
 disp('Resulting matrix...');
