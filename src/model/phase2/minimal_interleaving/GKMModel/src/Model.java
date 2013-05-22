@@ -39,11 +39,12 @@ public class Model
 		return b;
 	}
 	
+	// H and S are ALWAYS in expanded form!
 	static double probHCol(int[][] H, int[][] S, int k, int m, int j) {
 		double prob = 0.0;
 		
 		double prod = 1.0;
-		for (int i = 0; i < k; i++) {
+		for (int i = 1; i < k; i++) { // was 0, but both H and S include the -1 row, and that's not what the document says
 			double innerProd = 
 					binom(S[i][j], H[i][j]) * 
 					(Math.pow(p2, H[i][j])) * 
@@ -56,7 +57,7 @@ public class Model
 	}
 	
 	static double probH(int[][] H, int[][] S, int k, int m) {
-		double prob = 0.0;
+		double prob = 1.0;
 		
 		for (int j = 0; j < m; j++) {
 			prob *= probHCol(H, S, k, m, j);
@@ -68,94 +69,170 @@ public class Model
 	static void updateE(int[][] D, int k, int m, int n, int N) throws Exception {
 		double sum = 0.0;
 		
-		int[][] expandedD = buildD(D,k,m);
+		// already expanded from call into this guy...
+		int[][] expandedD = D;
 		
-		ArrayList<int[][]> Hset = buildHSet(expandedD, k, m, n, N); // was D
+//		disp("" + k);
+		ArrayList<int[][]> Hset = buildHSet(expandedD, k+1, m, n, N); // was D
+//		disp("" + Hset.size());
 		
-		disp("" + Hset.size());
-		return;
+		// NOTE: code checks out up to this point...
 		
-//		int[][] S = buildS(expandedD, k, m, n); // was D
-//		System.out.println("Update E - " + Hset.size() + " Hs in the Hset"); // CAW: with 4 3 0 0 as Dmax, Hset is empty...
-//		disp(S, true);
-//		System.out.println("|H set for N = " + N + "| = " + Hset.size());
-//		for (int[][] H : Hset) {
-//			disp(H, true);
-//			// TODO
-////			disp(expandedD,true);
-////			disp(add(expandedD,H,k+1,m), true);
-//			String key = canonical(add(expandedD, H, k+1, m));
-////			System.out.println("E(Td) = " + E.get(key));
+		int[][] S = buildS(expandedD, k+1, m, n); // was D
+		disp(S, true);
+		System.out.println("|H set for N = " + N + "| = " + Hset.size());
+		for (int[][] H : Hset) {
+			disp(H, true);
+			
+			// NOTE: the small Ds (i.e. without -1 row) are those that get put in the time map)
+			String key = canonical(toSmallD(add(expandedD, H, k+1, m), k+1, m));
+//			System.out.println("E(Td) = " + E.get(key));
 //			disp(add(expandedD,H,k+1,m), true);
-//			sum += probH(H, S, k, m) * E.get(key);
-//		}
-//		sum += 1; // 1 + (big sum)
-//		
-//		// multiply by 1/(1-p(H0))
-//		double prod = 1 / (1 - probH(buildHzero(k, m), S, k, m));
-//		
-//		// insert the new expected time value
-//		disp("" + sum);
-//		disp("" + prod);
-//		disp("New expected time for N = " + N + " is " + (prod * sum));
-//		E.put(canonical(D), prod * sum);
+			disp("smaller d that is the key");
+			disp(toSmallD(add(expandedD, H, k+1, m), k+1, m), true);
+			disp("TIME USED IN SUMMATION: " + E.get(key));
+			sum += probH(H, S, k, m) * E.get(key);
+			disp("" + probH(H, S, k, m));
+		}
+		sum += 1; // 1 + (big sum)
+		
+		// multiply by 1/(1-p(H0))
+		double prod = 1 / (1 - probH(buildHzero(k+1, m), S, k, m));
+//		disp("" + probH(buildHzero(k, m), S, k, m));
+		
+		// insert the new expected time value
+		disp("" + sum);
+		disp("" + prod);
+		disp("New expected time for N = " + N + " is " + (prod * sum));
+		E.put(canonical(toSmallD(D,k+1,m)), prod * sum);
 	}
 	
-	static boolean isValid(int n, int[][] D) {
+	static boolean isValidD(int n, int[][] D, boolean expanded) {
 //		System.out.println("PRINTING D TO CHECK");
 //		disp(D, true);
 		
 		int k = D.length; 
 		int m = D[0].length;
 		
-		if (!isDecreasing(D, k, m)) {
-			return false;
-		}
+//		if (!isDecreasing(D, k, m)) {
+//			return false;
+//		}
 		
-		// Check row/col boundaries (17-2)
-		int last = D[0][m - 1];
-		for (int i = 1; i < k; i++) {
-			if (last < D[i][0]){
-				return false;
-			} else {
-				last = D[i][m - 1];
+		// NOTE: The rows start at i = 1 because these are expanded Ds - 
+		// i.e. they include the -1 row, which isn't used in the constraint check
+		
+		// 17-1 constraint (decreasing) (correct)
+		if (expanded) {
+			for (int i = 1; i < k; i++) {
+				int last = D[i][0];
+				for (int j = 1; j < m; j++) {
+					if (last < D[i][j]) {
+						return false;
+					} else {
+						last = D[i][j];
+					}
+				}
+			}
+		} else{
+			for (int i = 0; i < k; i++) {
+				int last = D[i][0];
+				for (int j = 1; j < m; j++) {
+					if (last < D[i][j]) {
+						return false;
+					} else {
+						last = D[i][j];
+					}
+				}
 			}
 		}
 		
-		// Check 17-3 constraint
-		int sum = 1;
-		for (int i = 0; i < k; i++) {
-			sum += D[i][m-1];
+		// Check row/col boundaries (17-2) (correct)
+		if (expanded) {
+			int last = D[1][m - 1];
+			for (int i = 2; i < k; i++) {
+				if (last < D[i][0]){
+					return false;
+				} else {
+					last = D[i][m - 1];
+				}
+			}
+		} else {
+			int last = D[0][m - 1];
+			for (int i = 1; i < k; i++) {
+				if (last < D[i][0]){
+					return false;
+				} else {
+					last = D[i][m - 1];
+				}
+			}
 		}
-		if (sum < D[0][0]) {
-			return false;
+		
+		// Check 17-3 constraint (correct)
+		if (expanded) {
+			int sum = 1;
+			for (int i = 1; i < k; i++) { // start at 0, not -1
+				sum += D[i][m-1];
+			}
+			if (sum < D[1][0]) {
+				return false;
+			}
+		} else {
+			int sum = 1;
+			for (int i = 0; i < k; i++) { // start at 0
+				sum += D[i][m-1];
+			}
+			if (sum < D[0][0]) {
+				return false;
+			}
 		}
 		
 		return true;
 	}
 	
 	public static boolean isFullValidD(int[][] D, int n) {
-		if (!isValid(n, D)) {
+		if (!isValidD(n, D, true)) {
+//			disp("failed 17-1/2/3 constraints");
 			return false;
 		}
 		
 		int k = D.length;
 		int m = D[0].length;
 		
+		// Check 17-4 constraint (correct)
 		// check sum of the first column, must be <= n - 1
 		int sum = 0;
-		for (int i = 0; i < k; i++) {
+		for (int i = 1; i < k; i++) {
 			sum += D[i][0];
 		}
 		if (sum > (n - 1)) {
-//			disp("aw");
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public static ArrayList<int[][]> filterDset(ArrayList<int[][]> Dset, int n) {
+	public static boolean isFullValidH(int[][] H, int[][] S, int k, int m) {
+		// row sum constraint (7-2)
+		int sum = 0;
+		for (int i = 1; i < k; i++) {
+			sum += H[i][0];
+		}
+		if (sum > S[0][0]){
+			return false;
+		}
+		
+		// cell constraint (7-1)
+		for (int i = 1; i < k; i++) {
+			for (int j = 0; j < m; j++) {
+				if (H[i][j] > S[i][j]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public static ArrayList<int[][]> filterDSet(ArrayList<int[][]> Dset, int n) {
 		ArrayList<int[][]> result = new ArrayList<int[][]>();
 		
 		for (int[][] D : Dset) {
@@ -166,41 +243,23 @@ public class Model
 		
 		return result;
 	}
-
-	public static ArrayList< int[][] > pushLast(int k, int m, int n, int[][] Dmax, ArrayList<int[][]> space)
-	{
-		if (space == null)
-		{
-			space = new ArrayList< int[][] >();
-		} 
+	
+	public static ArrayList<int[][]> filterHSet(ArrayList<int[][]> Hset, int[][] S, int k, int m) {
+		ArrayList<int[][]> result = new ArrayList<int[][]>();
 		
-		// Pass, so append the matrix.
-		for (int i = 0; i < k; i++) {
-			for (int j = 0; j < m; j++) {
-				Dmax[i][j] = Dmax[i][m - 1]; // each elem in the same row as the same value
+		for (int[][] Htmp : Hset) {
+//			if (Htmp[0][0] == 0 && Htmp[0][1] == 1 && Htmp[1][0] == 1 && Htmp[1][1] == 1 && Htmp[2][0] == 1 && Htmp[2][1] == 0) {
+//				disp("INSIDE FILTERING AND FOUND IT...");
+//				disp(Htmp, true);
+//				disp(S, true);
+//				disp("" + isFullValidH(Htmp,S,k,m));
+//			}
+			if (isFullValidH(Htmp,S,k,m)) {
+				result.add(Htmp);
 			}
 		}
 		
-		// Check constraints
-		if (!isValid(n, Dmax)) {
-			return space;
-		}
-		
-//		disp(Dmax, true);
-		space.add(clone(Dmax));
-		
-		// Start to push from the bottom
-		for (int i = k - 2; i >= 0; i--) {
-			if (Dmax[i][m - 1] > 0)
-			{
-				Dmax[i][m-1] -= 1;
-				Dmax[i + 1][m-1] += 1;
-//				disp(Dmax,true);
-				space = pushLast(k, m, n, Dmax, space);
-			}
-		}
-
-		return space;
+		return result;
 	}
 	
 	public static ArrayList<int[][]> push(int k, int m, int n, int[][] D, ArrayList<int[][]> space, boolean check)
@@ -213,7 +272,11 @@ public class Model
 		// Check constraints...
 //		System.out.println("tried: ");
 //		disp(D, true);
-		if (!isValid(n, D) && check) return space;
+		if (!isValidD(n, D, false) && check) {
+//			disp("returning now...");
+//			disp(D, true);
+			return space;
+		}
 		if (!contains(space, D)) space.add(clone(D));
 //		System.out.println("passed");
 		
@@ -276,13 +339,23 @@ public class Model
 		return newD;
 	}
 	
+	public static int[][] toSmallD(int[][] D, int k, int m) {
+		int[][] result = new int[k-1][m];
+		for (int i = 1; i < k; i++) {
+			for (int j = 0; j < m; j++) {
+				result[i - 1][j] = D[i][j];
+			}
+		}
+		return result;
+	}
+	
 	public static int[][] buildS(int[][] D, int k, int m, int n) throws Exception {
 //		disp("BUILDING S FROM D");
 //		disp(D, true);
 		
 		// Finally, create S
-		int[][] S = new int[k + 1][m];
-		for (int i = 0; i < k + 1; i++) {
+		int[][] S = new int[k][m];
+		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < m; j++) {
 				if (i == 0 && j == 0) {
 					S[i][j] = n - 1 - D[0][0];
@@ -296,7 +369,7 @@ public class Model
 			}
 		}
 		
-		for (int i = 0; i < k + 1; i++) {
+		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < m; j++) {
 				if (S[i][j] < 0) {
 					throw new Exception("Negative value encountered in the S matrix.");
@@ -307,26 +380,6 @@ public class Model
 		return S;
 	}
 	
-	public static boolean validH(int[][] H, int[][] S, int k, int m) {
-		// row sum constraint
-		for (int j = 0; j < m; j++) {
-			int sum = 0;
-			for (int i = 0; i < k + 1; i++) {
-				sum += H[i][j];
-			}
-			if (sum > S[0][j]) return false;
-		}
-		// cell constraint
-		for (int i = 0; i < k + 1; i++) {
-			for (int j = 0; j < m; j++) {
-				if (!(H[i][j] >= 0 && H[i][j] <= S[i][j])) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
 	public static ArrayList<int[][]> buildH(int[][] H, int[][] S, int i, int j, int k, int m, int N) {
 		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
 		
@@ -335,7 +388,7 @@ public class Model
 		
 		// Check sum...
 		int sum = 0;
-		for (int r = 0; r < k + 1; r++) {
+		for (int r = 0; r < k; r++) {
 			for (int c = 0; c < m; c++) {
 				sum += H[r][c];
 			}
@@ -346,7 +399,7 @@ public class Model
 		
 		Hset.add(H);
 		
-		for (int r = 0; r < k + 1; r++) {
+		for (int r = 1; r < k; r++) {
 			for (int c = 0; c < m; c++) {
 				Hset.addAll(buildH(clone(H), S, r, c, k, m, N));
 			}
@@ -366,8 +419,8 @@ public class Model
 	}
 	
 	static int[][] buildHzero(int k, int m) {
-		int[][] H = new int[k + 1][m];
-		for (int i = 0; i < k + 1; i++) {
+		int[][] H = new int[k][m];
+		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < m; j++) {
 				H[i][j] = 0;
 			}
@@ -375,75 +428,93 @@ public class Model
 		return H;
 	}
 	
-	static boolean isDecreasing(int[][] M, int k, int m) {
-		int last = M[0][0];
-		for (int i = 0; i < k; i++) {
-			for (int j = 0; j < m; j++) {
-				if (i == 0 && j == 0) {
-					last = M[i][j];
-					continue;
-				} else {
-					if (M[i][j] > last) {
-						return false; // not decreasing...
-					} else {
-						last = M[i][j]; // update last value seen
-					}
-				}
-			}
-		}
-		
-		// Check Rows (decreasing order...)
-		for (int j = 0; j < m; j++) {
-			int lastRow = M[0][j]; // pull out the last one
-			for (int i = 1; i < k; i++) {
-				if (lastRow < M[i][j]) {
-					return false;
-				} else {
-					lastRow = M[i][m - 1];
-				}
-			}
-		}
-		
-		// Check columns (17-1)
-		for (int i = 0; i < k; i++) {
-			int lastCol = M[i][0]; // D(i,j = 0)
-			for (int j = 1; j < m; j++) {
-				if (lastCol < M[i][j]) { // D(i,j+1)
-					return false;
-				} else {
-					lastCol = M[i][j];
-				}
-			}
-		}
-		return true;
-	}
+//	static boolean isDecreasing(int[][] M, int k, int m) {
+//		int last = M[0][0];
+//		for (int i = 0; i < k; i++) {
+//			for (int j = 0; j < m; j++) {
+//				if (i == 0 && j == 0) {
+//					last = M[i][j];
+//					continue;
+//				} else {
+//					if (M[i][j] > last) {
+//						return false; // not decreasing...
+//					} else {
+//						last = M[i][j]; // update last value seen
+//					}
+//				}
+//			}
+//		}
+//		
+//		// Check Rows (decreasing order...)
+//		for (int j = 0; j < m; j++) {
+//			int lastRow = M[0][j]; // pull out the last one
+//			for (int i = 1; i < k; i++) {
+//				if (lastRow < M[i][j]) {
+//					return false;
+//				} else {
+//					lastRow = M[i][m - 1];
+//				}
+//			}
+//		}
+//		
+//		// Check columns (17-1)
+//		for (int i = 0; i < k; i++) {
+//			int lastCol = M[i][0]; // D(i,j = 0)
+//			for (int j = 1; j < m; j++) {
+//				if (lastCol < M[i][j]) { // D(i,j+1)
+//					return false;
+//				} else {
+//					lastCol = M[i][j];
+//				}
+//			}
+//		}
+//		return true;
+//	}
 	
 	public static ArrayList<int[][]> buildHSet(int[][] D, int k, int m, int n, int N) throws Exception {
 		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
 		ArrayList<int[][]> Hfinal = new ArrayList<int[][]>();
 		
 		int[][] H = buildHzero(k, m);
+//		disp(H,true);
 		int[][] S = buildS(D, k, m, n);
 		disp(S, true);
 		
 		// TODO: start here, look at S and all Hs that are built... fix some cases for D...
 		
-		for (int i = 0; i < k + 1; i++) {
+		for (int i = 1; i < k; i++) {
 			for (int j = 0; j < m; j++) {
 				Hset.addAll(buildH(clone(H), S, i, j, k, m, N));
 			}
 		}
 		
 		disp("" + Hset.size());
-		Hset = filterDset(Hset, n);
+		Hset = filterHSet(Hset, S, k, m);
+		disp("" + Hset.size());
+		
+//		disp("filtered set");
+//		for (int[][] Htmp : Hset) {
+//			disp(Htmp, true);
+//		}
+		
+//		for (int[][] Htmp : Hset) {
+//			if (Htmp[0][0] == 0 && Htmp[0][1] == 1 && Htmp[1][0] == 0 && Htmp[1][1] == 1 && Htmp[2][0] == 0 && Htmp[2][1] == 0) {
+//				disp("Finally...");
+//				disp(Htmp, true);
+//			}
+//		}
 		
 		// Now, filter out those that are not in the Dspace
 //		disp("Checking to see if D+H is in D-" + N + " subspace");
 //		disp("" + Hset.size());
 //		if (Hset.size() == 0) System.exit(-1); 
 		for (int[][] Ht : Hset) {
-			// Check to make sure that D+H is decreasing
-			int[][] addition = add(D, H, k+1, m);
+			// Check to make sure that D+H is in the D space
+			int[][] addition = add(D, Ht, k, m);
+			disp("addition test...");
+			disp(D, true);
+			disp(Ht, true);
+			disp(addition, true);
 			boolean include = true;
 			if (!(isFullValidD(addition, n))) {
 				include = false;
@@ -528,11 +599,11 @@ public class Model
 		}
 		
 		// While not valid, continue pushing down one by one
-		if (!isValid(n, Dmax)) {
+		if (!isValidD(n, Dmax, false)) {
 //			System.out.println("DEFAULT MAX IS INVALID - PUSHING DOWN TO GET OTHERS");
 			ArrayList<int[][]> Dset = push(k, m, n, Dmax, null, false);
 			for (int i = 0; i < Dset.size(); i++) {
-				if (isValid(n, Dset.get(i))) {
+				if (isValidD(n, Dset.get(i), false)) {
 					Dmax = Dset.get(i);
 					break;
 				}
@@ -566,19 +637,45 @@ public class Model
 //		}
 		
 		disp("Inserting initial D^" + N + " times");
-		D8 = filterDset(D8, n);
+		disp(Dmax, true);
+		
+		// Expand each D so it can be filtered properly...
+		ArrayList<int[][]> newD8 = new ArrayList<int[][]>();
 		for (int[][] D : D8) {
-			int[][] expandedD = buildD(D,k,m);
-			disp(expandedD, true);
-			E.put(canonical(expandedD), 0.0);
+			newD8.add(buildD(D, k, m));
 		}
+		
+		D8 = filterDSet(newD8, n);
+		for (int[][] D : D8) {
+//			int[][] expandedD = buildD(D,k,m);
+			disp(D, true);
+			E.put(canonical(toSmallD(D,k+1,m)), 0.0);
+			disp("" + E.keySet());
+		}
+		
+//		int[][] Dtest = {{4, 3}, {3, 2}, {1, 1}};
+//		disp("IS THIS VALID?");
+//		disp("" + isFullValidD(Dtest, n));
+//		disp("" + E.keySet());
 		
 		// Let the recursion begin!
 		for (int i = N - 1; i >= 0; i--) {
 			Dmax = buildDmax(i, k, m, n);
+//			disp(Dmax, true);
 			ArrayList<int[][]> Dset = push(k, m, n, Dmax, null, true);
-			Dset = filterDset(Dset, n);
-			System.out.println("D-" + i + " subspace");
+//			Dset = filterDSet(Dset, n);
+//			disp("" + Dset.size());
+			
+			// Expand out the Ds for filtering
+			ArrayList<int[][]> newDset = new ArrayList<int[][]>();
+//			disp("" + Dset.size());
+			for (int[][] D : Dset) {
+				newDset.add(buildD(D, k, m));
+//				disp(buildD(D, k, m), true);
+			}
+			
+			Dset = filterDSet(newDset, n);
+			System.out.println("|D-" + i + " subspace| = " + Dset.size());
 //			disp(Dmax, true);
 //			System.out.println(isValid(n, Dmax));
 //			System.out.println(Dset);
@@ -586,8 +683,11 @@ public class Model
 				disp(D, true);
 				updateE(D, k, m, n, i);
 			}
-			if (i == 7) return;
+//			if (i == 7) return;
 //			break;
 		}
 	}
 }
+
+
+
