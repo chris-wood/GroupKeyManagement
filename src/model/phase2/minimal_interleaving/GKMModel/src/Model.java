@@ -66,7 +66,7 @@ public class Model
 		return prob;
 	}
 	
-	static void updateE(int[][] D, int k, int m, int n, int N) throws Exception {
+	static void updateE(int[][] D, int k, int m, int n, int a, int N) throws Exception {
 		double sum = 0.0;
 		
 		// already expanded from call into this guy...
@@ -103,7 +103,7 @@ public class Model
 		// insert the new expected time value
 		disp("" + sum);
 		disp("" + prod);
-		disp("New expected time for N = " + N + " is " + (prod * sum));
+		disp("New expected time for a = " + a + " is " + (prod * sum));
 		E.put(canonical(toSmallD(D,k+1,m)), prod * sum);
 	}
 	
@@ -394,6 +394,7 @@ public class Model
 			}
 		}
 		if (sum > N) {
+//			disp("failed the sum test...");
 			return Hset;
 		}
 		
@@ -581,19 +582,19 @@ public class Model
 		if (box) System.out.println("-----");
 	}
 	
-	static int[][] buildDmax(int N, int k, int m, int n) {
+	static int[][] buildDmax(int a, int k, int m, int n) {
 		int[][] Dmax = new int[k][m];
 		int alloc = 0;
 		
 		// Create the max'd out configuration
-		for (int i = 0; i < k && alloc < N; i++) {
-			for (int j = 0; j < m && alloc < N; j++) {
-				if (alloc + n - 1 < N) { // max out...
+		for (int i = 0; i < k && alloc < a; i++) {
+			for (int j = 0; j < m && alloc < a; j++) {
+				if (alloc + n - 1 < a) { // max out...
 					Dmax[i][j] = n - 1;
 					alloc += n - 1;
-				} else if (N - alloc <= n - 1) { // fill in the difference...
-					Dmax[i][j] = N - alloc;
-					alloc += N - alloc; // this will cause us to break out of the loop
+				} else if (a - alloc <= n - 1) { // fill in the difference...
+					Dmax[i][j] = a - alloc;
+					alloc += a - alloc; // this will cause us to break out of the loop
 				}
 			}
 		}
@@ -659,8 +660,8 @@ public class Model
 //		disp("" + E.keySet());
 		
 		// Let the recursion begin!
-		for (int i = N - 1; i >= 0; i--) {
-			Dmax = buildDmax(i, k, m, n);
+		for (int a = N - 1; a >= 0; a--) {
+			Dmax = buildDmax(a, k, m, n);
 //			disp(Dmax, true);
 			ArrayList<int[][]> Dset = push(k, m, n, Dmax, null, true);
 //			Dset = filterDSet(Dset, n);
@@ -675,17 +676,21 @@ public class Model
 			}
 			
 			Dset = filterDSet(newDset, n);
-			System.out.println("|D-" + i + " subspace| = " + Dset.size());
+			System.out.println("|D-" + a + " subspace| = " + Dset.size());
 //			disp(Dmax, true);
 //			System.out.println(isValid(n, Dmax));
 //			System.out.println(Dset);
 			for (int[][] D : Dset) {
 				disp(D, true);
-				updateE(D, k, m, n, i);
+				updateE(D, k, m, n, a, N);
 			}
 //			if (i == 7) return;
 //			break;
 		}
+		
+		int[][] zero = buildHzero(k, m);
+		disp("\n\n\n");
+		disp("" + E.get(canonical(zero)));
 	}
 }
 
