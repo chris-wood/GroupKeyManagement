@@ -8,10 +8,10 @@
 
 % Simulation parameters
 numSamples = 1000; %1000 or 10000 for proper results
-maxChildren = [2,3,4,5,6];
-numNodes = [5,10,15,20,25,30]; % return after the thing is working!
-authProbabilities = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-keyProbabilities = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+maxChildren = [2];
+numNodes = [5]; %,10,15,20,25,30]; % return after the thing is working!
+authProbabilities = [1.0]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+keyProbabilities = [1.0]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numSims] = size(numNodes);
 [~, numAuthProbs] = size(authProbabilities);
 [~, numKeyProbs] = size(keyProbabilities);
@@ -22,7 +22,7 @@ times = zeros(numChildren, numAuthProbs, numKeyProbs, numSims,numSamples);
 finalTable = zeros(numChildren, numAuthProbs, numKeyProbs, numSims, 4);
 
 % Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
-kMult = 4;
+kMult = 2;
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');
@@ -209,7 +209,7 @@ for childIndex = 1:numChildren
         for p = 1:numAuthProbs
            for n = 1:numSims
               %temp(p, n) = avgTimes(c, p, n); % the final table has the correct values
-              temp(p, n) = mean(times(childIndex,p,pKeyIndex,n,:)); % the second element is the average time
+              temp(p, n) = mean(times(childIndex,p,pKeyIndex,n,:)) % the second element is the average time
            end
         end
         figure(figureId);

@@ -48,7 +48,7 @@ public class Model
 			double innerProd = 
 					binom(S[i][j], H[i][j]) * 
 					(Math.pow(p2, H[i][j])) * 
-					Math.pow(1 - p2, S[i][j] - H[i][j]);
+					(Math.pow(1 - p2, S[i][j] - H[i][j]));
 			prod *= innerProd;
 		}
 		prob = prod;
@@ -72,15 +72,16 @@ public class Model
 		// already expanded from call into this guy...
 		int[][] expandedD = D;
 		
+		int[][] S = buildS(expandedD, k+1, m, n); // was D
+		disp("S for D");
+		disp(S, true);
+		
 //		disp("" + k);
 		ArrayList<int[][]> Hset = buildHSet(expandedD, k+1, m, n, N); // was D
 //		disp("" + Hset.size());
 		
 		// NOTE: code checks out up to this point...
-		
-		int[][] S = buildS(expandedD, k+1, m, n); // was D
-		disp(S, true);
-		System.out.println("|H set for N = " + N + "| = " + Hset.size());
+		System.out.println("|H set for a = " + a + "| = " + Hset.size());
 		for (int[][] H : Hset) {
 			disp(H, true);
 			
@@ -88,11 +89,11 @@ public class Model
 			String key = canonical(toSmallD(add(expandedD, H, k+1, m), k+1, m));
 //			System.out.println("E(Td) = " + E.get(key));
 //			disp(add(expandedD,H,k+1,m), true);
-			disp("smaller d that is the key");
-			disp(toSmallD(add(expandedD, H, k+1, m), k+1, m), true);
-			disp("TIME USED IN SUMMATION: " + E.get(key));
+//			disp("smaller d that is the key");
+//			disp(toSmallD(add(expandedD, H, k+1, m), k+1, m), true);
+//			disp("TIME USED IN SUMMATION: " + E.get(key));
 			sum += probH(H, S, k, m) * E.get(key);
-			disp("" + probH(H, S, k, m));
+//			disp("" + probH(H, S, k, m));
 		}
 		sum += 1; // 1 + (big sum)
 		
@@ -101,9 +102,9 @@ public class Model
 //		disp("" + probH(buildHzero(k, m), S, k, m));
 		
 		// insert the new expected time value
-		disp("" + sum);
-		disp("" + prod);
-		disp("New expected time for a = " + a + " is " + (prod * sum));
+//		disp("" + sum);
+//		disp("" + prod);
+		disp("Expected time for D^" + a + " matrix: " + (prod * sum) + " = (" + prod + " * " + sum + ") = ((1/1-Pd(H^0)) * [inner sum])");
 		E.put(canonical(toSmallD(D,k+1,m)), prod * sum);
 	}
 	
@@ -479,7 +480,7 @@ public class Model
 		int[][] H = buildHzero(k, m);
 //		disp(H,true);
 		int[][] S = buildS(D, k, m, n);
-		disp(S, true);
+//		disp(S, true);
 		
 		// TODO: start here, look at S and all Hs that are built... fix some cases for D...
 		
@@ -489,9 +490,9 @@ public class Model
 			}
 		}
 		
-		disp("" + Hset.size());
+//		disp("" + Hset.size());
 		Hset = filterHSet(Hset, S, k, m);
-		disp("" + Hset.size());
+//		disp("" + Hset.size());
 		
 //		disp("filtered set");
 //		for (int[][] Htmp : Hset) {
@@ -509,20 +510,22 @@ public class Model
 //		disp("Checking to see if D+H is in D-" + N + " subspace");
 //		disp("" + Hset.size());
 //		if (Hset.size() == 0) System.exit(-1); 
+//		disp("H set");
 		for (int[][] Ht : Hset) {
 			// Check to make sure that D+H is in the D space
 			int[][] addition = add(D, Ht, k, m);
-			disp("addition test...");
-			disp(D, true);
-			disp(Ht, true);
-			disp(addition, true);
+//			disp("addition test...");
+//			disp(D, true);
+//			disp(Ht, true);
+//			disp(addition, true);
 			boolean include = true;
 			if (!(isFullValidD(addition, n))) {
 				include = false;
 			}
 			
 			if (include) {
-				disp("ADDED!");
+//				disp("ADDED!");
+//				disp(Ht, true);
 				Hfinal.add(Ht);
 			}
 		}
@@ -617,7 +620,7 @@ public class Model
 	public static void main(String[] args) throws Exception
 	{
 		int k = 2; // num children
-		int m = 2; // num messages
+		int m = 1; // num messages
 		int n = 5; // num nodes
 		int N = (n - 1) * m;
 		
@@ -647,11 +650,12 @@ public class Model
 		}
 		
 		D8 = filterDSet(newD8, n);
+		disp("D^" + N + " subspace");
 		for (int[][] D : D8) {
 //			int[][] expandedD = buildD(D,k,m);
 			disp(D, true);
 			E.put(canonical(toSmallD(D,k+1,m)), 0.0);
-			disp("" + E.keySet());
+//			disp("" + E.keySet());
 		}
 		
 //		int[][] Dtest = {{4, 3}, {3, 2}, {1, 1}};
@@ -681,6 +685,7 @@ public class Model
 //			System.out.println(isValid(n, Dmax));
 //			System.out.println(Dset);
 			for (int[][] D : Dset) {
+				disp("D^" + a + " matrix");
 				disp(D, true);
 				updateE(D, k, m, n, a, N);
 			}
@@ -689,8 +694,8 @@ public class Model
 		}
 		
 		int[][] zero = buildHzero(k, m);
-		disp("\n\n\n");
-		disp("" + E.get(canonical(zero)));
+		disp("");
+		disp("Expected time: " + E.get(canonical(zero)));
 	}
 }
 
