@@ -16,10 +16,10 @@ public class Model
 		return result;
 	}
 	
-	static double fact(double x) {
-		double f = 1.0;
+	static int fact(int x) {
+		int f = 1;
 		if (x <= 0) {
-			return 1.0;
+			return 1;
 		} else {
 			for (int i = 1; i <= x; i++) {
 				f *= i;
@@ -32,8 +32,8 @@ public class Model
 	{
 		double b = 0.0;
 		
-		double num = fact((double)n);
-		double denom = fact((double)n) * fact((double)(n - k));
+		double num = (double)fact(n);
+		double denom = (double)(fact(k) * fact(n - k));
 		b = num / denom;
 		
 		return b;
@@ -43,12 +43,15 @@ public class Model
 	static double probHCol(int[][] H, int[][] S, int k, int m, int j) {
 		double prob = 0.0;
 		
+//		disp("CHECKING");
+//		disp("" + Math.pow(1.0 - p2, S[1][1] - H[1][1]));
+		
 		double prod = 1.0;
 		for (int i = 1; i < k; i++) { // was 0, but both H and S include the -1 row, and that's not what the document says
 			double innerProd = 
 					binom(S[i][j], H[i][j]) * 
 					(Math.pow(p2, H[i][j])) * 
-					(Math.pow(1 - p2, S[i][j] - H[i][j]));
+					(Math.pow(1.0 - p2, S[i][j] - H[i][j]));
 			prod *= innerProd;
 		}
 		prob = prod;
@@ -59,7 +62,9 @@ public class Model
 	static double probH(int[][] H, int[][] S, int k, int m) {
 		double prob = 1.0;
 		
+//		disp("Calculating probH");
 		for (int j = 0; j < m; j++) {
+//			disp("" + probHCol(H, S, k, m, j));
 			prob *= probHCol(H, S, k, m, j);
 		}
 		
@@ -77,28 +82,34 @@ public class Model
 		disp(S, true);
 		
 //		disp("" + k);
-		ArrayList<int[][]> Hset = buildHSet(expandedD, k+1, m, n, N); // was D
+		ArrayList<int[][]> Hset = buildHSet(expandedD, k+1, m, n, N, a); // was D
 //		disp("" + Hset.size());
 		
 		// NOTE: code checks out up to this point...
 		System.out.println("|H set for a = " + a + "| = " + Hset.size());
+		double probSum = 0.0;
+		ArrayList<Double> probHs = new ArrayList<Double>();
 		for (int[][] H : Hset) {
 			disp(H, true);
 			
 			// NOTE: the small Ds (i.e. without -1 row) are those that get put in the time map)
 			String key = canonical(toSmallD(add(expandedD, H, k+1, m), k+1, m));
-//			System.out.println("E(Td) = " + E.get(key));
-//			disp(add(expandedD,H,k+1,m), true);
-//			disp("smaller d that is the key");
-//			disp(toSmallD(add(expandedD, H, k+1, m), k+1, m), true);
-//			disp("TIME USED IN SUMMATION: " + E.get(key));
-			sum += probH(H, S, k, m) * E.get(key);
+			
+			// Compute the probabilities now...
+//			disp("" + probH(H, S, k+1, m));
+			probSum += probH(H, S, k+1, m);
+			probHs.add(probH(H, S, k+1, m));
+			sum += probH(H, S, k+1, m) * E.get(key);
+//			sum += 1.0 * E.get(key);
+			
 //			disp("" + probH(H, S, k, m));
 		}
+		disp("probability of p(h) = " + probSum);
+		for (Double d : probHs) disp("" + d);
 		sum += 1; // 1 + (big sum)
 		
 		// multiply by 1/(1-p(H0))
-		double prod = 1 / (1 - probH(buildHzero(k+1, m), S, k, m));
+		double prod = 1 / (1 - probH(buildHzero(k+1, m), S, k+1, m));
 //		disp("" + probH(buildHzero(k, m), S, k, m));
 		
 		// insert the new expected time value
@@ -381,11 +392,25 @@ public class Model
 		return S;
 	}
 	
-	public static ArrayList<int[][]> buildH(int[][] H, int[][] S, int i, int j, int k, int m, int N) {
+	public static ArrayList<int[][]> buildH(int[][] H, int[][] S, int i, int j, int k, int m, int N, int a) {
 		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
 		
 		// Incremement H at index and then check to see if within the S bound
 		H[i][j]++;
+		
+		// compute the first row of the H matrix
+		// TODO: LEAVE OFF HERE FOR NOW MK?
+		
+		// TODO: THESE CONSTRAINTS ARE INCORRECT - GET THE INDICES WORKING
+		// TODO: D's are correct, S calculation is correct, create H's by hand and then check with this result.
+		
+		for (int c = 0; c < m; c++) {
+			int sum = 0;
+			for (int r = 1; r < k; r++) {
+				sum += H[r][c];
+			}
+			H[0][c] = sum;
+		}
 		
 		// Check sum...
 		int sum = 0;
@@ -394,8 +419,9 @@ public class Model
 				sum += H[r][c];
 			}
 		}
-		if (sum > N) {
+		if (sum > (N - a)) {
 //			disp("failed the sum test...");
+//			disp(H, true);
 			return Hset;
 		}
 		
@@ -403,7 +429,7 @@ public class Model
 		
 		for (int r = 1; r < k; r++) {
 			for (int c = 0; c < m; c++) {
-				Hset.addAll(buildH(clone(H), S, r, c, k, m, N));
+				Hset.addAll(buildH(clone(H), S, r, c, k, m, N, a));
 			}
 		}
 		
@@ -473,7 +499,7 @@ public class Model
 //		return true;
 //	}
 	
-	public static ArrayList<int[][]> buildHSet(int[][] D, int k, int m, int n, int N) throws Exception {
+	public static ArrayList<int[][]> buildHSet(int[][] D, int k, int m, int n, int N, int a) throws Exception {
 		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
 		ArrayList<int[][]> Hfinal = new ArrayList<int[][]>();
 		
@@ -486,13 +512,17 @@ public class Model
 		
 		for (int i = 1; i < k; i++) {
 			for (int j = 0; j < m; j++) {
-				Hset.addAll(buildH(clone(H), S, i, j, k, m, N));
+				Hset.addAll(buildH(clone(H), S, i, j, k, m, N, a));
 			}
 		}
 		
-//		disp("" + Hset.size());
+//		for (int[][] ht : Hset) {
+//			disp(ht, true);
+//		}
+		
+		disp("" + Hset.size());
 		Hset = filterHSet(Hset, S, k, m);
-//		disp("" + Hset.size());
+		disp("" + Hset.size());
 		
 //		disp("filtered set");
 //		for (int[][] Htmp : Hset) {
@@ -620,7 +650,7 @@ public class Model
 	public static void main(String[] args) throws Exception
 	{
 		int k = 2; // num children
-		int m = 1; // num messages
+		int m = 2; // num messages
 		int n = 5; // num nodes
 		int N = (n - 1) * m;
 		
@@ -688,6 +718,7 @@ public class Model
 				disp("D^" + a + " matrix");
 				disp(D, true);
 				updateE(D, k, m, n, a, N);
+//				disp("" + E.get(canonical(toSmallD(D,k+1,m))));
 			}
 //			if (i == 7) return;
 //			break;
