@@ -5,6 +5,7 @@ public class Model
 {
 	static HashMap<String, Double> E;
 	static double p2 = 1.0;
+	static double p1 = 1.0;
 	
 	static String canonical(int[][] M) {
 		String result = "";
@@ -28,15 +29,30 @@ public class Model
 		return f;
 	}
 	
-	static double binom(int n, int k)
+//	static int binom(int n, int k)
+//	{
+//		double b = 0.0;
+//		
+//		if (k == 0)
+//			return 1;
+//		if (n == 0)
+//			return 0;
+//		
+//		double num = (double)fact(n);
+//		double denom = (double)(fact(k) * fact(n - k));
+//		b = num / denom;
+//		
+//		return (int)b;
+//	}
+	
+	static int binom(int n, int k) 
 	{
-		double b = 0.0;
-		
-		double num = (double)fact(n);
-		double denom = (double)(fact(k) * fact(n - k));
-		b = num / denom;
-		
-		return b;
+		if (k == 0 || n == k)
+			return 1;
+		else if (n == 0)
+			return 0;
+		else
+			return binom(n-1,k-1) + binom(n-1,k);
 	}
 	
 	// H and S are ALWAYS in expanded form!
@@ -48,23 +64,83 @@ public class Model
 		
 		double prod = 1.0;
 		for (int i = 1; i < k; i++) { // was 0, but both H and S include the -1 row, and that's not what the document says
-			double innerProd = 
-					binom(S[i][j], H[i][j]) * 
-					(Math.pow(p2, H[i][j])) * 
-					(Math.pow(1.0 - p2, S[i][j] - H[i][j]));
+			double innerProd = binom(S[i][j], H[i][j]);
+//			disp("" + innerProd);
+			innerProd *= (Math.pow(p2, H[i][j]));
+//			disp("" + innerProd);
+			innerProd *= (Math.pow(1.0 - p2, S[i][j] - H[i][j]));
+//			disp("" + innerProd);
+//					binom(S[i][j], H[i][j]) * 
+//					(Math.pow(p2, H[i][j])) * 
+//					(Math.pow(1.0 - p2, S[i][j] - H[i][j]));
 			prod *= innerProd;
+//			disp("S/H values: " + S[i][j] + " " + H[i][j]);
+//			disp("i = " + i + ", " + innerProd);
 		}
 		prob = prod;
 		
 		return prob;
 	}
 	
+	static double gh(int[][] S, int[][] H, int k, int m, int b) // equation 14
+	{
+		double num = 1.0;
+		double denom = 0.0;
+		for (int i = 1; i < k; i++)
+		{
+			num *= binom(S[i][0], H[i][0]);
+		}
+		int sum = 0;
+		for (int i = 1; i < k; i++)
+		{
+			sum += S[i][0];
+		}
+		denom = binom(sum, b);
+		
+		return (double)num / (double)denom;
+	}
+	
 	static double probH(int[][] H, int[][] S, int k, int m) {
 		double prob = 1.0;
 		
-//		disp("Calculating probH");
-		for (int j = 0; j < m; j++) {
-//			disp("" + probHCol(H, S, k, m, j));
+		disp("Calculating probH");
+		disp(H, true);
+		disp(S, true);
+		
+		// p^0 is different - use equations 11/12/13/14
+		int b = 0;
+		for (int i = 1; i <k; i++)
+		{
+			b += H[i][0];
+		}
+		int sSum = 0;
+		for (int i = 1; i < k; i++) {
+			sSum += S[i][0];
+		}
+		int U = sSum < S[0][0] ? sSum : S[0][0];
+		
+		if (b == U) //equation 12
+		{
+			double sum = 0;
+//			disp("b = " + b);
+			for (int i = b; i <= S[0][0]; i++)
+			{
+				sum += binom(S[0][0], i) * Math.pow(p1, i) * Math.pow(1.0 - p1, S[0][0] - i);
+			}
+			prob *= sum;
+//			disp("b == U sum: " + sum);
+		} 
+		else if (b < U)// equation 13
+		{
+			double tmp = gh(S, H, k, m, b) * binom(S[0][0], b) * Math.pow(p1, b) * Math.pow(1 - p1, S[0][0] - b);
+//			disp ("b < U prod: " + tmp);
+			prob *= tmp;
+//			gh(int[][] S, int[][] H, int k, int m, int b)
+		}
+		
+		// Compute the probabilities for the other columns (column 0 is special...)
+		for (int j = 1; j < m; j++) {
+//			disp("j = " + j + ", " + probHCol(H, S, k, m, j));
 			prob *= probHCol(H, S, k, m, j);
 		}
 		
@@ -97,9 +173,11 @@ public class Model
 			
 			// Compute the probabilities now...
 //			disp("" + probH(H, S, k+1, m));
-			probSum += probH(H, S, k+1, m);
-			probHs.add(probH(H, S, k+1, m));
-			sum += probH(H, S, k+1, m) * E.get(key);
+			double tmpSum = probH(H, S, k+1, m); 
+			disp("prob for this H = " + tmpSum);
+			probSum += tmpSum;
+			probHs.add(tmpSum);
+			sum += tmpSum * E.get(key);
 //			sum += 1.0 * E.get(key);
 			
 //			disp("" + probH(H, S, k, m));
@@ -414,7 +492,7 @@ public class Model
 		
 		// Check sum...
 		int sum = 0;
-		for (int r = 0; r < k; r++) {
+		for (int r = 1; r < k; r++) {
 			for (int c = 0; c < m; c++) {
 				sum += H[r][c];
 			}
@@ -653,6 +731,17 @@ public class Model
 		int m = 2; // num messages
 		int n = 5; // num nodes
 		int N = (n - 1) * m;
+		
+		disp("" + binom(0, 0));
+		disp("" + binom(1,0));
+		disp("" + binom(0,1));
+		disp("" + fact(0));
+		disp("" + fact(1));
+		disp("" + fact(2));
+		disp("" + fact(5));
+		disp("" + Math.pow(1.0 - p2, 100));
+		disp("" + Math.pow(1.0, 100));
+		disp("" + Math.pow(1.0, 0));
 		
 		// Create the estimated time collection
 		E = new HashMap<String, Double>();

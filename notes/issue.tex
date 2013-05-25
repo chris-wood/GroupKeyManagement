@@ -1,0 +1,104 @@
+\documentclass[12pt]{article}  
+\usepackage{e-jc}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{lipsum}
+\usepackage{xifthen}
+\usepackage{needspace}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows,%
+                shapes,positioning}
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
+\tikzstyle{selected edge} = [draw,line width=5pt,-,red!50]
+\tikzstyle{ignored edge} = [draw,line width=5pt,-,black!20]
+
+\usepackage[small,bf,hang]{caption} % Improved caption
+
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{con}[thm]{Conjecture}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{problem}[thm]{Problem}
+\newtheorem{dnt}[thm]{Definition}
+\newtheorem{alg}[thm]{Algorithm}
+
+\newenvironment{proof}[1][Proof]
+{\par\noindent{\bf #1.} }{\hspace*{\fill}\nolinebreak{$\Box$}\bigskip\par}
+
+%\numberwithin{table}{section}
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\usepackage{color}
+\newcommand{\todo}[1] {
+	{\tt \color{red}{[TODO: {#1}]}}
+}
+\newcommand{\spr}[1] {
+	{\color{red}{{\tt [SPR: }{#1}]}}
+}
+\newcommand{\jg}[1] {
+	{\color{blue}{{\tt [JG: }{#1}]}}
+}
+
+\title{\bf $\Delta(T) = 4$ Construction Algorithm}
+
+\author{
+Christopher A. Wood\\
+\small Department of Computer Science \\[-0.8ex]
+\small Rochester Institute of Technology, Rochester, NY  14623, USA \\[-0.8ex]
+\small \texttt{caw4567@rit.edu}\\
+}
+
+\date{\dateline{XX}{XX}}
+%\small AMS Subject Classifications: 05C55, 05C30, XXXXX}
+
+\pagestyle{myheadings}
+\thispagestyle{plain}
+
+\begin{document}
+
+Consider the matrices used in Example 1. \\
+
+$\mathbf{D} = 
+\begin{pmatrix}
+3 & 3 \\
+1 & 1
+\end{pmatrix}
+$
+
+$\mathbf{S} = 
+\begin{pmatrix}
+1 & 0 \\
+2 & 1
+\end{pmatrix}
+$
+
+$\mathbf{H} = 
+\begin{pmatrix}
+0 & 0 \\
+0 & 1
+\end{pmatrix}
+$
+
+Using equation 15 for $p_D^{0}(\mathbf{H})$ we get the following:
+\begin{align*}
+p_D^{0}(\mathbf{H}) = & [{1 \choose 0}\times(1.0)^0 \times 0^{1}] \times [{2 \choose 0}\times(1.0)^0 \times 0^{2}]\\
+= & 0.0
+\end{align*}
+This causes equation 16 to evaluate to 0, as we see in the output. Am I missing something?
+
+\end{document} 
+
