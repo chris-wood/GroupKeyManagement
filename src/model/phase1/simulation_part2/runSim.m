@@ -7,195 +7,249 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-NUM_SAMPLES = 1000; %10000
-%MAX_CHILDREN = 2;
-MAX_CHILDREN = [2]; %,3,4,5,6,7,8]; 
-NUM_NODES = [5]; %,10,15,20,25,30];
-%NUM_NODES = [5];
-PROBABILITIES = [1.0]; %[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
-%PROBABILITIES = [0.5];
-[~, numSims] = size(NUM_NODES);
-[~, numProbs] = size(PROBABILITIES);
-[~, numChildren] = size(MAX_CHILDREN);
+numSamples = 1000; %1000 or 10000 for proper results
+maxChildren = [2];
+nodeCount = [5]; %,10,15,20,25,30]; % return after the thing is working!
+p1Probs = [0.5]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p2Probs= [0.5]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+[~, numNodes] = size(nodeCount);
+[~, numP1probs] = size(p1Probs);
+[~, numP2probs] = size(p2Probs);
+[~, numChildren] = size(maxChildren);
 
-% Set up the results matrix
-times = zeros(numChildren, numProbs, numSims, NUM_SAMPLES); % we perform one simulation for each number of nodes
-avgTimes = zeros(numChildren, numProbs, numSims);
-finalTable = zeros(numChildren, numProbs, numSims, 4);
+% Result containers
+times = zeros(numChildren, numP1probs, numP2probs, numNodes, numSamples);
+finalTable = zeros(numChildren, numP1probs, numP2probs, numNodes, 4);
+
+% Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
+kMult = 2;
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');
 for childIndex = 1:numChildren
-    disp('Children');
-    disp(MAX_CHILDREN(childIndex));
-    for p = 1:numProbs
-        disp('Probability');
-        disp(PROBABILITIES(p));
-        for n = 1:numSims
-            disp('Number of nodes');
-            disp(NUM_NODES(n));
-            totalTime = 0;
-            for i = 1:NUM_SAMPLES
-                % Initialize the adj. matrix representation for the nodes and network
-                % No one is connected at the beginning.
-                time = 0;
-                nConnected = 0;
-                aMatrix = zeros(NUM_NODES(n), NUM_NODES(n));
-                cMatrix = zeros(NUM_NODES(n));
-                for r = 1:NUM_NODES(n)
-                    cMatrix(r) = 0;
-                    for c = 1:NUM_NODES(n)
-                        aMatrix(r,c) = 0;
-                    end
-                end
+    disp(sprintf('Maximum number of children = %d', maxChildren(childIndex)))
+    for p1Index = 1:numP1probs
+        for p2Index = 1:numP2probs
+            for n = 1:numNodes
+                disp(sprintf('Simulation for %d nodes with pAuth = %d and pKey = %d', numNodes(n), p1Probs(p1Index), p2Probs(p2Index)))
+                for i = 1:numSamples
+                    % Initialize the adj. matrix representation for the nodes and network
+                    % No one is connected at the beginning...
+                    time = 0; % time = #t2 events
+                    nConnected = 0;
 
-                % Set the root node to have the key at time 0
-                cMatrix(1) = 1;
+                    % The matrix to store authentication steps in time.
+                    authMatrix = zeros(kMult, nodeCount(n), nodeCount(n));
 
-                % Loop while we do try to establish a connection with each node
-                while (nConnected < (NUM_NODES(n) - 1)) % We go until connected == (n-1)
-                    % Find the unconnected nodes
-                    tempList = zeros(1, NUM_NODES(n));
-                    nUnconnected = 0;
-                    for j = 1:NUM_NODES(n)
-                        if (cMatrix(j) == 0)
-                            nUnconnected = nUnconnected + 1;
-                            tempList(nUnconnected) = j; % Flag as unconnected
+                    % The adjacency matrix stores those nodes node connections (the
+                    % tree).
+                    aMatrix = zeros(nodeCount(n), nodeCount(n));
+
+                    % The connected vector that indicates whether a node has
+                    % the key (it is connected).
+                    cMatrix = zeros(1, nodeCount(n));
+
+                    % Set the root node to have the key at time 0
+                    cMatrix(1) = 1;
+
+                    % Loop while we do try to establish a connection with each node
+                    while (nConnected < (nodeCount(n) - 1)) % We go until connected == (n-1)
+
+                        % DEBUG
+                        fprintf('Time step: %i\n', time);
+
+                        % Find the unconnected nodes from the connected list
+                        tempList = zeros(1, nodeCount(n));
+                        tempListBack = zeros(1, nodeCount(n));
+                        nUnconnected = 0;
+                        for j = 1:nodeCount(n)
+                            tempList(j) = -1; % mark as invalid to start...
+                            if (cMatrix(j) == 0)
+                                nUnconnected = nUnconnected + 1;
+                                tempList(nUnconnected) = j; % Flag as unconnected
+                            end
                         end
-                    end
-                    unconnected = zeros(1, nUnconnected);
-                    for j = 1:nUnconnected
-                        unconnected(j) = tempList(j);
-                    end
 
-                    % For each node that is ready, decide with probability p
-                    % if it should receive the key at this instance in time.
-                    readyList = zeros(1, nUnconnected);
-                    nReady = 0;
-                    for j = 1:nUnconnected
-                        if (rand(1) < PROBABILITIES(p))
-                            readyList(j) = 1; % Flag it as ready
-                            nReady = nReady + 1;
+                        % Strip out all nodes that are currently in 
+                        % authentication stage.
+                        for kIndex = 1:kMult
+                           for rIndex = 1:nodeCount(n)
+                              for cIndex = 1:nodeCount(n)
+                                 if (authMatrix(kIndex, rIndex, cIndex) == 1)
+                                    % cIndex is being authenticated by rIndex,
+                                    % so take out cIndex from the list if it's
+                                    % in there.
+                                    for nIndex = 1:nodeCount(n)
+                                        if (tempList(nIndex) == cIndex)
+                                            tempList(nIndex) = -1; % set it back to invalid
+                                            nUnconnected = nUnconnected - 1; % decrement since we took it out of the list
+                                        end
+                                    end
+                                 end
+                              end
+                           end
                         end
-                    end
 
-                    % Compute the set of available parents at this iteration
-                    [parentList, parentCount] = readyParents(aMatrix, cMatrix, MAX_CHILDREN(childIndex), NUM_NODES(n));
+                        % Build up the unconnected list
+                        unconnected = zeros(1, nUnconnected);
+                        tempIndex = 1;
+                        for j = 1:nUnconnected
+                            % Skip over invalid entries
+                            while (tempList(tempIndex) == -1)
+                                tempIndex = tempIndex + 1;
+                            end
 
-                    % Shuffle algorithm
-                    unconnected;
-                    readyList;
-                    parentList;
-                    aMatrix;
-                    for j=parentCount:-1:1
-                        index = randi(j,1);
-                        temp = parentList(index);
-                        parentList(index) = parentList(j);
-                        parentList(j) = temp;
-                    end
+                            % Add this element to the list
+                            unconnected(j) = tempList(tempIndex);
+                            tempIndex = tempIndex + 1;
+                        end
 
-                    % Find upper bound on connections
-                    bound = min(parentCount, nReady);
+                        % For each node that is ready, decide with probability p
+                        % if it should receive the key at this instance in time.
+                        readyList = zeros(1, nUnconnected);
+                        nReady = 0;
+                        for j = 1:nUnconnected
+                            if (rand(1) <= p1Probs(p1Index))
+                                readyList(j) = 1; % Flag it as ready for authentication
+                                nReady = nReady + 1;
+                            end
+                        end
 
-                    % Make the connections between ready children and available
-                    % parents
-                    readyIndex = 1;
-                    for j = 1:bound
-                        % Skip over nodes that were deemed not ready
-                        while (readyList(readyIndex) == 0)
+                        %%% We need to work backwards through the
+                        %%% authentication stages so we don't accidentally
+                        %%% carry connections through the pipeline in the same
+                        %%% instance in time (only one transition at a time)
+
+                        % Handle the key distribution step now (authentication
+                        % is complete at this stage in the auth matrix)
+                        for rIndex = 1:nodeCount(n)
+                           for cIndex = 1:nodeCount(n)
+                              if (authMatrix(kMult, rIndex, cIndex) == 1)
+                                  % A connection exists, use the key
+                                  % probability to see if the key
+                                  % connection is passed along...
+                                  if (rand(1) <= p2Probs(p2Index))
+                                      %disp(sprintf('(%d) The key was passed from node %d to node %d', time, rIndex, cIndex));
+                                      authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
+                                      aMatrix(rIndex, cIndex) = 1;
+                                      aMatrix(cIndex, rIndex) = 1;
+                                      cMatrix(cIndex) = 1;
+                                      nConnected = nConnected + 1;
+
+                                      fprintf('Node %i now h as the key\n', cIndex);
+                                  end
+                              end
+                           end
+                        end
+
+                        % Now check to see if the nodes doing
+                        % authentication march forwards in time
+                        bound = kMult - 1;
+                        for kIndex = bound:-1:1
+                            for rIndex = 1:nodeCount(n)
+                               for cIndex = 1:nodeCount(n)
+                                  % If a pair of nodes is attempting
+                                  % authentcation, check to see if they
+                                  % make progress
+                                  if (authMatrix(kIndex, rIndex, cIndex) == 1)
+                                      if (rand(1) <= p2Probs(p2Index))
+                                          %disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, rIndex, cIndex))
+                                          authMatrix(kIndex + 1, rIndex, cIndex) = 1;
+                                          authMatrix(kIndex, rIndex, cIndex) = 0;
+                                          fprintf('Node %i advanced to stage %i\n', cIndex, kIndex + 1);
+                                      end
+                                  end
+                               end
+                            end
+                        end
+
+                        % Compute the set of available parents at this iteration
+                        [parentList, parentCount] = readyParents(aMatrix, cMatrix, authMatrix, maxChildren(childIndex), nodeCount(n), kMult);
+
+                        % Shuffle algorithm
+                        for j = parentCount:-1:1
+                            index = randi(j,1);
+                            temp = parentList(index);
+                            parentList(index) = parentList(j);
+                            parentList(j) = temp;
+                        end
+
+                        % Find upper bound on connections
+                        bound = min(parentCount, nReady);
+
+                        % Start these nodes off in the authentication step
+                        readyIndex = 1;
+                        for j = 1:bound
+                            % Skip over nodes that were deemed not ready
+                            while (readyList(readyIndex) == 0)
+                                readyIndex = readyIndex + 1;
+                            end
+
+                            % DEBUG
+                            fprintf('Node %i moved into the first stage\n', j);
+
+                            % Hook these guys into the auth matrix
+                            child = unconnected(readyIndex);
+                            parent = parentList(j);
+                            %disp(sprintf('(%d) Node %d starting authentication with node %d', time, parent, child))
+                            authMatrix(1, parent, child) = 1; % this is a directed graph, so don't point from child->parent
                             readyIndex = readyIndex + 1;
                         end
 
-                        % Tie these guys together
-                        %disp('connecting...');
-                        child = unconnected(readyIndex);
-                        parent = parentList(j);
-                        aMatrix(child, parent) = 1;
-                        aMatrix(parent, child) = 1;
-                        cMatrix(child) = 1;
-                        nConnected = nConnected + 1;
-                        readyIndex = readyIndex + 1;
+                        time = time + 1;
                     end
 
-                    % Increment the time variable
-                    time = time + 1;
+                    % Take away the last step in time (handle off-by-one)
+                    time = time - 1;
+                    %disp(sprintf('Total time: %d', time))
+
+                    % Record the total time for simulation
+                    times(childIndex,p1Index,p2Index,n,i) = time;
                 end
-
-                totalTime = totalTime + time;
-                times(childIndex,p,n,i) = time;
             end
-
-            totalTime;
-            avgTimes(childIndex,p,n) = totalTime / NUM_SAMPLES;
-        end
-    end
-
-    % Display...
-    %times'
-
-    % Calculate the average and standard deviation for each node simulation
-    for p = 1:numProbs
-        for i = 1:numSims
-            avg = mean(times(childIndex,p,i,:));
-            stddev = std(times(childIndex,p, i,:));
-            stderr = 2 * (stddev / (NUM_SAMPLES^(1/2)));
-            finalTable(childIndex, p,i,1) = NUM_NODES(i);
-            finalTable(childIndex, p,i,2) = avg;
-            finalTable(childIndex, p,i,3) = stddev;
-            finalTable(childIndex, p,i,4) = stderr;
         end
     end
 end
-
-% Display the final table
-%for c = 1:numChildren
-    %disp(finalTable(c,:))
-%end
-avgTimes
-%plot3(avgTimes(:,:,1))
 
 % Generate a plot for each one
-for c = 1:numChildren
-    temp = zeros(numProbs, numSims);
-    for p = 1:numProbs
-       for n = 1:numSims
-          %temp(p, n) = avgTimes(c, p, n); % the final table has the correct values
-          temp(p, n) = finalTable(c, p, n, 2); % the second element is the average time
-       end
+figureId = 1;
+for childIndex = 1:numChildren
+    for p1Index = 1:numP1probs
+        temp = zeros(numP2probs, numNodes);
+        for p2Index = 1:numP2probs
+           for n = 1:numNodes
+              %temp(p, n) = avgTimes(c, p, n); % the final table has the correct values
+              temp(p2Index, n) = mean(times(childIndex,p1Index,p2Index,n,:)) % the second element is the average time
+           end
+        end
+        %figure(figureId);
+        %figureId = figureId + 1; % forward the figures... math is fun.
+        %plot(temp);
+        %set(gca,'XTickLabel',{'0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7','0.8', '0.9', '1.0'});
+        %title([sprintf('Key Distribution Time for %d Children with Key Probability = %d', maxChildren(childIndex), keyProbabilities(pKeyIndex))]);
+        %xlabel('Authentication Probability');
+        %ylabel('Average Re-Key Time (epochs)');
     end
-    figure(c);
-    plot(temp);
-    %axis([0.1 1.0 0 Inf])
-    %set(gca, 'XTickMode', 'manual');
-    %title(MAX_CHILDREN(c),'FontWeight','bold');
-    set(gca,'XTickLabel',{'0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0'});
-    title(['Key Distribution Time for ',int2str(MAX_CHILDREN(c)), ' Children']);
-    xlabel('Connection Probability');
-    ylabel('Average Re-Key Time (epochs)');
 end
 
-%x = -pi:.1:pi;
-%y = sin(x);
-%plot(x,y)
-%set(gca,'XTick',0.1:0.1)
-%set(gca,'XTickLabel',{'-pi','-pi/2','0','pi/2','pi'})
 
+% Calculate the average and standard deviation for each node simulation
+%for pAuthIndex = 1:numAuthProbs
+%    for pKeyIndex = 1:numKeyProbs
+%        for i = 1:numNodes
+%            avg = mean(times(pAuthIndex, pKeyIndex, i,:));
+%            stddev = std(times(pAuthIndex, pKeyIndex, i,:));
+%            stderr = 2 * (stddev / (numSamples^(1/2)));
+%            finalTable(pAuthIndex,pKeyIndex,i,1) = numNodes(i);
+%            finalTable(pAuthIndex,pKeyIndex,i,2) = avg;
+%            finalTable(pAuthIndex,pKeyIndex,i,3) = stddev;
+%            finalTable(pAuthIndex,pKeyIndex,i,4) = stderr;
+%        end
+%    end
+%end
 
-%figure(numChildren + 1);
-%scatter3(MAX_CHILDREN, PROBABILITIES, NUM_NODES, 5, avgTimes)
+% Display the average times table
+%disp(avgTimes);
 
-%surf(PROBABILITIES, NUM_NODES, avgTimes(1,:,:))
-
-%surf(MAX_CHILDREN, PROBABILITIES, avgTimes(1,:), 1)
-
-%p = patch(isosurface(MAX_CHILDREN,PROBABILITIES,NUM_NODES,avgTimes,60))
-%isonormals(MAX_CHILDREN,PROBABILITIES,NUM_NODES,avgTimes,p)
-
-%scatter3([1:numChildren], [1:numProbs], [1:numSims], 5, avgTimes(:))
-
-%disp('Expected time');
-%disp(totalTime / NUM_SAMPLES)
-%xlabel('Number of Nodes');
-%ylabel('Estimated Time (E(t))');
-%plot(avgTimes);
-
+% Display the final table
+%disp(finalTable);

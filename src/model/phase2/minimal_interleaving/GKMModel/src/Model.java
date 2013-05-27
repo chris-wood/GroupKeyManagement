@@ -4,8 +4,8 @@ import java.util.HashMap;
 public class Model
 {
 	static HashMap<String, Double> E;
-	static double p2 = 1.0;
-	static double p1 = 1.0;
+	static double p2 = 0.5;
+	static double p1 = 0.5;
 	
 	static String canonical(int[][] M) {
 		String result = "";
@@ -324,10 +324,15 @@ public class Model
 	
 	public static ArrayList<int[][]> filterDSet(ArrayList<int[][]> Dset, int n) {
 		ArrayList<int[][]> result = new ArrayList<int[][]>();
+		ArrayList<String> seen = new ArrayList<String>();
 		
 		for (int[][] D : Dset) {
 			if (isFullValidD(D, n)) {
-				result.add(D);
+				if (!seen.contains(canonical(D)))
+				{
+					result.add(D);
+					seen.add(canonical(D));
+				}
 			}
 		}
 		
