@@ -119,7 +119,7 @@ public class Model
 		}
 		int U = sSum < S[0][0] ? sSum : S[0][0];
 		
-		if (b == U) //equation 12
+		if (b == U && b == sSum) //equation 12
 		{
 			double sum = 0;
 //			disp("b = " + b);
@@ -130,7 +130,7 @@ public class Model
 			prob *= sum;
 //			disp("b == U sum: " + sum);
 		} 
-		else if (b < U)// equation 13
+		else// equation 13
 		{
 			double tmp = gh(S, H, k, m, b) * binom(S[0][0], b) * Math.pow(p1, b) * Math.pow(1 - p1, S[0][0] - b);
 //			disp ("b < U prod: " + tmp);
@@ -336,6 +336,7 @@ public class Model
 	
 	public static ArrayList<int[][]> filterHSet(ArrayList<int[][]> Hset, int[][] S, int k, int m) {
 		ArrayList<int[][]> result = new ArrayList<int[][]>();
+		ArrayList<String> seen = new ArrayList<String>();
 		
 		for (int[][] Htmp : Hset) {
 //			if (Htmp[0][0] == 0 && Htmp[0][1] == 1 && Htmp[1][0] == 1 && Htmp[1][1] == 1 && Htmp[2][0] == 1 && Htmp[2][1] == 0) {
@@ -345,7 +346,11 @@ public class Model
 //				disp("" + isFullValidH(Htmp,S,k,m));
 //			}
 			if (isFullValidH(Htmp,S,k,m)) {
-				result.add(Htmp);
+				if (!seen.contains(canonical(Htmp)))
+				{
+					result.add(Htmp);
+					seen.add(canonical(Htmp));
+				}
 			}
 		}
 		
