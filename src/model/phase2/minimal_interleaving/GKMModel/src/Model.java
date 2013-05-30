@@ -182,12 +182,23 @@ public class Model
 			
 //			disp("" + probH(H, S, k, m));
 		}
+		double pzero = probH(buildHzero(k+1, m), S, k+1, m);
 		disp("probability of p(h) = " + probSum);
-		for (Double d : probHs) disp("" + d);
+		double pSumCheck = 0.0;
+		for (Double d : probHs) 
+		{
+			disp("" + d);
+			pSumCheck += d;
+		}
+		pSumCheck += pzero;
+		if (pSumCheck != 1.0) throw new Exception("PROBABILITIES DO NOT ADD UP TO ONE");
+		disp("probability of p(h^0) = " + pzero);
+		
+		
 		sum += 1; // 1 + (big sum)
 		
 		// multiply by 1/(1-p(H0))
-		double prod = 1 / (1 - probH(buildHzero(k+1, m), S, k+1, m));
+		double prod = 1 / (1 - pzero);
 //		disp("" + probH(buildHzero(k, m), S, k, m));
 		
 		// insert the new expected time value
