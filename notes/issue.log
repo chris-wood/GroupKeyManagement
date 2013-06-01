@@ -730,6 +730,7 @@ Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 )
 Package grfext Info: Graphics extension search list:
+(grfext)             [. list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
@@ -745,32 +746,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--74
 
  []
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 75.
+LaTeX Font Info:    Try loading font information for U+msa on input line 76.
 (/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 75.
+LaTeX Font Info:    Try loading font information for U+msb on input line 76.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
+./issue.tex:82: Missing $ inserted.
+<inserted text> 
+                $
+l.82 \begin{pmatrix}
+                    
+? 
+./issue.tex:82: Emergency stop.
+<inserted text> 
+                $
+l.82 \begin{pmatrix}
+                    
+End of file on the terminal!
 
-Package amsmath Warning: Foreign command \atopwithdelims;
-(amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 100.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 103.
-[1
-
-{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 103.
-
-(./issue.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 103.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 103.
-Package rerunfilecheck Info: File `issue.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 103.
+ 
+Here is how much of TeX's memory you used:
+ 17643 strings out of 493488
+ 333597 string characters out of 3141326
+ 517717 words of memory out of 3000000
+ 20622 multiletter control sequences out of 15000+200000
+ 9201 words of font info for 35 fonts, out of 3000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 56i,8n,56p,395b,90s stack positions out of 5000i,500n,10000p,200000b,50000s
+./issue.tex:82:  ==> Fatal error occurred, no output PDF file produced!
+VeryEnd' on input line 103.
  ) 
 Here is how much of TeX's memory you used:
  17652 strings out of 493488

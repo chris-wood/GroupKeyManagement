@@ -1,11 +1,23 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Model
 {
 	static HashMap<String, Double> E;
-	static double p2 = 0.5;
-	static double p1 = 0.5;
+	static double p2 = 1.0;
+	static double p1 = 1.0;
+	
+	static boolean isZero(int[][] M) {
+		for (int i = 0; i < M.length; i++)
+		{
+			for (int j = 0; j < M[i].length; j++)
+			{
+				if (M[i][j] != 0) return false;
+			}
+		}
+		return true;
+	}
 	
 	static String canonical(int[][] M) {
 		String result = "";
@@ -13,6 +25,16 @@ public class Model
 			for (int j = 0; j < M[i].length; j++) {
 				result += M[i][j] + ",";
 			}
+		}
+		return result;
+	}
+	
+	static String canonical(int[] M)
+	{
+		String result = "";
+		for (int i = 0; i < M.length; i++)
+		{
+			result += M[i] + ",";
 		}
 		return result;
 	}
@@ -59,7 +81,9 @@ public class Model
 	static double probHCol(int[][] H, int[][] S, int k, int m, int j) {
 		double prob = 0.0;
 		
-//		disp("CHECKING");
+//		disp("CHECKING H COL = " + j);
+//		disp(H, true);
+//		disp(S, true);
 //		disp("" + Math.pow(1.0 - p2, S[1][1] - H[1][1]));
 		
 		double prod = 1.0;
@@ -100,12 +124,9 @@ public class Model
 		return (double)num / (double)denom;
 	}
 	
-	static double probH(int[][] H, int[][] S, int k, int m) {
+	static double p0prob(int[][] H, int[][] S, int k, int m) throws Exception
+	{
 		double prob = 1.0;
-		
-		disp("Calculating probH");
-		disp(H, true);
-		disp(S, true);
 		
 		// p^0 is different - use equations 11/12/13/14
 		int b = 0;
@@ -118,31 +139,52 @@ public class Model
 			sSum += S[i][0];
 		}
 		int U = sSum < S[0][0] ? sSum : S[0][0];
+//				disp("BEFORE BEFORE");
+//				disp(H, true);
 		
 		if (b == U && b == sSum) //equation 12
 		{
 			double sum = 0;
-//			disp("b = " + b);
+//					disp("b = " + b);
+//			disp("EQUATION 12");
 			for (int i = b; i <= S[0][0]; i++)
 			{
 				sum += binom(S[0][0], i) * Math.pow(p1, i) * Math.pow(1.0 - p1, S[0][0] - i);
 			}
 			prob *= sum;
-//			disp("b == U sum: " + sum);
+//					disp("b == U sum: " + sum);
 		} 
 		else// equation 13
 		{
-			double tmp = gh(S, H, k, m, b) * binom(S[0][0], b) * Math.pow(p1, b) * Math.pow(1 - p1, S[0][0] - b);
-//			disp ("b < U prod: " + tmp);
-			prob *= tmp;
-//			gh(int[][] S, int[][] H, int k, int m, int b)
+//			disp("EQUATION 13");
+			double tmp = gh(S, H, k, m, b) * binom(S[0][0], b) * Math.pow(p1, b) * Math.pow(1.0 - p1, S[0][0] - b);
+//					disp ("b < U prod: " + tmp);
+			prob = tmp;
+			
+//					gh(int[][] S, int[][] H, int k, int m, int b)
 		}
-		
-		// Compute the probabilities for the other columns (column 0 is special...)
+
+		return prob;
+	}
+	
+	static double colProbs(int[][] H, int [][] S, int k, int m) throws Exception 
+	{
+		double prob = 1.0;
 		for (int j = 1; j < m; j++) {
-//			disp("j = " + j + ", " + probHCol(H, S, k, m, j));
-			prob *= probHCol(H, S, k, m, j);
+			double p = probHCol(H, S, k, m, j);
+			prob *= p;
 		}
+		return prob;
+	}
+	
+	static double probH(int[][] H, int[][] S, int k, int m, boolean isZero) throws Exception {
+		double prob = 1.0;
+		
+//		disp("Calculating probH");
+//		disp(H, true);
+//		disp(S, true);
+		
+		prob = p0prob(H, S, k, m) * colProbs(H, S, k, m);
 		
 		return prob;
 	}
@@ -173,16 +215,15 @@ public class Model
 			
 			// Compute the probabilities now...
 //			disp("" + probH(H, S, k+1, m));
-			double tmpSum = probH(H, S, k+1, m); 
+			double tmpSum = probH(H, S, k+1, m, true); 
 			disp("prob for this H = " + tmpSum);
 			probSum += tmpSum;
 			probHs.add(tmpSum);
 			sum += tmpSum * E.get(key);
-//			sum += 1.0 * E.get(key);
 			
 //			disp("" + probH(H, S, k, m));
 		}
-		double pzero = probH(buildHzero(k+1, m), S, k+1, m);
+		double pzero = probH(buildHzero(k+1, m), S, k+1, m, true);
 		disp("probability of p(h) = " + probSum);
 		double pSumCheck = 0.0;
 		for (Double d : probHs) 
@@ -190,9 +231,39 @@ public class Model
 			disp("" + d);
 			pSumCheck += d;
 		}
+		disp("Local probabilities:");
+		double p0probSum = 0.0;
+		double pjprobSum = 0.0;
+		
+		disp("D:");
+		disp(expandedD, true);
+		disp("S:");
+		disp(S, true);
+		
+		for (int[][] H : Hset)
+		{
+			disp("H:");
+			disp(H, true);
+			p0probSum += p0prob(H, S, k+1, m);
+			double tp = colProbs(H, S, k+1, m);
+			pjprobSum += tp;
+			disp("p0 = " + p0prob(H, S, k+1, m) + ", pj = " + colProbs(H, S, k+1, m));
+		}
+		if (p0probSum != 1.0)
+		{
+			disp("GAAHHH P^0 " + p0probSum);
+			throw new Exception("P^0 PROBABILITIES DON'T ADD TO ONE");
+		}
+		if (pjprobSum != 1.0) 
+		{
+			disp("GHAHAHAAH " + pjprobSum);
+			throw new Exception("P^J PROBABILITIES DON'T ADD TO ONE");
+		}
 		pSumCheck += pzero;
 		if (pSumCheck != 1.0) throw new Exception("PROBABILITIES DO NOT ADD UP TO ONE");
 		disp("probability of p(h^0) = " + pzero);
+		if (a == 5) System.exit(-1);
+//		System.exit(-1);
 		
 		
 		sum += 1; // 1 + (big sum)
@@ -555,114 +626,172 @@ public class Model
 		return H;
 	}
 	
-//	static boolean isDecreasing(int[][] M, int k, int m) {
-//		int last = M[0][0];
-//		for (int i = 0; i < k; i++) {
-//			for (int j = 0; j < m; j++) {
-//				if (i == 0 && j == 0) {
-//					last = M[i][j];
-//					continue;
-//				} else {
-//					if (M[i][j] > last) {
-//						return false; // not decreasing...
-//					} else {
-//						last = M[i][j]; // update last value seen
-//					}
-//				}
-//			}
-//		}
-//		
-//		// Check Rows (decreasing order...)
-//		for (int j = 0; j < m; j++) {
-//			int lastRow = M[0][j]; // pull out the last one
-//			for (int i = 1; i < k; i++) {
-//				if (lastRow < M[i][j]) {
-//					return false;
-//				} else {
-//					lastRow = M[i][m - 1];
-//				}
-//			}
-//		}
-//		
-//		// Check columns (17-1)
-//		for (int i = 0; i < k; i++) {
-//			int lastCol = M[i][0]; // D(i,j = 0)
-//			for (int j = 1; j < m; j++) {
-//				if (lastCol < M[i][j]) { // D(i,j+1)
-//					return false;
-//				} else {
-//					lastCol = M[i][j];
-//				}
-//			}
-//		}
-//		return true;
-//	}
+	public static boolean validHcol(int[][] S, int[] Hcol, int k, int m, int j) throws Exception
+	{	
+		if (j == 0)
+		{
+			int sum = 0;
+			for (int i = 1; i < k; i++) sum += Hcol[i];
+			if (sum > S[0][0]) // sum must be <= S(-1,0)
+			{
+				return false;
+			}
+		}
+		
+		for (int i = 1; i < k; i++)
+		{
+			if (Hcol[i] > S[i][j]) // H(i,j) <= S(i,j) for all i = 0,...,k-1 and all j's
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static void pushHCol(int[][] S, int[] Hcol, int k, int m, int i, int j, ArrayList<int[]> colList, ArrayList<String> seen) throws Exception
+	{
+		Hcol[i]++;
+		if (validHcol(S, Hcol, k, m, j))
+		{
+			int[] clone = clone(Hcol);
+			colList.add(Hcol);
+			pushHCol(S, clone, k, m, i, j, colList, seen);
+		}
+		else if (i != k - 1)
+		{
+			while (Hcol[i] > 0) // backtrack...
+			{
+				Hcol[i]--;
+				int[] clone = clone(Hcol);
+				pushHCol(S, clone, k, m, i+1, j, colList, seen);
+			}
+		}
+	}
+	
+	public static ArrayList<ArrayList<Integer>> colCombinations(ArrayList<ArrayList<int[]>> cols, ArrayList<Integer> build, int j)
+	{
+		ArrayList<ArrayList<Integer>> indices = new ArrayList<ArrayList<Integer>>();
+		
+		if (j == cols.size() - 1)
+		{
+			for (int i = 0; i < cols.get(j).size(); i++)
+			{
+				ArrayList<Integer> copy = clone(build);
+				copy.add(i);
+				indices.add(copy);
+				
+				disp("Index set");
+				for (Integer k : copy)
+				{
+					System.out.print(k + " ");
+				}
+				disp("");
+			}
+		}
+		else
+		{
+			for (int i = 0; i < cols.get(j).size(); i++)
+			{
+				ArrayList<Integer> copy = clone(build);
+				copy.add(i);
+				indices.addAll(colCombinations(cols, copy, j + 1));
+			}
+		}
+		
+		return indices;
+	}
+	
+	public static ArrayList<int[][]> buildHFromColumns(ArrayList<ArrayList<int[]>> cols, int k, int m) throws Exception
+	{
+		ArrayList<int[][]> matrices = new ArrayList<int[][]>();
+		HashSet<String> seen = new HashSet<String>();
+		
+		ArrayList<ArrayList<Integer>> indices = colCombinations(cols, new ArrayList<Integer>(), 0);
+		for (ArrayList<Integer> set : indices)
+		{
+			int[][] mat = new int[k][m];
+			for (int j = 0; j < m; j++)
+			{
+				int[] col = cols.get(j).get(set.get(j));
+				for (int i = 0; i < k; i++)
+				{
+					mat[i][j] = col[i];
+				}
+			}
+			if (!seen.contains(canonical(mat)) && !isZero(mat))
+			{
+				disp("ADDING");
+				disp(mat, false);
+				matrices.add(mat);
+				seen.add(canonical(mat));
+			}
+		}
+		
+		return matrices;
+	}
 	
 	public static ArrayList<int[][]> buildHSet(int[][] D, int k, int m, int n, int N, int a) throws Exception {
-		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
+//		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
 		ArrayList<int[][]> Hfinal = new ArrayList<int[][]>();
 		
-		int[][] H = buildHzero(k, m);
-//		disp(H,true);
+//		int[][] H = buildHzero(k, m);
 		int[][] S = buildS(D, k, m, n);
-//		disp(S, true);
 		
-		// TODO: start here, look at S and all Hs that are built... fix some cases for D...
-		
-		for (int i = 1; i < k; i++) {
-			for (int j = 0; j < m; j++) {
-				Hset.addAll(buildH(clone(H), S, i, j, k, m, N, a));
+		// Build up each column independently
+		ArrayList<ArrayList<int[]>> Hcols = new ArrayList<ArrayList<int[]>>();
+		for (int j = 0; j < m; j++)
+		{
+			int[] Hcol = new int[k];
+			ArrayList<int[]> newCols = new ArrayList<int[]>();
+			pushHCol(S, Hcol, k, m, 1, j, newCols, new ArrayList<String>());
+			Hcol = new int[k]; // reset to 0
+			newCols.add(Hcol);
+			Hcols.add(newCols);
+//			Hcols.get(j).add(Hcol);
+			disp("Showing columns for j = " + j + ", || = " + Hcols.get(j).size());
+			for (int[] colJ : Hcols.get(j)) {
+				disp(colJ);
 			}
 		}
 		
-//		for (int[][] ht : Hset) {
-//			disp(ht, true);
-//		}
+		Hfinal = buildHFromColumns(Hcols, k, m);
 		
-		disp("" + Hset.size());
-		Hset = filterHSet(Hset, S, k, m);
-		disp("" + Hset.size());
-		
-//		disp("filtered set");
-//		for (int[][] Htmp : Hset) {
-//			disp(Htmp, true);
-//		}
-		
-//		for (int[][] Htmp : Hset) {
-//			if (Htmp[0][0] == 0 && Htmp[0][1] == 1 && Htmp[1][0] == 0 && Htmp[1][1] == 1 && Htmp[2][0] == 0 && Htmp[2][1] == 0) {
-//				disp("Finally...");
-//				disp(Htmp, true);
-//			}
-//		}
-		
-		// Now, filter out those that are not in the Dspace
-//		disp("Checking to see if D+H is in D-" + N + " subspace");
-//		disp("" + Hset.size());
-//		if (Hset.size() == 0) System.exit(-1); 
-//		disp("H set");
-		for (int[][] Ht : Hset) {
-			// Check to make sure that D+H is in the D space
-			int[][] addition = add(D, Ht, k, m);
-//			disp("addition test...");
-//			disp(D, true);
-//			disp(Ht, true);
-//			disp(addition, true);
-			boolean include = true;
-			if (!(isFullValidD(addition, n))) {
-				include = false;
-			}
-			
-			if (include) {
-//				disp("ADDED!");
-//				disp(Ht, true);
-				Hfinal.add(Ht);
-			}
-		}
-		
-		// TODO: need to uniquify the Hset (they're probably not unique...)
-//		disp("" + Hfinal.size());
 		return Hfinal;
 	}
+	
+//	public static ArrayList<int[][]> buildHSet(int[][] D, int k, int m, int n, int N, int a) throws Exception {
+//		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
+//		ArrayList<int[][]> Hfinal = new ArrayList<int[][]>();
+//		
+//		int[][] H = buildHzero(k, m);
+//		int[][] S = buildS(D, k, m, n);
+//		
+//		for (int i = 1; i < k; i++) {
+//			for (int j = 0; j < m; j++) {
+//				Hset.addAll(buildH(clone(H), S, i, j, k, m, N, a));
+//			}
+//		}
+//		
+//		// Filter
+//		Hset = filterHSet(Hset, S, k, m);
+//		
+//		// Now, filter out those that are not in the Dspace
+//		for (int[][] Ht : Hset) {
+//			// Check to make sure that D+H is in the D space
+//			int[][] addition = add(D, Ht, k, m);
+//			boolean include = true;
+//			if (!(isFullValidD(addition, n))) {
+//				include = false;
+//			}
+//			
+//			if (include) {
+//				Hfinal.add(Ht);
+//			}
+//		}
+//		
+//		return Hfinal;
+//	}
 	
 	public static boolean isZero(int[][] H, int k, int m) {
 		for (int i = 0; i < k; i++) {
@@ -698,8 +827,31 @@ public class Model
 		return copy;
 	}
 	
+	public static int[] clone(int[] M) {
+		int[] copy = new int[M.length];
+		for (int i = 0; i < M.length; i++) {
+			copy[i] = M[i];
+		}
+		return copy;
+	}
+	
+	public static ArrayList<Integer> clone(ArrayList<Integer> c)
+	{
+		ArrayList<Integer> copy = new ArrayList<Integer>();
+		for (Integer i : c)
+		{
+			copy.add(i);
+		}
+		return copy;
+	}
+	
 	static void disp(String m) {
 		System.out.println(m);
+	}
+	
+	static void disp(int[] v) {
+		for (int i = 0; i < v.length; i++) System.out.print(v[i] + " ");
+		disp("");
 	}
 	
 	public static void disp(int[][] m, boolean box)
@@ -748,6 +900,21 @@ public class Model
 
 	public static void main(String[] args) throws Exception
 	{
+//		ArrayList<ArrayList<int[]>> cols = new ArrayList<ArrayList<int[]>>();
+//		cols.add(new ArrayList<int[]>());
+//		cols.add(new ArrayList<int[]>());
+//		cols.add(new ArrayList<int[]>());
+//		cols.get(0).add(new int[] {0});
+//		cols.get(0).add(new int[] {0});
+//		cols.get(0).add(new int[] {0});
+//		cols.get(0).add(new int[] {0});
+//		cols.get(1).add(new int[] {0});
+//		cols.get(1).add(new int[] {0});
+//		cols.get(1).add(new int[] {0});
+//		cols.get(2).add(new int[] {0});
+//		ArrayList<ArrayList<Integer>> ints = colCombinations(cols, new ArrayList<Integer>(), 0);
+//		System.exit(-1);
+		
 		int k = 2; // num children
 		int m = 2; // num messages
 		int n = 5; // num nodes
