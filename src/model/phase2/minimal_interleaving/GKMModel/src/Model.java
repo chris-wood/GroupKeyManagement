@@ -128,7 +128,7 @@ public class Model
 	{
 		double prob = 1.0;
 		
-		// p^0 is different - use equations 11/12/13/14
+		// p^0 is different - use equations 11/12/13/14/15
 		int b = 0;
 		for (int i = 1; i <k; i++)
 		{
@@ -139,29 +139,20 @@ public class Model
 			sSum += S[i][0];
 		}
 		int U = sSum < S[0][0] ? sSum : S[0][0];
-//				disp("BEFORE BEFORE");
-//				disp(H, true);
 		
-		if (b == U && b == sSum) //equation 12
+		if (b == U && b == sSum) //equation 13
 		{
 			double sum = 0;
-//					disp("b = " + b);
-//			disp("EQUATION 12");
 			for (int i = b; i <= S[0][0]; i++)
 			{
 				sum += binom(S[0][0], i) * Math.pow(p1, i) * Math.pow(1.0 - p1, S[0][0] - i);
 			}
 			prob *= sum;
-//					disp("b == U sum: " + sum);
 		} 
-		else// equation 13
+		else// equation 14
 		{
-//			disp("EQUATION 13");
 			double tmp = gh(S, H, k, m, b) * binom(S[0][0], b) * Math.pow(p1, b) * Math.pow(1.0 - p1, S[0][0] - b);
-//					disp ("b < U prod: " + tmp);
 			prob = tmp;
-			
-//					gh(int[][] S, int[][] H, int k, int m, int b)
 		}
 
 		return prob;
@@ -179,13 +170,7 @@ public class Model
 	
 	static double probH(int[][] H, int[][] S, int k, int m, boolean isZero) throws Exception {
 		double prob = 1.0;
-		
-//		disp("Calculating probH");
-//		disp(H, true);
-//		disp(S, true);
-		
 		prob = p0prob(H, S, k, m) * colProbs(H, S, k, m);
-		
 		return prob;
 	}
 	
@@ -239,6 +224,7 @@ public class Model
 		disp(expandedD, true);
 		disp("S:");
 		disp(S, true);
+		boolean invalid = false;
 		
 		for (int[][] H : Hset)
 		{
@@ -246,6 +232,14 @@ public class Model
 			disp(H, true);
 			p0probSum += p0prob(H, S, k+1, m);
 			double tp = colProbs(H, S, k+1, m);
+			
+			if (tp != 1.0) 
+			{
+				invalid = true;
+//				disp("GHAHAHAAH " + tp);
+//				throw new Exception("P^J PROBABILITIES DON'T ADD TO ONE");
+			}
+			
 			pjprobSum += tp;
 			disp("p0 = " + p0prob(H, S, k+1, m) + ", pj = " + colProbs(H, S, k+1, m));
 		}
@@ -254,11 +248,12 @@ public class Model
 			disp("GAAHHH P^0 " + p0probSum);
 			throw new Exception("P^0 PROBABILITIES DON'T ADD TO ONE");
 		}
-		if (pjprobSum != 1.0) 
-		{
-			disp("GHAHAHAAH " + pjprobSum);
-			throw new Exception("P^J PROBABILITIES DON'T ADD TO ONE");
-		}
+		if (invalid) throw new Exception("pj failed.");
+//		if (pjprobSum != 1.0) 
+//		{
+//			disp("GHAHAHAAH " + pjprobSum);
+//			throw new Exception("P^J PROBABILITIES DON'T ADD TO ONE");
+//		}
 		pSumCheck += pzero;
 		if (pSumCheck != 1.0) throw new Exception("PROBABILITIES DO NOT ADD UP TO ONE");
 		disp("probability of p(h^0) = " + pzero);
