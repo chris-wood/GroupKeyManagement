@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 1000; %1000 or 10000 for proper results
+numSamples = 1; %1000 or 10000 for proper results
 maxChildren = [2];
 nodeCount = [5]; %,10,15,20,25,30]; % return after the thing is working!
-p1Probs = [0.5]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-p2Probs= [0.5]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p1Probs = [.5]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p2Probs= [.5]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
 [~, numP1probs] = size(p1Probs);
 [~, numP2probs] = size(p2Probs);
@@ -31,7 +31,7 @@ for childIndex = 1:numChildren
     for p1Index = 1:numP1probs
         for p2Index = 1:numP2probs
             for n = 1:numNodes
-                disp(sprintf('Simulation for %d nodes with pAuth = %d and pKey = %d', numNodes(n), p1Probs(p1Index), p2Probs(p2Index)))
+                disp(sprintf('Simulation for %d nodes with p1 = %d and p2 = %d', numNodes(n), p1Probs(p1Index), p2Probs(p2Index)))
                 for i = 1:numSamples
                     % Initialize the adj. matrix representation for the nodes and network
                     % No one is connected at the beginning...
@@ -54,7 +54,7 @@ for childIndex = 1:numChildren
 
                     % Loop while we do try to establish a connection with each node
                     while (nConnected < (nodeCount(n) - 1)) % We go until connected == (n-1)
-
+                        
                         % DEBUG
                         fprintf('Time step: %i\n', time);
 
@@ -152,12 +152,12 @@ for childIndex = 1:numChildren
                                   % authentcation, check to see if they
                                   % make progress
                                   if (authMatrix(kIndex, rIndex, cIndex) == 1)
-                                      if (rand(1) <= p2Probs(p2Index))
+                                      %if (rand(1) <= p2Probs(p2Index))
                                           %disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, rIndex, cIndex))
                                           authMatrix(kIndex + 1, rIndex, cIndex) = 1;
                                           authMatrix(kIndex, rIndex, cIndex) = 0;
                                           fprintf('Node %i advanced to stage %i\n', cIndex, kIndex + 1);
-                                      end
+                                      %end
                                   end
                                end
                             end
@@ -186,7 +186,7 @@ for childIndex = 1:numChildren
                             end
 
                             % DEBUG
-                            fprintf('Node %i moved into the first stage\n', j);
+                            fprintf('Node %i started communicating with node %i\n', j, unconnected(readyIndex));
 
                             % Hook these guys into the auth matrix
                             child = unconnected(readyIndex);
