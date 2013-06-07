@@ -5,8 +5,17 @@ import java.util.HashSet;
 public class Model
 {
 	static HashMap<String, Double> E;
-	static double p2 = 1.0;
-	static double p1 = 1.0;
+	static double p2 = 0.5;
+	static double p1 = 0.5;
+	
+	static boolean isZero(int[] v)
+	{
+		for (int i = 0; i < v.length; i++)
+		{
+			if (v[i] != 0) return false;
+		}
+		return true;
+	}
 	
 	static boolean isZero(int[][] M) {
 		for (int i = 0; i < M.length; i++)
@@ -205,71 +214,14 @@ public class Model
 			probSum += tmpSum;
 			probHs.add(tmpSum);
 			sum += tmpSum * E.get(key);
-			
-//			disp("" + probH(H, S, k, m));
 		}
 		double pzero = probH(buildHzero(k+1, m), S, k+1, m, true);
 		disp("probability of p(h) = " + probSum);
-		double pSumCheck = 0.0;
-		for (Double d : probHs) 
-		{
-			disp("" + d);
-			pSumCheck += d;
-		}
-		disp("Local probabilities:");
-		double p0probSum = 0.0;
-		double pjprobSum = 0.0;
-		
-		disp("D:");
-		disp(expandedD, true);
-		disp("S:");
-		disp(S, true);
-		boolean invalid = false;
-		
-		for (int[][] H : Hset)
-		{
-			disp("H:");
-			disp(H, true);
-			p0probSum += p0prob(H, S, k+1, m);
-			double tp = colProbs(H, S, k+1, m);
-			
-			if (tp != 1.0) 
-			{
-				invalid = true;
-//				disp("GHAHAHAAH " + tp);
-//				throw new Exception("P^J PROBABILITIES DON'T ADD TO ONE");
-			}
-			
-			pjprobSum += tp;
-			disp("p0 = " + p0prob(H, S, k+1, m) + ", pj = " + colProbs(H, S, k+1, m));
-		}
-		if (p0probSum != 1.0)
-		{
-			disp("GAAHHH P^0 " + p0probSum);
-			throw new Exception("P^0 PROBABILITIES DON'T ADD TO ONE");
-		}
-		if (invalid) throw new Exception("pj failed.");
-//		if (pjprobSum != 1.0) 
-//		{
-//			disp("GHAHAHAAH " + pjprobSum);
-//			throw new Exception("P^J PROBABILITIES DON'T ADD TO ONE");
-//		}
-		pSumCheck += pzero;
-		if (pSumCheck != 1.0) throw new Exception("PROBABILITIES DO NOT ADD UP TO ONE");
-		disp("probability of p(h^0) = " + pzero);
-		if (a == 5) System.exit(-1);
-//		System.exit(-1);
-		
 		
 		sum += 1; // 1 + (big sum)
 		
 		// multiply by 1/(1-p(H0))
 		double prod = 1 / (1 - pzero);
-//		disp("" + probH(buildHzero(k, m), S, k, m));
-		
-		// insert the new expected time value
-//		disp("" + sum);
-//		disp("" + prod);
 		disp("Expected time for D^" + a + " matrix: " + (prod * sum) + " = (" + prod + " * " + sum + ") = ((1/1-Pd(H^0)) * [inner sum])");
 		E.put(canonical(toSmallD(D,k+1,m)), prod * sum);
 	}
@@ -563,12 +515,6 @@ public class Model
 		// Incremement H at index and then check to see if within the S bound
 		H[i][j]++;
 		
-		// compute the first row of the H matrix
-		// TODO: LEAVE OFF HERE FOR NOW MK?
-		
-		// TODO: THESE CONSTRAINTS ARE INCORRECT - GET THE INDICES WORKING
-		// TODO: D's are correct, S calculation is correct, create H's by hand and then check with this result.
-		
 		for (int c = 0; c < m; c++) {
 			int sum = 0;
 			for (int r = 1; r < k; r++) {
@@ -675,13 +621,6 @@ public class Model
 				ArrayList<Integer> copy = clone(build);
 				copy.add(i);
 				indices.add(copy);
-				
-				disp("Index set");
-				for (Integer k : copy)
-				{
-					System.out.print(k + " ");
-				}
-				disp("");
 			}
 		}
 		else
@@ -716,8 +655,6 @@ public class Model
 			}
 			if (!seen.contains(canonical(mat)) && !isZero(mat))
 			{
-				disp("ADDING");
-				disp(mat, false);
 				matrices.add(mat);
 				seen.add(canonical(mat));
 			}
@@ -727,10 +664,8 @@ public class Model
 	}
 	
 	public static ArrayList<int[][]> buildHSet(int[][] D, int k, int m, int n, int N, int a) throws Exception {
-//		ArrayList<int[][]> Hset = new ArrayList<int[][]>();
 		ArrayList<int[][]> Hfinal = new ArrayList<int[][]>();
 		
-//		int[][] H = buildHzero(k, m);
 		int[][] S = buildS(D, k, m, n);
 		
 		// Build up each column independently
@@ -743,14 +678,73 @@ public class Model
 			Hcol = new int[k]; // reset to 0
 			newCols.add(Hcol);
 			Hcols.add(newCols);
-//			Hcols.get(j).add(Hcol);
 			disp("Showing columns for j = " + j + ", || = " + Hcols.get(j).size());
 			for (int[] colJ : Hcols.get(j)) {
 				disp(colJ);
 			}
 		}
 		
+		int numMatrices = 1; // there should only be one zero matrix, so subtract at the end.
+		for (int j = 0; j < m; j++) 
+		{
+			numMatrices *= Hcols.get(j).size();
+		}
+		numMatrices--;
+		
+		// check to make sure the number of combinations is correct for j > 0 (equation 12)
+		int prod = 1;
+		for (int j = 1; j < m; j++)
+		{
+			for (int i = 1; i < k; i++)
+			{
+				prod *= (S[i][j] + 1);
+			}
+			if (prod != Hcols.get(j).size()) throw new Exception("H columns for j = " + j + " were not constructed correctly. " +
+					"Expected " + prod + " but got " + Hcols.get(j).size());
+		}
+		
+		// Verify that all of the probabilities add up to 1.0...
+		for (int ji = 0; ji < m; ji++)
+		{
+			if (ji == 0)
+			{
+				double prob = 0.0;
+				for (int[] col : Hcols.get(ji))
+				{
+					int[][] temp = buildHzero(k, m);
+					for (int i = 0; i < k; i++)
+					{
+						temp[i][ji] = col[i];
+					}
+					prob += p0prob(temp, S, k, m);
+				}
+				if (prob != 1.0)
+				{
+					throw new Exception("Probabilities for j = 0 don't add up to 1.0");
+				}
+			}
+			else
+			{
+				double prob = 0.0;
+				for (int[] col : Hcols.get(ji))
+				{
+					int[][] temp = buildHzero(k, m);
+					for (int i = 0; i < k; i++)
+					{
+						temp[i][ji] = col[i];
+					}
+					prob += probHCol(temp, S, k, m, ji); 
+				}
+				if (prob != 1.0)
+				{
+					throw new Exception("Probabilities for j = " + ji + " don't add up to 1.0.");
+				}
+			}
+		}
+		
 		Hfinal = buildHFromColumns(Hcols, k, m);
+		if (Hfinal.size() != numMatrices)
+			throw new Exception("Incorrect number of H matrices generated.");
 		
 		return Hfinal;
 	}
@@ -894,37 +888,11 @@ public class Model
 	}
 
 	public static void main(String[] args) throws Exception
-	{
-//		ArrayList<ArrayList<int[]>> cols = new ArrayList<ArrayList<int[]>>();
-//		cols.add(new ArrayList<int[]>());
-//		cols.add(new ArrayList<int[]>());
-//		cols.add(new ArrayList<int[]>());
-//		cols.get(0).add(new int[] {0});
-//		cols.get(0).add(new int[] {0});
-//		cols.get(0).add(new int[] {0});
-//		cols.get(0).add(new int[] {0});
-//		cols.get(1).add(new int[] {0});
-//		cols.get(1).add(new int[] {0});
-//		cols.get(1).add(new int[] {0});
-//		cols.get(2).add(new int[] {0});
-//		ArrayList<ArrayList<Integer>> ints = colCombinations(cols, new ArrayList<Integer>(), 0);
-//		System.exit(-1);
-		
+	{	
 		int k = 2; // num children
 		int m = 2; // num messages
 		int n = 5; // num nodes
 		int N = (n - 1) * m;
-		
-		disp("" + binom(0, 0));
-		disp("" + binom(1,0));
-		disp("" + binom(0,1));
-		disp("" + fact(0));
-		disp("" + fact(1));
-		disp("" + fact(2));
-		disp("" + fact(5));
-		disp("" + Math.pow(1.0 - p2, 100));
-		disp("" + Math.pow(1.0, 100));
-		disp("" + Math.pow(1.0, 0));
 		
 		// Create the estimated time collection
 		E = new HashMap<String, Double>();
@@ -934,13 +902,6 @@ public class Model
 		
 		// Generate the list of all matrices in the D^8 (D*)
 		ArrayList<int[][]> D8 = push(k, m, n, Dmax, null, true);
-		
-		// Initialize the ET(D) for all matrices in the d = 8
-//		System.out.println("What we got back,...");
-//		for (int[][] D : D8) {
-//			disp(D, true);
-//			E.put(canonical(D), 0.0);
-//		}
 		
 		disp("Inserting initial D^" + N + " times");
 		disp(Dmax, true);
@@ -953,47 +914,51 @@ public class Model
 		
 		D8 = filterDSet(newD8, n);
 		disp("D^" + N + " subspace");
-		for (int[][] D : D8) {
-//			int[][] expandedD = buildD(D,k,m);
+		for (int[][] D : D8) 
+		{
 			disp(D, true);
 			E.put(canonical(toSmallD(D,k+1,m)), 0.0);
-//			disp("" + E.keySet());
 		}
 		
-//		int[][] Dtest = {{4, 3}, {3, 2}, {1, 1}};
-//		disp("IS THIS VALID?");
-//		disp("" + isFullValidD(Dtest, n));
-//		disp("" + E.keySet());
-		
 		// Let the recursion begin!
-		for (int a = N - 1; a >= 0; a--) {
+		for (int a = N - 1; a >= 0; a--) 
+		{
 			Dmax = buildDmax(a, k, m, n);
-//			disp(Dmax, true);
 			ArrayList<int[][]> Dset = push(k, m, n, Dmax, null, true);
-//			Dset = filterDSet(Dset, n);
-//			disp("" + Dset.size());
 			
 			// Expand out the Ds for filtering
 			ArrayList<int[][]> newDset = new ArrayList<int[][]>();
-//			disp("" + Dset.size());
 			for (int[][] D : Dset) {
 				newDset.add(buildD(D, k, m));
-//				disp(buildD(D, k, m), true);
 			}
 			
 			Dset = filterDSet(newDset, n);
 			System.out.println("|D-" + a + " subspace| = " + Dset.size());
-//			disp(Dmax, true);
-//			System.out.println(isValid(n, Dmax));
-//			System.out.println(Dset);
 			for (int[][] D : Dset) {
 				disp("D^" + a + " matrix");
 				disp(D, true);
 				updateE(D, k, m, n, a, N);
-//				disp("" + E.get(canonical(toSmallD(D,k+1,m))));
 			}
-//			if (i == 7) return;
-//			break;
+			
+			if (a == 0) 
+			{
+				disp("CHECKING STARTING POINT"); 
+				int[][] S = buildS(Dset.get(0), k+1, m, n); // was D
+				disp("S for D");
+				disp(S, true);
+				ArrayList<int[][]> Hset = buildHSet(Dset.get(0), k+1, m, n, N, a); // was D
+				if (Hset.size() != 1) throw new Exception("Wrong number of H matrices for the starting point");
+				double targetProb = 1.0 - Math.pow((1 - p1), n - 1);
+				if (probH(Hset.get(0), S, k+1, m, true) != targetProb)
+				{
+					throw new Exception("The only non-zero H matrix didn't add up to probability 1 - (1-p1)^(n-1)");
+				}
+				targetProb = Math.pow((1 - p1), n - 1);
+				if (probH(buildHzero(k+1, m), S, k+1, m, true) != (targetProb))
+				{
+					throw new Exception("The zero matrix H didn't add up to probability (1 - p1)^(n - 1)");
+				}
+			}
 		}
 		
 		int[][] zero = buildHzero(k, m);
