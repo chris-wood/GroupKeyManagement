@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 1; %1000 or 10000 for proper results
+numSamples = 10000; %1000 or 10000 for proper results
 maxChildren = [2];
 nodeCount = [5]; %,10,15,20,25,30]; % return after the thing is working!
 p1Probs = [.5]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
@@ -56,7 +56,7 @@ for childIndex = 1:numChildren
                     while (nConnected < (nodeCount(n) - 1)) % We go until connected == (n-1)
                         
                         % DEBUG
-                        fprintf('Time step: %i\n', time);
+                        % fprintf('Time step: %i\n', time);
 
                         % Find the unconnected nodes from the connected list
                         tempList = zeros(1, nodeCount(n));
@@ -72,7 +72,7 @@ for childIndex = 1:numChildren
 
                         % Strip out all nodes that are currently in 
                         % authentication stage.
-                        for kIndex = 1:kMult
+                        for kIndex = 1:(kMult) % all nodes in the last stage will be ready for the key...
                            for rIndex = 1:nodeCount(n)
                               for cIndex = 1:nodeCount(n)
                                  if (authMatrix(kIndex, rIndex, cIndex) == 1)
@@ -124,11 +124,11 @@ for childIndex = 1:numChildren
                         % is complete at this stage in the auth matrix)
                         for rIndex = 1:nodeCount(n)
                            for cIndex = 1:nodeCount(n)
-                              if (authMatrix(kMult, rIndex, cIndex) == 1)
+                              if (authMatrix(kMult, rIndex, cIndex) == 1) % was kMult, not kMult - 1
                                   % A connection exists, use the key
                                   % probability to see if the key
                                   % connection is passed along...
-                                  if (rand(1) <= p2Probs(p2Index))
+                                  %if (rand(1) <= p2Probs(p2Index))
                                       %disp(sprintf('(%d) The key was passed from node %d to node %d', time, rIndex, cIndex));
                                       authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
                                       aMatrix(rIndex, cIndex) = 1;
@@ -136,8 +136,8 @@ for childIndex = 1:numChildren
                                       cMatrix(cIndex) = 1;
                                       nConnected = nConnected + 1;
 
-                                      fprintf('Node %i now h as the key\n', cIndex);
-                                  end
+                                      % fprintf('Node %i now has the key\n', cIndex);
+                                  %end
                               end
                            end
                         end
@@ -152,12 +152,12 @@ for childIndex = 1:numChildren
                                   % authentcation, check to see if they
                                   % make progress
                                   if (authMatrix(kIndex, rIndex, cIndex) == 1)
-                                      %if (rand(1) <= p2Probs(p2Index))
+                                      if (rand(1) <= p2Probs(p2Index))
                                           %disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, rIndex, cIndex))
                                           authMatrix(kIndex + 1, rIndex, cIndex) = 1;
                                           authMatrix(kIndex, rIndex, cIndex) = 0;
-                                          fprintf('Node %i advanced to stage %i\n', cIndex, kIndex + 1);
-                                      %end
+                                          % fprintf('Node %i advanced to stage %i\n', cIndex, kIndex + 1);
+                                      end
                                   end
                                end
                             end
@@ -165,6 +165,10 @@ for childIndex = 1:numChildren
 
                         % Compute the set of available parents at this iteration
                         [parentList, parentCount] = readyParents(aMatrix, cMatrix, authMatrix, maxChildren(childIndex), nodeCount(n), kMult);
+                        %disp('parents available at this time');
+                        %for j = 1:parentCount
+                        %   disp(parentList(j));
+                        %end
 
                         % Shuffle algorithm
                         for j = parentCount:-1:1
@@ -186,7 +190,7 @@ for childIndex = 1:numChildren
                             end
 
                             % DEBUG
-                            fprintf('Node %i started communicating with node %i\n', j, unconnected(readyIndex));
+                            % fprintf('Node %i is in stage 1\n', unconnected(readyIndex));
 
                             % Hook these guys into the auth matrix
                             child = unconnected(readyIndex);
@@ -232,24 +236,26 @@ for childIndex = 1:numChildren
     end
 end
 
-
 % Calculate the average and standard deviation for each node simulation
-%for pAuthIndex = 1:numAuthProbs
-%    for pKeyIndex = 1:numKeyProbs
-%        for i = 1:numNodes
-%            avg = mean(times(pAuthIndex, pKeyIndex, i,:));
-%            stddev = std(times(pAuthIndex, pKeyIndex, i,:));
-%            stderr = 2 * (stddev / (numSamples^(1/2)));
-%            finalTable(pAuthIndex,pKeyIndex,i,1) = numNodes(i);
-%            finalTable(pAuthIndex,pKeyIndex,i,2) = avg;
-%            finalTable(pAuthIndex,pKeyIndex,i,3) = stddev;
-%            finalTable(pAuthIndex,pKeyIndex,i,4) = stderr;
-%        end
-%    end
-%end
+% finalTable = zeros(numChildren, numP1probs, numP2probs, numNodes, 4);
+for childIndex = 1:numChildren
+  for p1Index = 1:numP1probs
+    for p2Index = 1:numP2probs
+      for i = 1:numNodes
+        avg = mean(times(numChildren,p1Index,p2Index, i,:));
+        stddev = std(times(numChildren, p1Index, p2Index, i,:));
+        stderr = 2 * (stddev / (numSamples^(1/2)));
+        finalTable(numChildren, p1Index,p2Index,i,1) = nodeCount(i);
+        finalTable(numChildren, p1Index,p2Index,i,2) = avg;
+        finalTable(numChildren, p1Index,p2Index,i,3) = stddev;
+        finalTable(numChildren, p1Index,p2Index,i,4) = stderr;
+      end
+    end
+  end
+end
 
 % Display the average times table
 %disp(avgTimes);
 
 % Display the final table
-%disp(finalTable);
+disp(finalTable);

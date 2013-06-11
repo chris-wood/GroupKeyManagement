@@ -19,7 +19,7 @@ for i = 1:nNodes
         end
         
         % Search the authentication matrix...
-        for kIndex = 1:kMult
+        for kIndex = 1:(kMult) % this was just kMult, but those in the last stage will always get the key immediately
             for cIndex = 1:nNodes
                 if (authMatrix(kIndex, i, cIndex) == 1) 
                     workingCount = workingCount + 1;
