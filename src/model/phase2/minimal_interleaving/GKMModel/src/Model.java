@@ -947,7 +947,7 @@ public class Model
 		
 		int[][] zero = buildHzero(k, m);
 		// disp("");
-		disp("Expected time: " + E.get(canonical(zero)));
+		disp("" + E.get(canonical(zero)));
 	}
 }
 
