@@ -9,7 +9,7 @@
 % Simulation parameters
 numSamples = 10000; %1000 or 10000 for proper results
 maxChildren = [2];
-nodeCount = [5]; %,10,15,20,25,30]; % return after the thing is working!
+nodeCount = [8]; %,10,15,20,25,30]; % return after the thing is working!
 p1Probs = [.5]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 p2Probs= [.5]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
@@ -31,7 +31,7 @@ for childIndex = 1:numChildren
     for p1Index = 1:numP1probs
         for p2Index = 1:numP2probs
             for n = 1:numNodes
-                disp(sprintf('Simulation for %d nodes with p1 = %d and p2 = %d', numNodes(n), p1Probs(p1Index), p2Probs(p2Index)))
+                disp(sprintf('Simulation for %d nodes with p1 = %d and p2 = %d', nodeCount(n), p1Probs(p1Index), p2Probs(p2Index)))
                 for i = 1:numSamples
                     % Initialize the adj. matrix representation for the nodes and network
                     % No one is connected at the beginning...
@@ -253,9 +253,6 @@ for childIndex = 1:numChildren
     end
   end
 end
-
-% Display the average times table
-%disp(avgTimes);
 
 % Display the final table
 disp(finalTable);
