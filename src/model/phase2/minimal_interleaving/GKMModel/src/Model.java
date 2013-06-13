@@ -926,6 +926,7 @@ public class Model
 			
 			if (a == 0) 
 			{
+				final float precision = 0.001f; // IEEE-754 fp rep precision
 				// disp("CHECKING STARTING POINT"); 
 				int[][] S = buildS(Dset.get(0), k+1, m, n); // was D
 				// disp("S for D");
@@ -933,14 +934,14 @@ public class Model
 				ArrayList<int[][]> Hset = buildHSet(Dset.get(0), k+1, m, n, N, a); // was D
 				if (Hset.size() != 1) throw new Exception("Wrong number of H matrices for the starting point");
 				double targetProb = 1.0 - Math.pow((1 - p1), n - 1);
-				if (probH(Hset.get(0), S, k+1, m, true) != targetProb)
+				if (Math.abs(probH(Hset.get(0), S, k+1, m, true) - targetProb) >= precision)
 				{
-					throw new Exception("The only non-zero H matrix didn't add up to probability 1 - (1-p1)^(n-1)");
+					throw new Exception("The only non-zero H matrix didn't add up to probability 1 - (1-p1)^(n-1): " + targetProb);
 				}
 				targetProb = Math.pow((1 - p1), n - 1);
-				if (probH(buildHzero(k+1, m), S, k+1, m, true) != (targetProb))
+				if (Math.abs(probH(buildHzero(k+1, m), S, k+1, m, true) - targetProb) >= precision)
 				{
-					throw new Exception("The zero matrix H didn't add up to probability (1 - p1)^(n - 1)");
+					throw new Exception("The zero matrix H didn't add up to probability (1 - p1)^(n - 1): " + targetProb);
 				}
 			}
 		}
