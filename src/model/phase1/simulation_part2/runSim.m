@@ -245,6 +245,7 @@ for childIndex = 1:numChildren
         avg = mean(times(numChildren,p1Index,p2Index, i,:));
         stddev = std(times(numChildren, p1Index, p2Index, i,:));
         stderr = 2 * (stddev / (numSamples^(1/2)));
+        fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', kMult, maxChildren(numChildren), nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
         finalTable(numChildren, p1Index,p2Index,i,1) = nodeCount(i);
         finalTable(numChildren, p1Index,p2Index,i,2) = avg;
         finalTable(numChildren, p1Index,p2Index,i,3) = stddev;
@@ -255,4 +256,4 @@ for childIndex = 1:numChildren
 end
 
 % Display the final table
-disp(finalTable);
+%disp(finalTable);
