@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 10000; %1000 or 10000 for proper results
+numSamples = 100000; %1000 or 10000 for proper results
 maxChildren = [2];
-nodeCount = [8]; %,10,15,20,25,30]; % return after the thing is working!
-p1Probs = [.5]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-p2Probs= [.5]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+nodeCount = [5,6,7,8]; 
+p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
 [~, numP1probs] = size(p1Probs);
 [~, numP2probs] = size(p2Probs);
@@ -22,7 +22,7 @@ times = zeros(numChildren, numP1probs, numP2probs, numNodes, numSamples);
 finalTable = zeros(numChildren, numP1probs, numP2probs, numNodes, 4);
 
 % Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
-kMult = 2;
+kMult = 2; % making this anything different severly impacts the MODEL's performance
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');
@@ -223,7 +223,7 @@ for childIndex = 1:numChildren
         for p2Index = 1:numP2probs
            for n = 1:numNodes
               %temp(p, n) = avgTimes(c, p, n); % the final table has the correct values
-              temp(p2Index, n) = mean(times(childIndex,p1Index,p2Index,n,:)) % the second element is the average time
+              temp(p2Index, n) = mean(times(childIndex,p1Index,p2Index,n,:)); % the second element is the average time
            end
         end
         %figure(figureId);
@@ -245,6 +245,7 @@ for childIndex = 1:numChildren
         avg = mean(times(numChildren,p1Index,p2Index, i,:));
         stddev = std(times(numChildren, p1Index, p2Index, i,:));
         stderr = 2 * (stddev / (numSamples^(1/2)));
+        fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', kMult, maxChildren(numChildren), nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
         finalTable(numChildren, p1Index,p2Index,i,1) = nodeCount(i);
         finalTable(numChildren, p1Index,p2Index,i,2) = avg;
         finalTable(numChildren, p1Index,p2Index,i,3) = stddev;
@@ -255,4 +256,4 @@ for childIndex = 1:numChildren
 end
 
 % Display the final table
-disp(finalTable);
+%disp(finalTable);
