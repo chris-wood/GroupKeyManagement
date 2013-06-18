@@ -27,6 +27,18 @@ public class Model
 		}
 		return true;
 	}
+
+	static int sum(int[][] m) {
+		int s = 0;
+		for (int i = 0; i < m.length; i++)
+		{
+			for (int j = 0; j < m[i].length; j++)
+			{
+				s += m[i][j];
+			}
+		}
+		return s;
+	}
 	
 	static String canonical(int[][] M) {
 		String result = "";
@@ -195,7 +207,7 @@ public class Model
 		
 //		disp("" + k);
 		ArrayList<int[][]> Hset = buildHSet(expandedD, k+1, m, n, N, a); // was D
-//		disp("" + Hset.size());
+		// disp("" + Hset.size());
 		
 		// NOTE: code checks out up to this point...
 		// System.out.println("|H set for a = " + a + "| = " + Hset.size());
@@ -205,6 +217,16 @@ public class Model
 			// disp(H, true);
 			
 			// NOTE: the small Ds (i.e. without -1 row) are those that get put in the time map)
+			// disp("added");
+			// disp(S, true);
+			// disp(expandedD, true);
+			// disp(H, true);
+			// disp(add(expandedD, H, k+1, m), true);
+			// disp("to smaller guy");
+			// disp(toSmallD(add(expandedD, H, k+1, m), k+1, m), true);
+
+			// Sanity check...
+			if (!isValidD(n, add(expandedD, H, k+1, m), true)) throw new Exception("D+H is not a valid D");
 			String key = canonical(toSmallD(add(expandedD, H, k+1, m), k+1, m));
 			
 			// Compute the probabilities now...
@@ -213,6 +235,13 @@ public class Model
 			// disp("prob for this H = " + tmpSum);
 			probSum += tmpSum;
 			probHs.add(tmpSum);
+			if (!E.keySet().contains(key))
+			{
+				disp(S, true);
+				disp(expandedD, true);
+				disp(H, true);
+				throw new Exception("Transition problem: " + key);
+			}
 			sum += tmpSum * E.get(key);
 		}
 		double pzero = probH(buildHzero(k+1, m), S, k+1, m, true);
@@ -223,6 +252,7 @@ public class Model
 		// multiply by 1/(1-p(H0))
 		double prod = 1 / (1 - pzero);
 		// disp("Expected time for D^" + a + " matrix: " + (prod * sum) + " = (" + prod + " * " + sum + ") = ((1/1-Pd(H^0)) * [inner sum])");
+		disp("Inserting: " + canonical(toSmallD(D,k+1,m)));
 		E.put(canonical(toSmallD(D,k+1,m)), prod * sum);
 	}
 	
@@ -391,53 +421,186 @@ public class Model
 		return result;
 	}
 	
-	public static ArrayList<int[][]> push(int k, int m, int n, int[][] D, ArrayList<int[][]> space, boolean check)
+// 	public static ArrayList<int[][]> push(int k, int m, int n, int[][] D, ArrayList<int[][]> space, boolean check)
+// 	{
+// 		if (space == null)
+// 		{
+// 			space = new ArrayList< int[][] >();
+// 		}
+		
+// 		// Check constraints...
+// //		System.out.println("tried: ");
+// //		disp(D, true);
+// 		if (!isValidD(n, D, false) && check) {
+// 			// disp("returning now...");
+// 			// disp(canonical(D));
+// 			return space;
+// 		}
+// 		if (!contains(space, D)) // don't push the same matrix more than once
+// 		{
+// 			space.add(clone(D));
+// 			for (int index = 0; index < k * m; index++) 
+// 			{
+// 				int count = 0;
+				
+// 				int[][] newD = clone(D);
+// //				System.out.println("trying: " + index);
+// 				for (int i = 0; i < k; i++) {
+// 					for (int j = 0; j < m; j++) {
+// 						count++;
+// 						if (count < index) {
+// //							System.out.println("skipping...");
+// 							// pass...
+// 							continue;
+// 						}
+// 						if (i == k - 1 && j == m - 1) {
+// 							// pass...
+// 							continue;
+// 						} else if (j == m - 1) {
+// 							// push down to the next row...
+// 							if (newD[i+1][0] < newD[i][j]) {
+// 								newD[i][j]--;
+// 								newD[i+1][0]++;
+// 								space = push(k, m, n, newD, space, check);
+// 							}
+// 						} else {
+// 							// push to next column...
+// 							if (newD[i][j + 1] < newD[i][j]) {
+// 								newD[i][j]--;
+// 								newD[i][j+1]++;
+// 								space = push(k, m, n, newD, space, check);
+// 							}
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+		
+// 		return space;
+// 	}
+
+	public static ArrayList<int[][]> push(int k, int m, int n, int a, int[][] D, ArrayList<int[][]> space, boolean check)
 	{
 		if (space == null)
 		{
 			space = new ArrayList< int[][] >();
 		}
+
+		// check to see if we at least found ONE
+		boolean reallyCheck = false;
+		if (space.size() > 0)
+		{
+			for (int[][] ld : space)
+			{
+				if (isValidD(n, ld, false))
+				{
+					reallyCheck = true;
+					break;
+				}
+			}
+		}
 		
 		// Check constraints...
 //		System.out.println("tried: ");
 //		disp(D, true);
-		if (!isValidD(n, D, false) && check) {
-//			disp("returning now...");
-//			disp(D, true);
+		if (!isValidD(n, D, false) && reallyCheck) { // don't push with an invalid matrix
+			// disp("returning now...");
+			// disp(canonical(D));
 			return space;
 		}
-		if (!contains(space, D)) space.add(clone(D));
-//		System.out.println("passed");
-		
-		for (int index = 0; index < k * m; index++) {
-			int count = 0;
-			
-			int[][] newD = clone(D);
-//			System.out.println("trying: " + index);
-			for (int i = 0; i < k; i++) {
-				for (int j = 0; j < m; j++) {
-					count++;
-					if (count < index) {
-//						System.out.println("skipping...");
-						// pass...
-						continue;
-					}
-					if (i == k - 1 && j == m - 1) {
-						// pass...
-						continue;
-					} else if (j == m - 1) {
-						// push down to the next row...
-						if (newD[i+1][0] < newD[i][j]) {
-							newD[i][j]--;
-							newD[i+1][0]++;
-							space = push(k, m, n, newD, space, check);
-						}
-					} else {
-						// push to next column...
-						if (newD[i][j + 1] < newD[i][j]) {
-							newD[i][j]--;
-							newD[i][j+1]++;
-							space = push(k, m, n, newD, space, check);
+		// disp("Recursed and didn't check: " + canonical(D));
+		if (!contains(space, D)) // don't push the same matrix more than once
+		{
+			space.add(clone(D));
+			// if (check) disp("Added: " + canonical(D));
+			for (int index = 0; index < k * m; index++) 
+			{
+				int count = 0;
+				
+//				System.out.println("trying: " + index);
+				for (int i = 0; i < k; i++) {
+					for (int j = 0; j < m; j++) {
+						int[][] newD = clone(D);
+// 						count++;
+// 						if (count < index) {
+// //							System.out.println("skipping...");
+// 							// pass...
+// 							continue;
+// 						}
+
+						if (i == k - 1 && j == m - 1) { // don't push the last row/column entry...
+							// pass...
+							continue;
+						} else if (j == m - 1) {
+							// if (i == 0 && j == 3 && a == 13) disp("HERE HERE: " + canonical(newD));
+
+							// push down to the next row...
+							if (newD[i+1][0] < newD[i][j]) {
+								newD[i][j]--;
+								newD[i+1][0]++;
+								// if (canonical(D).equals("4,4,4,1,0,0,0,0,"))
+								// {
+								// 	disp("PUSHED: " + canonical(newD));	
+
+								// }	
+								space = push(k, m, n, a, newD, space, check);
+							} else {
+								// disp(newD[i+1][0] + " " + newD[i][j]);
+							}
+
+							int[][] tmpd = clone(D);
+							ArrayList<Integer> starts = possibleStarts(toRow(tmpd));
+							ArrayList<Integer> ends = possibleEnds(toRow(tmpd));
+							for (Integer si : starts)
+							{
+								for (Integer ei : ends)
+								{
+									// if (canonical(D).equals("4,4,4,1,0,0,0,0,")) disp("si = " + si + ", ei = " + ei);
+									if (si < ei && (si + 1) != ei && get2D(D, si) > get2D(D, ei)) // refer to the same spot...
+									{
+										int[][] ntd = clone(D);
+										// if (check)
+										// {
+										// 	disp("Shifting: " + canonical(ntd));
+										// 	disp("s = " + si + ", e = " + ei);
+										// }
+										shift(ntd, si, ei);
+										// if (check) disp("Done: " + canonical(ntd));
+										if (sum(ntd) == a) space = push(k, m, n, a, ntd, space, check);
+									}
+								}
+							}
+						} else {
+
+							// push to next column...
+							if (newD[i][j + 1] < newD[i][j]) {
+								newD[i][j]--;
+								newD[i][j+1]++;
+								space = push(k, m, n, a, newD, space, check);
+							}
+
+							// try a shift
+							int[][] tmpd = clone(D);
+							ArrayList<Integer> starts = possibleStarts(toRow(tmpd));
+							ArrayList<Integer> ends = possibleEnds(toRow(tmpd));
+							for (Integer si : starts)
+							{
+								for (Integer ei : ends)
+								{
+									if (si < ei && (si + 1) != ei && get2D(D, si) > get2D(D, ei)) // refer to the same spot!
+									{
+										int[][] ntd = clone(D);
+										// if (check)
+										// {
+										// 	disp("Shifting: " + canonical(ntd));
+										// 	disp("s = " + si + ", e = " + ei);
+										// }
+										shift(ntd, si, ei);
+										// if (check) disp("Done: " + canonical(ntd));
+										if (sum(ntd) == a) space = push(k, m, n, a, ntd, space, check);
+									}
+								}
+							}
 						}
 					}
 				}
@@ -445,6 +608,121 @@ public class Model
 		}
 		
 		return space;
+	}
+
+	public static int[] toRow(int[][] m)
+	{
+		int index = 0;
+		int[] r = new int[m.length * m[0].length];
+		for (int i = 0; i < m.length; i++)
+		{
+			for (int j = 0; j < m[i].length; j++)
+			{
+				r[index++] = m[i][j];
+			}
+		}
+		return r;
+	}
+
+	public static int shiftIndex(int[] D, int index)
+	{
+		int t = D.length - 1;
+		int min = D[D.length - 1];
+		for (int i = D.length - 1; i >= 0 && i != (index - 1); i--)
+		{
+			if (D[i] == min) t = i;
+			if (D[i] != min) return t;
+		}
+		return -1;
+	}
+
+	// public static int startShiftIndex(int[] D)
+	// {
+	// 	int max = D[0];
+	// 	for (int i = 1; i < D.length; i++)
+	// 	{
+	// 		if (D[i] != max)
+	// 		{
+	// 			return i - 1;
+	// 		}
+	// 	}
+	// 	return -1;
+	// }
+
+	// gather shift starts and ends, if startIndex != endIndex and startIndex > endIndex
+
+	public static ArrayList<Integer> possibleStarts(int[] D) // shift starts can ONLY be on switch boundaries
+	{
+		ArrayList<Integer> starts = new ArrayList<Integer>();
+		int max = D[0];
+		for (int i = 1; i < D.length; i++)
+		{
+			if (D[i] != max)
+			{
+				starts.add(i - 1);
+				max = D[i]; // reset
+			}
+		}
+		return starts;
+	}
+
+	public static ArrayList<Integer> possibleEnds(int[] D)
+	{
+		ArrayList<Integer> ends = new ArrayList<Integer>();
+		int min = D[D.length - 1];
+		for (int i = D.length - 2; i >= 0; i--)
+		{
+			if (D[i] != min)
+			{
+				ends.add(i + 1);
+				min = D[i]; // reset
+			}
+		}
+		return ends;
+	}
+
+	// public static ArrayList<Integer> possibleStarts(int[] D, int si)
+	// {
+	// 	ArrayList<Integer> starts = new ArrayList<Integer>();
+	// 	int max = D[0];
+	// 	boolean add = false;
+	// 	for (int i = 1; i < D.length && i != si; i++)
+	// 	{
+	// 		if (D[i] != max)
+	// 		{
+	// 			add = true;
+	// 			starts.add(i - 1);
+	// 		}
+	// 		else if (add)
+	// 		{
+	// 			starts.add(i - 1);
+	// 		}
+	// 	}
+	// 	return starts;
+	// }
+
+	public static int get2D(int[][] D, int index)
+	{
+		int cols = D[0].length;
+		return (D[index / cols][index % cols]);
+	}
+
+	public static void set2D(int[][] D, int index, int val)
+	{
+		int cols = D[0].length;
+		D[index / cols][index % cols] = val;
+	}
+
+	public static void shift(int[][] D, int index, int shiftIndex)
+	{
+		for (int i = shiftIndex - 1; i > index; i--)
+		{
+			int tmp = get2D(D, i);
+			set2D(D, i + 1, get2D(D, i + 1) + 1);
+			set2D(D, i, get2D(D, i) - 1);
+		}
+		set2D(D, index, get2D(D, index) - 1);         // bump down
+		set2D(D, index + 1, get2D(D, index + 1) + 1); // bump up :-)
 	}
 	
 	public static int[][] buildD(int[][] D, int k, int m) {
@@ -695,6 +973,7 @@ public class Model
 		int prod = 1;
 		for (int j = 1; j < m; j++)
 		{
+			prod = 1;
 			for (int i = 1; i < k; i++)
 			{
 				prod *= (S[i][j] + 1);
@@ -776,6 +1055,23 @@ public class Model
 		}
 		return false;
 	}
+
+	public static int indexOf(ArrayList<int[][]> space, int[][] M) {
+		for (int ii = 0; ii < space.size(); ii++)
+		{
+			int[][] tmp = space.get(ii);
+			boolean match = true;
+			for (int i = 0; i < tmp.length && match; i++) {
+				for (int j = 0; j < tmp[i].length && match; j++) {
+					if (tmp[i][j] != M[i][j]) {
+						match = false;
+					}
+				}
+			}
+			if (match) return ii;
+		}
+		return -1;
+	}
 	
 	public static int[][] clone(int[][] M) {
 		int[][] copy = new int[M.length][M[0].length];
@@ -826,7 +1122,8 @@ public class Model
 		if (box) System.out.println("-----");
 	}
 	
-	static int[][] buildDmax(int a, int k, int m, int n) {
+	static int[][] buildDmax(int a, int k, int m, int n) throws Exception
+	{
 		int[][] Dmax = new int[k][m];
 		int alloc = 0;
 		
@@ -844,18 +1141,77 @@ public class Model
 		}
 		
 		// While not valid, continue pushing down one by one
-		if (!isValidD(n, Dmax, false)) {
-//			System.out.println("DEFAULT MAX IS INVALID - PUSHING DOWN TO GET OTHERS");
-			ArrayList<int[][]> Dset = push(k, m, n, Dmax, null, false);
-			for (int i = 0; i < Dset.size(); i++) {
-				if (isValidD(n, Dset.get(i), false)) {
-					Dmax = Dset.get(i);
-					break;
+		while (!isValidD(n, Dmax, false)) {
+			System.out.println("DEFAULT MAX " + a + " IS INVALID - PUSHING DOWN TO GET OTHERS");
+			disp(Dmax, true);
+			ArrayList<int[][]> Dset = push(k, m, n, a, Dmax, null, false); // was false 
+
+			ArrayList<int[][]> keepers = new ArrayList<int[][]>();
+			for (int i = 0; i < Dset.size(); i++)
+			{
+				if (isValidD(n, Dset.get(i), false))
+				{
+					// disp(Dset.get(i), true);
+					// Dset.remove(i);
+					keepers.add(Dset.get(i));
 				}
 			}
+
+			if (contains(keepers, Dmax))
+			{
+				Dset.remove(indexOf(keepers, Dmax));
+			}
+			Dmax = findMax(keepers);
+			// for (int i = 0; i < Dset.size(); i++) {
+			// 	if (isValidD(n, Dset.get(i), false)) {
+			// 		Dmax = Dset.get(i);
+			// 		disp(Dmax, true);
+			// 		// break;
+			// 	}
+			// }
 		}
 		
 		return Dmax; // we'll never get here
+	}
+
+	public static int compareMax(int[][] m1, int[][] m2)
+	{
+		for (int i = 0; i < m1.length; i++) 
+		{
+			for  (int j = 0; j < m1[i].length; j++)
+			{
+				if (m1[i][j] < m2[i][j]) return -1;
+				if (m1[i][j] > m2[i][j]) return 1;
+			}
+		}
+		return 0;
+	}
+
+	public static int[][] findMax(ArrayList<int[][]> ms)
+	{
+		int[][] max = ms.get(0);
+
+		boolean swapped = true;
+		while (swapped)
+		{
+			swapped = false;
+			for (int i = 0; i < ms.size() - 1; i++)
+			{
+				int j = i + 1;
+				if (compareMax(ms.get(i), ms.get(j)) < 0) // if ms[i] < ms[j], swap
+				{
+					int[][] m1 = ms.get(i);
+					int[][] m2 = ms.get(j);
+					ms.remove(j);
+					ms.remove(i); // remove in reverse order to swap
+					ms.add(i, m2);
+					ms.add(j, m1);
+					swapped = true;
+				}
+			}
+		}
+
+		return ms.get(0);
 	}
 
 	public static void main(String[] args) throws Exception
@@ -865,6 +1221,47 @@ public class Model
 			System.err.println("usage: java Model k m n p1 p2");
 			System.exit(-1);
 		}
+
+
+		int[][] test = {{3,3,3,3},{0,0,0,0}};
+		disp(canonical(test));
+		int index1d = 3;
+		int si = shiftIndex(toRow(test), index1d);
+		disp("" + si);
+		if (si > 0)
+		{
+			shift(test, index1d, si);
+			disp(canonical(test));
+			si = shiftIndex(toRow(test), index1d);
+			disp("" + si);
+			if (si > 0)
+			{
+				shift(test, index1d, si);
+				disp(canonical(test));
+				index1d = 2;
+				si = shiftIndex(toRow(test), index1d);
+				disp("" + si);
+				if (si > 0)
+				{
+					shift(test, index1d, si);
+					disp(canonical(test));
+					index1d = 1;
+					si = shiftIndex(toRow(test), index1d);
+					disp("" + si);
+					if (si > 0)
+					{
+						shift(test, index1d, si);
+						disp(canonical(test));
+						// space = push(k, m, n, newD, space, check);
+					}
+					// space = push(k, m, n, newD, space, check);
+				}
+				// space = push(k, m, n, newD, space, check);
+			}
+			// space = push(k, m, n, newD, space, check);
+		}
+
+		// System.exit(-1);
 
 		// int k = 2; // num children
 		// int m = 2; // num messages
@@ -885,7 +1282,7 @@ public class Model
 		int[][] Dmax = buildDmax(N, k, m, n);
 		
 		// Generate the list of all matrices in the D^8 (D*)
-		ArrayList<int[][]> D8 = push(k, m, n, Dmax, null, true);
+		ArrayList<int[][]> D8 = push(k, m, n, N, Dmax, null, true);
 		
 		// disp("Inserting initial D^" + N + " times");
 		// disp(Dmax, true);
@@ -907,16 +1304,20 @@ public class Model
 		// Let the recursion begin!
 		for (int a = N - 1; a >= 0; a--) 
 		{
+			disp("D^" + a);
 			Dmax = buildDmax(a, k, m, n);
-			ArrayList<int[][]> Dset = push(k, m, n, Dmax, null, true);
+			disp(Dmax, true);
+			ArrayList<int[][]> Dset = push(k, m, n, a, Dmax, null, true);
 			
 			// Expand out the Ds for filtering
 			ArrayList<int[][]> newDset = new ArrayList<int[][]>();
 			for (int[][] D : Dset) {
+				// disp(canonical(D));
 				newDset.add(buildD(D, k, m));
 			}
 			
 			Dset = filterDSet(newDset, n);
+			disp("D^" + a + " subspace generation complete.");
 			// System.out.println("|D-" + a + " subspace| = " + Dset.size());
 			for (int[][] D : Dset) {
 				// disp("D^" + a + " matrix");
@@ -924,14 +1325,14 @@ public class Model
 				updateE(D, k, m, n, a, N);
 			}
 			
-			if (a == 0) 
+			if (a == 0) // Checking starting point
 			{
 				// disp("CHECKING STARTING POINT"); 
 				int[][] S = buildS(Dset.get(0), k+1, m, n); // was D
 				// disp("S for D");
 				// disp(S, true);
 				ArrayList<int[][]> Hset = buildHSet(Dset.get(0), k+1, m, n, N, a); // was D
-				if (Hset.size() != 1) throw new Exception("Wrong number of H matrices for the starting point");
+				if (Hset.size() != 1) throw new Exception("Wrong number of H matrices for the starting point: " + Hset.size());
 				double targetProb = 1.0 - Math.pow((1 - p1), n - 1);
 				if (probH(Hset.get(0), S, k+1, m, true) != targetProb)
 				{
