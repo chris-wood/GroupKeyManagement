@@ -499,19 +499,23 @@ public class Model
 				}
 			}
 		}
+
+		if (a == 13 && canonical(D).equals("3,3,3,3,1,0,0,0,")) disp("WOOOOT");
 		
 		// Check constraints...
 //		System.out.println("tried: ");
 //		disp(D, true);
-		if (!isValidD(n, D, false) && reallyCheck) { // don't push with an invalid matrix
+		if (!isValidD(n, D, false) && check) { // don't push with an invalid matrix
 			// disp("returning now...");
 			// disp(canonical(D));
 			return space;
 		}
 		// disp("Recursed and didn't check: " + canonical(D));
+		if (a == 13 && canonical(D).equals("3,3,3,3,1,0,0,0,")) disp("AGAIIIN");
 		if (!contains(space, D)) // don't push the same matrix more than once
 		{
 			space.add(clone(D));
+			if (a == 13 && canonical(D).equals("3,3,3,3,1,0,0,0,")) disp("ADDED!!!");
 			// if (check) disp("Added: " + canonical(D));
 			for (int index = 0; index < k * m; index++) 
 			{
