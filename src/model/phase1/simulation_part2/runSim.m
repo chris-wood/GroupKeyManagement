@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 100000; %1000 or 10000 for proper results
+numSamples = 100; %1000 or 10000 for proper results
 maxChildren = [2];
-nodeCount = [5,6,7,8]; 
-p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+nodeCount = [5];%,6,7,8]; 
+p1Probs = [0.5];%[1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p2Probs= [0.5];%[1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
 [~, numP1probs] = size(p1Probs);
 [~, numP2probs] = size(p2Probs);
@@ -22,7 +22,7 @@ times = zeros(numChildren, numP1probs, numP2probs, numNodes, numSamples);
 finalTable = zeros(numChildren, numP1probs, numP2probs, numNodes, 4);
 
 % Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
-kMult = 2; % making this anything different severly impacts the MODEL's performance
+kMult = 4; % making this anything different severly impacts the MODEL's performance
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');

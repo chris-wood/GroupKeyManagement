@@ -240,6 +240,7 @@ public class Model
 				disp(S, true);
 				disp(expandedD, true);
 				disp(H, true);
+				disp("canonical d: " + canonical(D));
 				throw new Exception("Transition problem: " + key);
 			}
 			sum += tmpSum * E.get(key);
@@ -487,125 +488,82 @@ public class Model
 		}
 
 		// check to see if we at least found ONE
-		boolean reallyCheck = false;
-		if (space.size() > 0)
+		// boolean reallyCheck = false;
+		// if (space.size() > 0)
+		// {
+		// 	for (int[][] ld : space)
+		// 	{
+		// 		if (isValidD(n, ld, false))
+		// 		{
+		// 			reallyCheck = true;
+		// 			break;
+		// 		}
+		// 	}
+		// }
+		
+		// Check constraints...
+		// disp("trying: " + canonical(D));
+		// if (!isValidD(n, D, false) && check) 
+		// { 
+		// 	return space;
+		// }
+
+		// Make sure we're still in decreasing order to avoid A LOT of overhead
+		int[] tr = toRow(D);
+		int max = tr[0];
+		for (int i = 1; i < tr.length; i++)
 		{
-			for (int[][] ld : space)
+			if (max < tr[i])
 			{
-				if (isValidD(n, ld, false))
-				{
-					reallyCheck = true;
-					break;
-				}
+				return space;
+			}
+			else
+			{
+				max = tr[i];
 			}
 		}
 
-		if (a == 13 && canonical(D).equals("3,3,3,3,1,0,0,0,")) disp("WOOOOT");
-		
-		// Check constraints...
-//		System.out.println("tried: ");
-//		disp(D, true);
-		if (!isValidD(n, D, false) && check) { // don't push with an invalid matrix
-			// disp("returning now...");
-			// disp(canonical(D));
-			return space;
-		}
-		// disp("Recursed and didn't check: " + canonical(D));
-		if (a == 13 && canonical(D).equals("3,3,3,3,1,0,0,0,")) disp("AGAIIIN");
 		if (!contains(space, D)) // don't push the same matrix more than once
 		{
+			// Add this biotch
 			space.add(clone(D));
-			if (a == 13 && canonical(D).equals("3,3,3,3,1,0,0,0,")) disp("ADDED!!!");
-			// if (check) disp("Added: " + canonical(D));
-			for (int index = 0; index < k * m; index++) 
+
+			// Do the immediate pushes...
+			for (int i = 0; i < k; i++) 
 			{
-				int count = 0;
-				
-//				System.out.println("trying: " + index);
-				for (int i = 0; i < k; i++) {
-					for (int j = 0; j < m; j++) {
-						int[][] newD = clone(D);
-// 						count++;
-// 						if (count < index) {
-// //							System.out.println("skipping...");
-// 							// pass...
-// 							continue;
-// 						}
-
-						if (i == k - 1 && j == m - 1) { // don't push the last row/column entry...
-							// pass...
-							continue;
-						} else if (j == m - 1) {
-							// if (i == 0 && j == 3 && a == 13) disp("HERE HERE: " + canonical(newD));
-
-							// push down to the next row...
-							if (newD[i+1][0] < newD[i][j]) {
-								newD[i][j]--;
-								newD[i+1][0]++;
-								// if (canonical(D).equals("4,4,4,1,0,0,0,0,"))
-								// {
-								// 	disp("PUSHED: " + canonical(newD));	
-
-								// }	
-								space = push(k, m, n, a, newD, space, check);
-							} else {
-								// disp(newD[i+1][0] + " " + newD[i][j]);
-							}
-
-							int[][] tmpd = clone(D);
-							ArrayList<Integer> starts = possibleStarts(toRow(tmpd));
-							ArrayList<Integer> ends = possibleEnds(toRow(tmpd));
-							for (Integer si : starts)
-							{
-								for (Integer ei : ends)
-								{
-									// if (canonical(D).equals("4,4,4,1,0,0,0,0,")) disp("si = " + si + ", ei = " + ei);
-									if (si < ei && (si + 1) != ei && get2D(D, si) > get2D(D, ei)) // refer to the same spot...
-									{
-										int[][] ntd = clone(D);
-										// if (check)
-										// {
-										// 	disp("Shifting: " + canonical(ntd));
-										// 	disp("s = " + si + ", e = " + ei);
-										// }
-										shift(ntd, si, ei);
-										// if (check) disp("Done: " + canonical(ntd));
-										if (sum(ntd) == a) space = push(k, m, n, a, ntd, space, check);
-									}
-								}
-							}
-						} else {
-
-							// push to next column...
-							if (newD[i][j + 1] < newD[i][j]) {
-								newD[i][j]--;
-								newD[i][j+1]++;
-								space = push(k, m, n, a, newD, space, check);
-							}
-
-							// try a shift
-							int[][] tmpd = clone(D);
-							ArrayList<Integer> starts = possibleStarts(toRow(tmpd));
-							ArrayList<Integer> ends = possibleEnds(toRow(tmpd));
-							for (Integer si : starts)
-							{
-								for (Integer ei : ends)
-								{
-									if (si < ei && (si + 1) != ei && get2D(D, si) > get2D(D, ei)) // refer to the same spot!
-									{
-										int[][] ntd = clone(D);
-										// if (check)
-										// {
-										// 	disp("Shifting: " + canonical(ntd));
-										// 	disp("s = " + si + ", e = " + ei);
-										// }
-										shift(ntd, si, ei);
-										// if (check) disp("Done: " + canonical(ntd));
-										if (sum(ntd) == a) space = push(k, m, n, a, ntd, space, check);
-									}
-								}
-							}
+				for (int j = 0; j < m; j++) 
+				{
+					int[] drow = toRow(clone(D));
+					int index = (i * m) + j;
+					if (index < (k*m) - 1) // can't look at head at the last index
+					{
+						if (drow[index] > drow[index + 1]) // strictly greater or we wind up with an invalid matrix
+						{
+							drow[index]--;
+							drow[index + 1]++;
+							int[][] newD = toMatrix(drow, k, m);
+							// disp("AFTER MODIFICATION:");
+							// disp(canonical(newD));
+							if (sum(newD) == a) space = push(k, m, n, a, newD, space, check);
 						}
+					}
+				}
+			}
+
+			// Try all shifts (independent of the m/k pair we're at right now)
+			int[] drow = toRow(clone(D));
+			ArrayList<Integer> starts = possibleStarts(drow);
+			ArrayList<Integer> ends = possibleEnds(drow);
+			for (Integer si : starts)
+			{
+				for (Integer ei : ends)
+				{
+					// disp("S/E pair: " + si + "," + ei);
+					if (si < ei && (si + 1) != ei && get2D(D, si) > get2D(D, ei)) // refer to the same spot...
+					{
+						int[][] ntd = clone(D);
+						shift(ntd, si, ei);
+						if (sum(ntd) == a) space = push(k, m, n, a, ntd, space, check);
 					}
 				}
 			}
@@ -626,6 +584,20 @@ public class Model
 			}
 		}
 		return r;
+	}
+
+	public static int[][] toMatrix(int[] row, int k, int m)
+	{
+		int[][] mat = new int[k][m];
+		int index = 0;
+		for (int i = 0; i < k; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				mat[i][j] = row[index++];
+			}
+		}
+		return mat;
 	}
 
 	public static int shiftIndex(int[] D, int index)
@@ -1298,10 +1270,11 @@ public class Model
 		}
 		
 		D8 = filterDSet(newD8, n);
-		// disp("D^" + N + " subspace");
+		disp("D^" + N + " subspace");
 		for (int[][] D : D8) 
 		{
-			// disp(D, true);
+			// disp(canonical(D));
+			disp(canonical(toSmallD(D,k+1,m)));
 			E.put(canonical(toSmallD(D,k+1,m)), 0.0);
 		}
 		
