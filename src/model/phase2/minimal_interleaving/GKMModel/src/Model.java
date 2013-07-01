@@ -253,7 +253,7 @@ public class Model
 		// multiply by 1/(1-p(H0))
 		double prod = 1 / (1 - pzero);
 		// disp("Expected time for D^" + a + " matrix: " + (prod * sum) + " = (" + prod + " * " + sum + ") = ((1/1-Pd(H^0)) * [inner sum])");
-		disp("Inserting: " + canonical(toSmallD(D,k+1,m)));
+		// disp("Inserting: " + canonical(toSmallD(D,k+1,m)));
 		E.put(canonical(toSmallD(D,k+1,m)), prod * sum);
 	}
 	
@@ -1118,8 +1118,8 @@ public class Model
 		
 		// While not valid, continue pushing down one by one
 		while (!isValidD(n, Dmax, false)) {
-			System.out.println("DEFAULT MAX " + a + " IS INVALID - PUSHING DOWN TO GET OTHERS");
-			disp(Dmax, true);
+			// System.out.println("DEFAULT MAX " + a + " IS INVALID - PUSHING DOWN TO GET OTHERS");
+			// disp(Dmax, true);
 			ArrayList<int[][]> Dset = push(k, m, n, a, Dmax, null, false); // was false 
 
 			ArrayList<int[][]> keepers = new ArrayList<int[][]>();
@@ -1199,43 +1199,43 @@ public class Model
 		}
 
 
-		int[][] test = {{3,3,3,3},{0,0,0,0}};
-		disp(canonical(test));
-		int index1d = 3;
-		int si = shiftIndex(toRow(test), index1d);
-		disp("" + si);
-		if (si > 0)
-		{
-			shift(test, index1d, si);
-			disp(canonical(test));
-			si = shiftIndex(toRow(test), index1d);
-			disp("" + si);
-			if (si > 0)
-			{
-				shift(test, index1d, si);
-				disp(canonical(test));
-				index1d = 2;
-				si = shiftIndex(toRow(test), index1d);
-				disp("" + si);
-				if (si > 0)
-				{
-					shift(test, index1d, si);
-					disp(canonical(test));
-					index1d = 1;
-					si = shiftIndex(toRow(test), index1d);
-					disp("" + si);
-					if (si > 0)
-					{
-						shift(test, index1d, si);
-						disp(canonical(test));
-						// space = push(k, m, n, newD, space, check);
-					}
-					// space = push(k, m, n, newD, space, check);
-				}
-				// space = push(k, m, n, newD, space, check);
-			}
-			// space = push(k, m, n, newD, space, check);
-		}
+		// int[][] test = {{3,3,3,3},{0,0,0,0}};
+		// disp(canonical(test));
+		// int index1d = 3;
+		// int si = shiftIndex(toRow(test), index1d);
+		// disp("" + si);
+		// if (si > 0)
+		// {
+		// 	shift(test, index1d, si);
+		// 	disp(canonical(test));
+		// 	si = shiftIndex(toRow(test), index1d);
+		// 	disp("" + si);
+		// 	if (si > 0)
+		// 	{
+		// 		shift(test, index1d, si);
+		// 		disp(canonical(test));
+		// 		index1d = 2;
+		// 		si = shiftIndex(toRow(test), index1d);
+		// 		disp("" + si);
+		// 		if (si > 0)
+		// 		{
+		// 			shift(test, index1d, si);
+		// 			disp(canonical(test));
+		// 			index1d = 1;
+		// 			si = shiftIndex(toRow(test), index1d);
+		// 			disp("" + si);
+		// 			if (si > 0)
+		// 			{
+		// 				shift(test, index1d, si);
+		// 				disp(canonical(test));
+		// 				// space = push(k, m, n, newD, space, check);
+		// 			}
+		// 			// space = push(k, m, n, newD, space, check);
+		// 		}
+		// 		// space = push(k, m, n, newD, space, check);
+		// 	}
+		// 	// space = push(k, m, n, newD, space, check);
+		// }
 
 		// System.exit(-1);
 
@@ -1270,20 +1270,20 @@ public class Model
 		}
 		
 		D8 = filterDSet(newD8, n);
-		disp("D^" + N + " subspace");
+		// disp("D^" + N + " subspace");
 		for (int[][] D : D8) 
 		{
 			// disp(canonical(D));
-			disp(canonical(toSmallD(D,k+1,m)));
+			// disp(canonical(toSmallD(D,k+1,m)));
 			E.put(canonical(toSmallD(D,k+1,m)), 0.0);
 		}
 		
 		// Let the recursion begin!
 		for (int a = N - 1; a >= 0; a--) 
 		{
-			disp("D^" + a);
+			// disp("D^" + a);
 			Dmax = buildDmax(a, k, m, n);
-			disp(Dmax, true);
+			// disp(Dmax, true);
 			ArrayList<int[][]> Dset = push(k, m, n, a, Dmax, null, true);
 			
 			// Expand out the Ds for filtering
@@ -1294,7 +1294,7 @@ public class Model
 			}
 			
 			Dset = filterDSet(newDset, n);
-			disp("D^" + a + " subspace generation complete.");
+			// disp("D^" + a + " subspace generation complete.");
 			// System.out.println("|D-" + a + " subspace| = " + Dset.size());
 			for (int[][] D : Dset) {
 				// disp("D^" + a + " matrix");
