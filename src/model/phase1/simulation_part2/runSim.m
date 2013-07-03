@@ -9,7 +9,7 @@
 % Simulation parameters
 numSamples = 100000; %1000 or 10000 for proper results
 maxChildren = [2]; % this is k
-nodeCount = [10];%,6,7,8]; 
+nodeCount = [5,8,10,15];%,6,7,8]; 
 p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
