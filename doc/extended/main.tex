@@ -1,0 +1,68 @@
+%
+% Hello! Here's how this works:
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+% If you're new to LaTeX, the wikibook at
+% http://en.wikibooks.org/wiki/LaTeX
+% is a great place to start, and there are some examples in this
+% document, too.
+%
+% Enjoy!
+%
+\documentclass[12pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{algorithm2e}
+
+\title{Verification of the Statistical Model for Multi-Stage Message Distribution}
+\author{Jedi High Council}
+
+\begin{document}
+\maketitle
+
+\section{Monte Carlo Simulation}
+
+As in the first paper, we use a monte carlo simulation to verify the correctness of the statistical model developed for multi-stage message distribution. A high-level overview of the simulation algorithm is detailed in Algorithm \ref{alg:simulation}. Both the Matlab source code for the simulation and Java source code for the model should be linked to in the final paper.
+
+Due to the computational complexity of the model, the current unoptimized code can not go beyond $n = 9$ nodes and $n, m >= 3$. The recursive process of generating candidate transition matrices from a particular $D^a$ subspace to $D^{a+1}$ is very expensive. I think it can be optimized by a simple pruning scheme to remove redundant branches of the search space, though this has yet to be explored. 
+
+A list of the times from the model and simulation for $T = 10000$ runs, along with the simulation standard deviation and standard error, is shown in the attached spreadsheet. The model and simulation appear to match. 
+
+\begin{algorithm}[H] \label{alg:simulation}
+  \SetAlgoLined
+  \KwData{$T$, $k$, $m$, $n$, $p_1$, and $p_2$}
+  \KwResult{Expected time}
+  	$A_c \gets zeros[1\dots n][1\dots n]$\;
+    $A_m \gets zeros[1\dots k][1\dots n][1\dots n]$\;
+    $n_c \gets 0$\;
+    $C_l \gets zeros[1\dots n]$\;
+    $total \gets 0$\;
+	\For{$T_i = 0 \to T$} {
+    	$t \gets 0$\;
+    	\While{$n_c < n - 1$} {
+        	Build a list of candidate child nodes ready to receive a new message (i.e. those unconnected and not receiving a message already). Filter the list by randomly discarding each candidate node with probability $1 - p_1$\
+            \For{$m_i = 0 \to m$} {
+            	With probability $p_2$, advance each child node in stage $S_{m_i}$ to $S_{m_{i+1}}$. If a node advances to stage $S_m$, set them as connected in $C_l$, update their connection with the parent in $A_c$, and discard their message trace in $A_m$.\;
+        	}
+            Randomly assign each child node in the message ready list to an available parent. If the number of available parents is less than the number of ready children, then a subset of those in the ready list begin a communication trace. Else, every children begins a communication trace.\;
+            $t \gets t + 1$\;
+        }
+        $total \gets total + t$\;
+    }
+    \textbf{output} $total / T$
+  \caption{Monte carlo simulation to verify the statistical model}
+\end{algorithm}
+
+
+\end{document}
