@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 100000; %1000 or 10000 for proper results
-maxChildren = [2]; % this is k
-nodeCount = [5,8,10,15];%,6,7,8]; 
-p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+numSamples = 1000; %1000 or 10000 for proper results
+maxChildren = [4]; % this is k
+nodeCount = [12];%,6,7,8]; 
+p1Probs = [0.1];%[1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p2Probs= [0.1];%[1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
 [~, numP1probs] = size(p1Probs);
 [~, numP2probs] = size(p2Probs);
@@ -23,7 +23,7 @@ finalTable = zeros(numChildren, numP1probs, numP2probs, numNodes, 4);
 
 % Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
 % this is m
-kMult = 2; % making this anything different severly impacts the MODEL's performance
+kMult = 3; % making this anything different severly impacts the MODEL's performance
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');
@@ -163,6 +163,8 @@ for childIndex = 1:numChildren
                                end
                             end
                         end
+                        
+                        
 
                         % Compute the set of available parents at this iteration
                         [parentList, parentCount] = readyParents(aMatrix, cMatrix, authMatrix, maxChildren(childIndex), nodeCount(n), kMult);
@@ -206,7 +208,7 @@ for childIndex = 1:numChildren
 
                     % Take away the last step in time (handle off-by-one)
                     time = time - 1;
-                    %disp(sprintf('Total time: %d', time))
+                    disp(sprintf('Total time: %d', time))
 
                     % Record the total time for simulation
                     times(childIndex,p1Index,p2Index,n,i) = time;
@@ -246,7 +248,7 @@ for childIndex = 1:numChildren
         avg = mean(times(numChildren,p1Index,p2Index, i,:));
         stddev = std(times(numChildren, p1Index, p2Index, i,:));
         stderr = 2 * (stddev / (numSamples^(1/2)));
-        fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', kMult, maxChildren(numChildren), nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
+        fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', maxChildren(numChildren), kMult, nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
         finalTable(numChildren, p1Index,p2Index,i,1) = nodeCount(i);
         finalTable(numChildren, p1Index,p2Index,i,2) = avg;
         finalTable(numChildren, p1Index,p2Index,i,3) = stddev;
