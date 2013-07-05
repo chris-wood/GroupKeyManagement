@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 1000; %1000 or 10000 for proper results
-maxChildren = [4]; % this is k
-nodeCount = [12];%,6,7,8]; 
-p1Probs = [0.1];%[1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-p2Probs= [0.1];%[1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+numSamples = 100000; %1000 or 10000 for proper results
+maxChildren = [4]; % this is k - poor naming conventions, I know.
+nodeCount = [5,8,10,12];%,6,7,8]; 
+p1Probs = [1, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p2Probs= [1, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
 [~, numP1probs] = size(p1Probs);
 [~, numP2probs] = size(p2Probs);
@@ -19,11 +19,10 @@ p2Probs= [0.1];%[1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,
 
 % Result containers
 times = zeros(numChildren, numP1probs, numP2probs, numNodes, numSamples);
-finalTable = zeros(numChildren, numP1probs, numP2probs, numNodes, 4);
+finalTable = zeros(numChildren, numP1probs, numP2probs, numNodes, 4); % num nodes, avg time, stddev, error in the last coord
 
-% Each epoch will be of size t2, and t1 = 4*t2 (it's about 4 times longer)
-% this is m
-kMult = 3; % making this anything different severly impacts the MODEL's performance
+% this is m - poor naming conventions, I know.
+kMult = 3; 
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');
@@ -126,19 +125,12 @@ for childIndex = 1:numChildren
                         for rIndex = 1:nodeCount(n)
                            for cIndex = 1:nodeCount(n)
                               if (authMatrix(kMult, rIndex, cIndex) == 1) % was kMult, not kMult - 1
-                                  % A connection exists, use the key
-                                  % probability to see if the key
-                                  % connection is passed along...
-                                  %if (rand(1) <= p2Probs(p2Index))
-                                      %disp(sprintf('(%d) The key was passed from node %d to node %d', time, rIndex, cIndex));
-                                      authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
-                                      aMatrix(rIndex, cIndex) = 1;
-                                      aMatrix(cIndex, rIndex) = 1;
-                                      cMatrix(cIndex) = 1;
-                                      nConnected = nConnected + 1;
-
-                                      % fprintf('Node %i now has the key\n', cIndex);
-                                  %end
+                                  % Once we're in this stage we automatically go to having the key (no questions asked)
+                                  authMatrix(kMult, rIndex, cIndex) = 0; % no longer in the authentication stage...
+                                  aMatrix(rIndex, cIndex) = 1;
+                                  aMatrix(cIndex, rIndex) = 1;
+                                  cMatrix(cIndex) = 1;
+                                  nConnected = nConnected + 1;
                               end
                            end
                         end
@@ -154,10 +146,8 @@ for childIndex = 1:numChildren
                                   % make progress
                                   if (authMatrix(kIndex, rIndex, cIndex) == 1)
                                       if (rand(1) <= p2Probs(p2Index))
-                                          %disp(sprintf('(%d) Authentication between nodes %d and %d advances', time, rIndex, cIndex))
                                           authMatrix(kIndex + 1, rIndex, cIndex) = 1;
                                           authMatrix(kIndex, rIndex, cIndex) = 0;
-                                          % fprintf('Node %i advanced to stage %i\n', cIndex, kIndex + 1);
                                       end
                                   end
                                end
@@ -192,13 +182,9 @@ for childIndex = 1:numChildren
                                 readyIndex = readyIndex + 1;
                             end
 
-                            % DEBUG
-                            % fprintf('Node %i is in stage 1\n', unconnected(readyIndex));
-
                             % Hook these guys into the auth matrix
                             child = unconnected(readyIndex);
                             parent = parentList(j);
-                            %disp(sprintf('(%d) Node %d starting authentication with node %d', time, parent, child))
                             authMatrix(1, parent, child) = 1; % this is a directed graph, so don't point from child->parent
                             readyIndex = readyIndex + 1;
                         end
@@ -206,8 +192,8 @@ for childIndex = 1:numChildren
                         time = time + 1;
                     end
 
-                    % Take away the last step in time (handle off-by-one)
-                    time = time - 1;
+                    % Take away the last step in time - since key distribution happens on the time step before
+                    time = time - 1; 
                     disp(sprintf('Total time: %d', time))
 
                     % Record the total time for simulation
@@ -225,7 +211,6 @@ for childIndex = 1:numChildren
         temp = zeros(numP2probs, numNodes);
         for p2Index = 1:numP2probs
            for n = 1:numNodes
-              %temp(p, n) = avgTimes(c, p, n); % the final table has the correct values
               temp(p2Index, n) = mean(times(childIndex,p1Index,p2Index,n,:)); % the second element is the average time
            end
         end
