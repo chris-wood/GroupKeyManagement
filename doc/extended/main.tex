@@ -33,11 +33,9 @@
 
 \section{Monte Carlo Simulation}
 
-As in the first paper, we use a monte carlo simulation to verify the correctness of the statistical model developed for multi-stage message distribution. A high-level overview of the simulation algorithm is detailed in Algorithm \ref{alg:simulation}. Both the Matlab source code for the simulation and Java source code for the model should be linked to in the final paper.
+To verify our model we implemented a monte carlo simulation that simulates the behavior of the network given parameters $n$, $m$, and $k$. In particular, the simulation initializes the network of $n$ nodes in an unconnected state (i.e. all nodes are disconnected from each other and there exists a single node, the key manager, who possesses the key). Then, in discrete time steps, the simulation attempts to establish new connections between a pair of nodes $u$ and $v$ with probability $p_1$. In addition, nodes already in the process of establishing a connection proceed forward through the $m$ stages of message distribution by a single step with probability $p_2$. At the end of one time step, the overall discrete time is incremented by one, and the process repeats until all nodes have been connected and received the key. This procedure is formalized in Algorithm \ref{alg:simulation}. The source code, written in Matlab, has been made available at <LINK> for interested readers to experiment with. It is a self contained program that contains all of the required documentation within.
 
-Due to the computational complexity of the model, the current unoptimized code can not go beyond $n = 9$ nodes and $n, m >= 3$. The recursive process of generating candidate transition matrices from a particular $D^a$ subspace to $D^{a+1}$ is very expensive. I think it can be optimized by a simple pruning scheme to remove redundant branches of the search space, though this has yet to be explored. 
-
-A list of the times from the model and simulation for $T = 10000$ runs, along with the simulation standard deviation and standard error, is shown in the attached spreadsheet. The model and simulation appear to match. 
+We repeated this general procedure for $T = 10000$ iterations each for different values of $n$, $k$, and $m$, collecting the average time over all program runs, standard deviation of each run, and the estimated error in the simulation. Our estimated error was quite small and well within the expected bounds of precision. We then computed the difference $\Delta$ between the output from our model and the average time reported by this monte carlo simulation to verify the correctness. We found that for all configurations considered the delta was always less than $0.2$. We attribute this difference to the error introduced in monte carlo simulation. \\
 
 \begin{algorithm}[H] \label{alg:simulation}
   \SetAlgoLined
@@ -63,6 +61,5 @@ A list of the times from the model and simulation for $T = 10000$ runs, along wi
     \textbf{output} $total / T$
   \caption{Monte carlo simulation to verify the statistical model}
 \end{algorithm}
-
 
 \end{document}
