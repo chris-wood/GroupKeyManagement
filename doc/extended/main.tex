@@ -38,28 +38,55 @@ To verify our model we implemented a monte carlo simulation that simulates the b
 We repeated this general procedure for $T = 10000$ iterations each for different values of $n$, $k$, and $m$, collecting the average time over all program runs, standard deviation of each run, and the estimated error in the simulation. Our estimated error was quite small and well within the expected bounds of precision. We then computed the difference $\Delta$ between the output from our model and the average time reported by this monte carlo simulation to verify the correctness. We found that for all configurations considered the delta was always less than $0.2$. We attribute this difference to the error introduced in monte carlo simulation. \\
 
 \begin{algorithm}[H] \label{alg:simulation}
+\tiny
   \SetAlgoLined
   \KwData{$T$, $k$, $m$, $n$, $p_1$, and $p_2$}
   \KwResult{Expected time}
-  	$A_c \gets zeros[1\dots n][1\dots n]$\;
-    $A_m \gets zeros[1\dots k][1\dots n][1\dots n]$\;
-    $n_c \gets 0$\;
-    $C_l \gets zeros[1\dots n]$\;
     $total \gets 0$\;
-	\For{$T_i = 0 \to T$} {
+	\For{$T_i = 0$ to $T$} {
     	$t \gets 0$\;
+      $A_c \gets zeros[1\dots n][1\dots n]$\;
+      $A_m \gets zeros[1\dots k][1\dots n][1\dots n]$\;
+      $n_c \gets 0$\;
+      $C_l \gets zeros[1\dots n]$\;
     	\While{$n_c < n - 1$} {
-        	Build a list of candidate child nodes ready to receive a new message (i.e. those unconnected and not receiving a message already). Filter the list by randomly discarding each candidate node with probability $1 - p_1$\
-            \For{$m_i = 0 \to m$} {
-            	With probability $p_2$, advance each child node in stage $S_{m_i}$ to $S_{m_{i+1}}$. If a node advances to stage $S_m$, set them as connected in $C_l$, update their connection with the parent in $A_c$, and discard their message trace in $A_m$.\;
-        	}
-            Randomly assign each child node in the message ready list to an available parent. If the number of available parents is less than the number of ready children, then a subset of those in the ready list begin a communication trace. Else, every children begins a communication trace.\;
-            $t \gets t + 1$\;
+        	$L \gets getReadyChildren(A_c, A_m, C_l, 1-p_1)\;$\\
+          %Build a list of candidate child nodes ready to receive a new message (i.e. those unconnected and not receiving a message already). \\
+          %Filter the list by randomly discarding each candidate node with probability $1 - p_1$\\
+          \For{$r = 1$ to $n$} {
+            \For{$c = 1$ to $n$} {
+              \If{$A_m[r][c][m] = 1$} {
+                $A_m[r][c][m] \gets 0\;$ \\
+                $A_c[r][c] \gets 1\;$ \\
+                $A_c[c][r] \gets 1\;$ \\
+                $C_l[c] \gets 1\;$ \\
+                $n_c \gets n_c + 1\;$\\
+              }
+            }
+          }
+          \For{$m' = 1$ to $m - 1$} {
+            \For{$r = 1$ to $n$} {
+              \For{$c = 1$ to $n$} {
+                \If{$A_m[r][c][m'] = 1$ and $rand() < p_2$} {
+                  $A_m[r][c][m' + 1] \gets 1\;$ \\
+                  $A_m[r][c][m'] \gets 0\;$ \\
+                }
+              }
+            }
+          }
+          $P \gets getReadyParents(A_c, A_m, A_l)\;$\\
+          \For{$i \gets 0$ to $min\{|P|, |L|\}$} {
+            $A_m[P[i]][L[i]][1] \gets 1\;$ \\
+          }
+          $t \gets t + 1$\;
         }
-        $total \gets total + t$\;
-    }
+         %    	With probability $p_2$, advance each child node in stage $S_{m_i}$ to $S_{m_{i+1}}$. If a node advances to stage $S_m$, set them as connected in $C_l$, update their connection with the parent in $A_c$, and discard their message trace in $A_m$.\;
+        	% }
+         %    Randomly assign each child node in the message ready list to an available parent. If the number of available parents is less than the number of ready children, then a subset of those in the ready list begin a communication trace. Else, every children begins a communication trace.\;
+         $total \gets total + (t - 1)$\;
+      }
     \textbf{output} $total / T$
-  \caption{Monte carlo simulation to verify the statistical model}
+  \caption{Monte carlo simulation to verify the statistical model. The functions $getReadyChildren()$ and $getReadyParents()$ uniformly select nodes from the entire group at random to be new children and parents, respectively, by analyzing the current state of the network as represented by the adjacency matrix $A_m$, message matrix $A_m$, and connected list $C_l$. Also, $getReadyChildren()$ uses probability $1- p_1$ when selecting new children to establish connections with.}
 \end{algorithm}
 
 \end{document}
