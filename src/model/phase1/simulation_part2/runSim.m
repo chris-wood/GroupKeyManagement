@@ -194,7 +194,6 @@ for childIndex = 1:numChildren
 
                     % Take away the last step in time - since key distribution happens on the time step before
                     time = time - 1; 
-                    disp(sprintf('Total time: %d', time))
 
                     % Record the total time for simulation
                     times(childIndex,p1Index,p2Index,n,i) = time;
@@ -233,6 +232,8 @@ for childIndex = 1:numChildren
         avg = mean(times(numChildren,p1Index,p2Index, i,:));
         stddev = std(times(numChildren, p1Index, p2Index, i,:));
         stderr = 2 * (stddev / (numSamples^(1/2)));
+        
+        % Display the CSV output and build up the final table
         fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', maxChildren(numChildren), kMult, nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
         finalTable(numChildren, p1Index,p2Index,i,1) = nodeCount(i);
         finalTable(numChildren, p1Index,p2Index,i,2) = avg;
