@@ -198,11 +198,10 @@ for childIndex = 1:numChildren
 
                     % Record the total time for simulation
                     times(childIndex,p1Index,p2Index,n,i) = time;
-                    total = total + time;
                 end
-                avg = mean(times(numChildren,p1Index,p2Index, n,:))
-                stddev = std(times(numChildren, p1Index, p2Index, n,:))
-                stderr = 2 * (stddev / (numSamples^(1/2)))
+                % avg = mean(times(childIndex, p1Index, p2Index, n,:))
+                % stddev = std(times(childIndex, p1Index, p2Index, n,:))
+                % stderr = 2 * (stddev / (numSamples^(1/2)))
             end
         end
     end
@@ -234,8 +233,8 @@ for childIndex = 1:numChildren
   for p1Index = 1:numP1probs
     for p2Index = 1:numP2probs
       for i = 1:numNodes
-        avg = mean(times(numChildren,p1Index,p2Index, i,:));
-        stddev = std(times(numChildren, p1Index, p2Index, i,:));
+        avg = mean(times(childIndex, p1Index, p2Index, i,:));
+        stddev = std(times(childIndex, p1Index, p2Index, i,:));
         stderr = 2 * (stddev / (numSamples^(1/2)));
         
         % Display the CSV output and build up the final table
