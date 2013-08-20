@@ -29,9 +29,8 @@ finalTable = zeros(numMessages, numChildren, numP1probs, numP2probs, numNodes, 4
 % Run the simulation nSamples times
 disp('Starting the simulation...');
 for messageIndex = 1:numMessages
-    % kMult = maxMessages(messageIndex);
     for childIndex = 1:numChildren
-        disp(sprintf('Maximum number of children = %d', maxChildren(childIndex)))
+        disp(sprintf('k,m =  %d, %d', maxChildren(childIndex), maxMessages(messageIndex)))
         for p1Index = 1:numP1probs
             for p2Index = 1:numP2probs
                 for n = 1:numNodes
