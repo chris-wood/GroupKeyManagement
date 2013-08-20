@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 1000; %1000 or 10000 for proper results
+numSamples = 100; %1000 or 10000 for proper results
 maxChildren = [2, 3]; %, 4, 5, 6, 7, 8, 9, 10]; % this is k
 maxMessages = [2,3];
 nodeCount = [5,10]; %,25,50,100,150,250,500]; 
@@ -213,26 +213,26 @@ for messageIndex = 1:numMessages
 end
 
 % Generate a plot for each one
-figureId = 1;
-for messageIndex = 1:numMessages
-    for childIndex = 1:numChildren
-        for p1Index = 1:numP1probs
-            temp = zeros(numP2probs, numNodes);
-            for p2Index = 1:numP2probs
-               for n = 1:numNodes
-                  temp(p2Index, n) = mean(times(messageIndex, childIndex, p1Index, p2Index, n,:)); % the second element is the average time
-               end
-            end
-            %figure(figureId);
-            %figureId = figureId + 1; % forward the figures... math is fun.
-            %plot(temp);
-            %set(gca,'XTickLabel',{'0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7','0.8', '0.9', '1.0'});
-            %title([sprintf('Key Distribution Time for %d Children with Key Probability = %d', maxChildren(childIndex), keyProbabilities(pKeyIndex))]);
-            %xlabel('Authentication Probability');
-            %ylabel('Average Re-Key Time (epochs)');
-        end
-    end
-end
+% figureId = 1;
+% for messageIndex = 1:numMessages
+%     for childIndex = 1:numChildren
+%         for p1Index = 1:numP1probs
+%             temp = zeros(numP2probs, numNodes);
+%             for p2Index = 1:numP2probs
+%                for n = 1:numNodes
+%                   temp(p2Index, n) = mean(times(messageIndex, childIndex, p1Index, p2Index, n,:)); % the second element is the average time
+%                end
+%             end
+%             %figure(figureId);
+%             %figureId = figureId + 1; % forward the figures... math is fun.
+%             %plot(temp);
+%             %set(gca,'XTickLabel',{'0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7','0.8', '0.9', '1.0'});
+%             %title([sprintf('Key Distribution Time for %d Children with Key Probability = %d', maxChildren(childIndex), keyProbabilities(pKeyIndex))]);
+%             %xlabel('Authentication Probability');
+%             %ylabel('Average Re-Key Time (epochs)');
+%         end
+%     end
+% end
 
 disp('START OUTPUT');
 
@@ -249,10 +249,10 @@ for messageIndex = 1:numMessages
             
             % Display the CSV output and build up the final table
             fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
-            finalTable(numChildren, p1Index,p2Index,i,1) = nodeCount(i);
-            finalTable(numChildren, p1Index,p2Index,i,2) = avg;
-            finalTable(numChildren, p1Index,p2Index,i,3) = stddev;
-            finalTable(numChildren, p1Index,p2Index,i,4) = stderr;
+            finalTable(numMessages, childIndex, p1Index, p2Index,i,1) = nodeCount(i);
+            finalTable(numMessages, childIndex, p1Index, p2Index,i,2) = avg;
+            finalTable(numMessages, childIndex, p1Index, p2Index,i,3) = stddev;
+            finalTable(numMessages, childIndex, p1Index, p2Index,i,4) = stderr;
           end
         end
       end
