@@ -200,8 +200,8 @@ for childIndex = 1:numChildren
                     times(childIndex,p1Index,p2Index,n,i) = time;
                     total = total + time;
                 end
-                avg = total / numSamples;
-                stddev = std(times(numChildren, p1Index, p2Index, i,:))
+                avg = mean(times(numChildren, p1Index, p2Index, n, :))
+                stddev = std(times(numChildren, p1Index, p2Index, n, :))
                 stderr = 2 * (stddev / (numSamples^(1/2)))
             end
         end
