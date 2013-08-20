@@ -32,6 +32,7 @@ for childIndex = 1:numChildren
         for p2Index = 1:numP2probs
             for n = 1:numNodes
                 disp(sprintf('Simulation for %d nodes with p1 = %d and p2 = %d', nodeCount(n), p1Probs(p1Index), p2Probs(p2Index)))
+                total = 0;
                 for i = 1:numSamples
                     % Initialize the adj. matrix representation for the nodes and network
                     % No one is connected at the beginning...
@@ -197,8 +198,9 @@ for childIndex = 1:numChildren
 
                     % Record the total time for simulation
                     times(childIndex,p1Index,p2Index,n,i) = time;
+                    total = total + time;
                 end
-                avg = mean(times(numChildren,p1Index,p2Index, i,:))
+                avg = total / numSamples;
                 stddev = std(times(numChildren, p1Index, p2Index, i,:))
                 stderr = 2 * (stddev / (numSamples^(1/2)))
             end
