@@ -200,7 +200,7 @@ for messageIndex = 1:numMessages
                         time = time - 1; 
 
                         % Record the total time for simulation
-                        times(childIndex,p1Index,p2Index,n,i) = time;
+                        times(messageIndex, childIndex, p1Index, p2Index, n, i) = time;
                     end
                     avg = mean(times(messageIndex, childIndex, p1Index, p2Index, n,:));
                     stddev = std(times(messageIndex, childIndex, p1Index, p2Index, n,:));
