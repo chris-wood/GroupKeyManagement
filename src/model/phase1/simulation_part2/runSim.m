@@ -238,7 +238,7 @@ for childIndex = 1:numChildren
         stderr = 2 * (stddev / (numSamples^(1/2)));
         
         % Display the CSV output and build up the final table
-        fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', maxChildren(numChildren), kMult, nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
+        fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', maxChildren(childIndex), kMult, nodeCount(i), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
         finalTable(numChildren, p1Index,p2Index,i,1) = nodeCount(i);
         finalTable(numChildren, p1Index,p2Index,i,2) = avg;
         finalTable(numChildren, p1Index,p2Index,i,3) = stddev;
