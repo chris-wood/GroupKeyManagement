@@ -10,7 +10,7 @@
 numSamples = 1000; 
 maxChildren = [2, 3, 4, 5, 6]; % this is k
 maxMessages = [2, 3, 4, 5, 6]; % this is m
-nodeCount = [5,10]; %,25,50,100,150,250,500]; 
+nodeCount = [5, 10, 25, 50, 100, 150, 250, 500]; 
 p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; 
 p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; 
 
