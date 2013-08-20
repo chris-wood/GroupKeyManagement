@@ -9,7 +9,7 @@
 % Simulation parameters
 numSamples = 100; %1000 or 10000 for proper results
 maxChildren = [2, 3, 4, 5, 6, 7, 8, 9, 10]; % this is k
-nodeCount = [5,10,25,50,100,150,250,500]; 
+nodeCount = [5,10]; %,25,50,100,150,250,500]; 
 p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
 [~, numNodes] = size(nodeCount);
@@ -200,8 +200,8 @@ for childIndex = 1:numChildren
                     times(childIndex,p1Index,p2Index,n,i) = time;
                     total = total + time;
                 end
-                avg = mean(times(numChildren, p1Index, p2Index, n))
-                stddev = std(times(numChildren, p1Index, p2Index, n))
+                avg = mean(times(numChildren,p1Index,p2Index, n,:))
+                stddev = std(times(numChildren, p1Index, p2Index, n,:))
                 stderr = 2 * (stddev / (numSamples^(1/2)))
             end
         end
