@@ -7,12 +7,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simulation parameters
-numSamples = 100; %1000 or 10000 for proper results
-maxChildren = [2, 3]; %, 4, 5, 6, 7, 8, 9, 10]; % this is k
-maxMessages = [2,3];
+numSamples = 1000; 
+maxChildren = [2, 3, 4, 5, 6]; % this is k
+maxMessages = [2, 3, 4, 5, 6]; % this is m
 nodeCount = [5,10]; %,25,50,100,150,250,500]; 
-p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
+p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1]; 
+p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; 
+
+% Extract sizes dynamically...
 [~, numNodes] = size(nodeCount);
 [~, numP1probs] = size(p1Probs);
 [~, numP2probs] = size(p2Probs);
@@ -22,9 +24,6 @@ p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1]; %01,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
 % Result containers
 times = zeros(numMessages, numChildren, numP1probs, numP2probs, numNodes, numSamples);
 finalTable = zeros(numMessages, numChildren, numP1probs, numP2probs, numNodes, 4); % num nodes, avg time, stddev, error in the last coord
-
-% this is m - poor naming conventions, I know.
-% kMult = 3; 
 
 % Run the simulation nSamples times
 disp('Starting the simulation...');
