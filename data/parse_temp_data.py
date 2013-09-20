@@ -31,7 +31,7 @@ for line in fn:
 
 # print times
 for tup in times:
-	fname = "data_" + str(tup[0]) + "_" + str(tup[1]) + "_" + str(tup[2]) + "_" + str(tup[3])
+	fname = "data_" + str(tup[0]) + "_" + str(tup[1]) + "_" + str(tup[2]) + "_" + str(tup[3]) + ".csv"
 	fout = open(fname, 'w')
 	for data in times[tup]:
 		fout.write(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]) + "\n")
