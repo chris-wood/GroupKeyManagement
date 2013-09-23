@@ -27,11 +27,11 @@ p1Probs = [1, 0.9, 0.75, 0.5, 0.25, 0.1];
 p2Probs= [1, 0.9, 0.75, 0.5, 0.25, 0.1];
 
 % Extract sizes dynamically...
-[~, numNodes] = size(nodeCount);
-[~, numP1probs] = size(p1Probs);
-[~, numP2probs] = size(p2Probs);
-[~, numChildren] = size(maxChildren);
-[~, numMessages] = size(maxMessages);
+[t1, numNodes] = size(nodeCount);
+[t2, numP1probs] = size(p1Probs);
+[t3, numP2probs] = size(p2Probs);
+[t4, numChildren] = size(maxChildren);
+[t5, numMessages] = size(maxMessages);
 
 % Result containers
 times = zeros(numMessages, numChildren, numP1probs, numP2probs, numNodes, numSamples);
