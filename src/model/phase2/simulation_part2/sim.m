@@ -9,7 +9,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % The output file - open for overwriting with this new simulation
-fName = 'sim_run_20130921.txt';
+fName = 'sim_run_20130922.txt';
 fid = fopen(fName, 'w');
 if (fid == -1)
 	disp('Error: could not open the file for output.');
