@@ -9,7 +9,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % The output file - open for overwriting with this new simulation
-fName = 'sim_long_20130928.txt';
+fName = 'sim_long_20130930.txt';
 fid = fopen(fName, 'w');
 if (fid == -1)
 	disp('Error: could not open the file for output.');
@@ -19,7 +19,7 @@ else
 end
 
 % Simulation parameters
-numSamples = 10000; 
+numSamples = 5000; 
 maxChildren = [3]; % this is k
 maxMessages = [3]; % this is m
 nodeCount = [25, 50, 75, 100, 200, 250, 500, 750, 1000];
