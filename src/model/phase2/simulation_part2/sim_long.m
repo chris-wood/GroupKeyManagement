@@ -220,10 +220,10 @@ for messageIndex = 1:numMessages
                     end
                     avg = mean(times(messageIndex, childIndex, p1Index, p2Index, n,:));
                     stddev = std(times(messageIndex, childIndex, p1Index, p2Index, n,:));
-                    stderr = 2 * (stddev / (numSamples^(1/2)));
-                    fprintf('%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
-                    fprintf(stderr, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
-			fprintf(fid, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
+                    err = 2 * (stddev / (numSamples^(1/2)));
+                    fprintf('%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, err);
+                    fprintf(stderr, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, err);
+			fprintf(fid, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, err);
                 end
             end
         end
