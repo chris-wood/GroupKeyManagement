@@ -9,7 +9,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % The output file - open for overwriting with this new simulation
-fName = 'sim_long_20131003.txt';
+fName = 'sim_long_20131012.txt';
 fid = fopen(fName, 'w');
 if (fid == -1)
 	disp('Error: could not open the file for output.');
@@ -27,11 +27,11 @@ p1Probs = [0.5];
 p2Probs= [0.5];
 
 % Extract sizes dynamically...
-[t1, numNodes] = size(nodeCount);
-[t2, numP1probs] = size(p1Probs);
-[t3, numP2probs] = size(p2Probs);
-[t4, numChildren] = size(maxChildren);
-[t5, numMessages] = size(maxMessages);
+[t1, numNodes] = size(nodeCount)
+[t2, numP1probs] = size(p1Probs)
+[t3, numP2probs] = size(p2Probs)
+[t4, numChildren] = size(maxChildren)
+[t5, numMessages] = size(maxMessages)
 
 % Result containers
 times = zeros(numMessages, numChildren, numP1probs, numP2probs, numNodes, numSamples);
@@ -44,8 +44,13 @@ for messageIndex = 1:numMessages
         disp(sprintf('k,m =  %d, %d', maxChildren(childIndex), maxMessages(messageIndex)))
         for p1Index = 1:numP1probs
             for p2Index = 1:numP2probs
+		p1Index
+		p2Index
+		p1Probs(p1Index)
+		p2Probs(p2Index)
                 for n = 1:numNodes
-                    disp(sprintf('Simulation for %d nodes with p1 = %d and p2 = %d', nodeCount(n), p1Probs(p1Index), p2Probs(p2Index)))
+                    disp(sprintf('Simulation for %d nodes with p1 = %f and p2 = %f', nodeCount(n), p1Probs(p1Index), p2Probs(p2Index)))
+				fprintf(stderr, 'Simulation for %d nodes with p1 = %f and p2 = %f', nodeCount(n), p1Probs(p1Index), p2Probs(p2Index))
                     total = 0;
                     for i = 1:numSamples
                         % Initialize the adj. matrix representation for the nodes and network
@@ -216,8 +221,9 @@ for messageIndex = 1:numMessages
                     avg = mean(times(messageIndex, childIndex, p1Index, p2Index, n,:));
                     stddev = std(times(messageIndex, childIndex, p1Index, p2Index, n,:));
                     stderr = 2 * (stddev / (numSamples^(1/2)));
-                    fprintf('%d, %d, %d, %d, %d, %d, %d, %d\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
-			fprintf(fid, '%d, %d, %d, %d, %d, %d, %d, %d\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
+                    fprintf('%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
+                    fprintf(stderr, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
+			fprintf(fid, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
                 end
             end
         end

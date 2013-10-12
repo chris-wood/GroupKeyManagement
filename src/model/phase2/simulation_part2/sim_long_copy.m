@@ -9,7 +9,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % The output file - open for overwriting with this new simulation
-fName = 'sim_short_20131012.txt';
+fName = 'sim_long_20131012.txt';
 fid = fopen(fName, 'w');
 if (fid == -1)
 	disp('Error: could not open the file for output.');
@@ -19,19 +19,19 @@ else
 end
 
 % Simulation parameters
-numSamples = 250; 
+numSamples = 1000; 
 maxChildren = [3]; % this is k
 maxMessages = [3]; % this is m
-nodeCount = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320, 325, 330, 335, 340, 345, 350, 355, 360, 365, 370, 375, 380, 385, 390, 395, 400, 405, 410, 415, 420, 425, 430, 435, 440, 445, 450, 455, 460, 465, 470, 475, 480, 485, 490, 495, 500, 505, 510, 515, 520, 525, 530, 535, 540, 545, 550, 555, 560, 565, 570, 575, 580, 585, 590, 595, 600, 605, 610, 615, 620, 625, 630, 635, 640, 645, 650, 655, 660, 665, 670, 675, 680, 685, 690, 695, 700, 705, 710, 715, 720, 725, 730, 735, 740, 745, 750, 755, 760, 765, 770, 775, 780, 785, 790, 795, 800, 805, 810, 815, 820, 825, 830, 835, 840, 845, 850, 855, 860, 865, 870, 875, 880, 885, 890, 895, 900, 905, 910, 915, 920, 925, 930, 935, 940, 945, 950, 955, 960, 965, 970, 975, 980, 985, 990, 995, 1000];
+nodeCount = [25, 50, 75, 100, 200, 250, 500, 750, 1000];
 p1Probs = [0.5];
 p2Probs= [0.5];
 
 % Extract sizes dynamically...
-[t1, numNodes] = size(nodeCount);
-[t2, numP1probs] = size(p1Probs);
-[t3, numP2probs] = size(p2Probs);
-[t4, numChildren] = size(maxChildren);
-[t5, numMessages] = size(maxMessages);
+[t1, numNodes] = size(nodeCount)
+[t2, numP1probs] = size(p1Probs)
+[t3, numP2probs] = size(p2Probs)
+[t4, numChildren] = size(maxChildren)
+[t5, numMessages] = size(maxMessages)
 
 % Result containers
 times = zeros(numMessages, numChildren, numP1probs, numP2probs, numNodes, numSamples);
@@ -44,9 +44,12 @@ for messageIndex = 1:numMessages
         disp(sprintf('k,m =  %d, %d', maxChildren(childIndex), maxMessages(messageIndex)))
         for p1Index = 1:numP1probs
             for p2Index = 1:numP2probs
+		p1Index
+		p2Index
+		p1Probs(p1Index)
+		p2Probs(p2Index)
                 for n = 1:numNodes
                     disp(sprintf('Simulation for %d nodes with p1 = %f and p2 = %f', nodeCount(n), p1Probs(p1Index), p2Probs(p2Index)))
-				fprintf(stderr, 'Simulation for %d nodes with p1 = %f and p2 = %f', nodeCount(n), p1Probs(p1Index), p2Probs(p2Index))
                     total = 0;
                     for i = 1:numSamples
                         % Initialize the adj. matrix representation for the nodes and network
@@ -218,8 +221,7 @@ for messageIndex = 1:numMessages
                     stddev = std(times(messageIndex, childIndex, p1Index, p2Index, n,:));
                     stderr = 2 * (stddev / (numSamples^(1/2)));
                     fprintf('%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
-                    fprintf(stderr, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
-					fprintf(fid, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
+			fprintf(fid, '%f, %f, %f, %f, %f, %f, %f, %f\n', maxChildren(childIndex), maxMessages(messageIndex), nodeCount(n), p1Probs(p1Index), p2Probs(p2Index), avg, stddev, stderr);
                 end
             end
         end
