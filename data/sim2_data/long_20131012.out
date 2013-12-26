@@ -1,0 +1,52 @@
+GNU Octave, version 3.6.4
+Copyright (C) 2013 John W. Eaton and others.
+This is free software; see the source code for copying conditions.
+There is ABSOLUTELY NO WARRANTY; not even for MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  For details, type `warranty'.
+
+Octave was configured for "x86_64-pc-linux-gnu".
+
+Additional information about Octave is available at http://www.octave.org.
+
+Please contribute if you find this software useful.
+For more information, visit http://www.octave.org/get-involved.html
+
+Read http://www.octave.org/bugs.html to learn how to submit bug reports.
+
+For information about changes from previous versions, type `news'.
+
+Success: output file opened successfully - proceeding to gather data.
+t1 =  1
+numNodes =  9
+t2 =  1
+numP1probs =  1
+t3 =  1
+numP2probs =  1
+t4 =  1
+numChildren =  1
+t5 =  1
+numMessages =  1
+Starting the simulation...
+k,m =  3, 3
+p1Index =  1
+p2Index =  1
+ans =  0.50000
+ans =  0.50000
+Simulation for 25 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 25.000000, 0.500000, 0.500000, 29.221000, 3.569720, 0.225769
+Simulation for 50 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 50.000000, 0.500000, 0.500000, 35.676000, 3.529799, 0.223244
+Simulation for 75 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 75.000000, 0.500000, 0.500000, 39.793000, 3.613753, 0.228554
+Simulation for 100 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 100.000000, 0.500000, 0.500000, 42.196000, 3.583912, 0.226667
+Simulation for 200 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 200.000000, 0.500000, 0.500000, 48.770000, 3.595835, 0.227421
+Simulation for 250 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 250.000000, 0.500000, 0.500000, 50.901000, 3.637091, 0.230030
+Simulation for 500 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 500.000000, 0.500000, 0.500000, 57.770000, 3.418301, 0.216192
+Simulation for 750 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 750.000000, 0.500000, 0.500000, 61.464000, 3.589650, 0.227029
+Simulation for 1000 nodes with p1 = 0.500000 and p2 = 0.500000
+3.000000, 3.000000, 1000.000000, 0.500000, 0.500000, 64.364000, 3.588088, 0.226931
