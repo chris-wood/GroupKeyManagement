@@ -23,8 +23,8 @@ while True:
 		time = time.strip()
 		print >> sys.stderr, str(k) + "," + str(m) + "," + str(n) + "," + str(p1) + "," + str(p2) + "," + time
 		print(str(k) + "," + str(m) + "," + str(n) + "," + str(p1) + "," + str(p2) + "," + time)
-		print >> (end - start)
-		print (end - start)
+		print >> sys.stderr, str(end - start)
+		print str(end - start)
 
 	# Next iteration
 	n = n + 1
