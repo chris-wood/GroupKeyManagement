@@ -16,13 +16,13 @@ while True:
 	cmdline = str(k) + " " + str(m) + " " + str(n) + " " + str(p1) + " " + str(p2)
 	start = datetime.datetime.now()
 	p = subprocess.Popen('java Model ' + cmdline, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-	end = datetime.datetime.now()
 	seen = []
 	data = p.stdout.readlines()
 	for time in data: # Should only be a single line
 		time = time.strip()
 		print >> sys.stderr, str(k) + "," + str(m) + "," + str(n) + "," + str(p1) + "," + str(p2) + "," + time
 		print(str(k) + "," + str(m) + "," + str(n) + "," + str(p1) + "," + str(p2) + "," + time)
+		end = datetime.datetime.now()
 		print >> sys.stderr, str(end - start)
 		print str(end - start)
 
